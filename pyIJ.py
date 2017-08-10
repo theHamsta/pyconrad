@@ -1,4 +1,6 @@
 from jpype import *
+import threading
+import time
 
 class PyIJ:
     "ImageJ Gui wraped in python"
@@ -6,11 +8,16 @@ class PyIJ:
     guiStarted = None
     classes = None
     ijGuiInstance = None
+    guiThread = None
+    pyijInstance = None
+
+    def __init__(self):
+        self.pyijInstance = self
 
     def initJava(self):
         if not self.isInitialized():
             try:
-                startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=lib\\ij.jar")
+                startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=lib/ij.jar")
                 print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('ij')
             except JException as ex:
@@ -21,9 +28,9 @@ class PyIJ:
     def startGui(self):
         if not self.isInitialized():
             self.initJava()
-        self.ijGuiInstance = self.classes.ImageJ()
-        self.guiStarted = True
-        print('Gui started',self.ijGuiInstance)
+        self.guiThread = threading.Thread(target=self.test)
+        self.guiThread.setDaemon(False)
+        self.guiThread.start()
 
     def isInitialized(self):
         return self.javaInitalized
@@ -35,6 +42,19 @@ class PyIJ:
         self.javaInitialized = False
 
     def stopGui(self):
+        self.guiStarted = False
+        time.sleep(1)
         self.classes.WindowManager.closeAllWindows()
         self.ijGuiInstance.quit()
-        self.guiStarted = False
+
+
+    def test(self):
+        attachThreadToJVM()
+        self.ijGuiInstance = self.classes.ImageJ()
+        self.guiStarted = True
+        print('Gui started', self.ijGuiInstance)
+        #detachThreadFromJVM()
+        while self.guiStarted:
+            if(self.ijGuiInstance.quitting() == 1):
+                self.stopGui()
+            time.sleep(1)

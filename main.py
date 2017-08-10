@@ -5,7 +5,6 @@ import time
 ij = pyIJ.PyIJ()
 ij.initJava()
 ij.startGui()
-ij.initJava()
 
 imagePath = 'C:\\Data\\0016.tif'
 
@@ -30,3 +29,5 @@ test = ij.classes.ImagePlus(JString(imagePath))
 test.show()
 print('Image Loaded, python thread closes in 5sec...')
 time.sleep(5)
+print('Oh crap, there is a GUI running, cant exit main process..... ')
+print('Wait on User close imageJ')
