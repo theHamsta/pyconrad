@@ -39,4 +39,4 @@ class PyIJ:
         self.classes.WindowManager.closeAllWindows()
         self.ijGuiInstance.quit()
         self.guiStarted = False
-        self.stopJava()
+        #self.stopJava()
