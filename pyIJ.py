@@ -11,7 +11,6 @@ class PyIJ:
         if not self.isInitialized():
             try:
                 startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=lib\\ij.jar")
-                #detachThreadFromJVM()
                 print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('ij')
             except JException as ex:
@@ -39,4 +38,3 @@ class PyIJ:
         self.classes.WindowManager.closeAllWindows()
         self.ijGuiInstance.quit()
         self.guiStarted = False
-        #self.stopJava()
