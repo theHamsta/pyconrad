@@ -8,8 +8,16 @@ from matplotlib import pyplot as plt
 startJVM(getDefaultJVMPath(),
 "-Djava.class.path=C:\\StanfordRepo\\pyConrad\\CONRAD 1.0.6\\conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G") 
 package = JPackage("edu").stanford.rsl.conrad.data.numeric
- 
+packageUtil = JPackage("edu").stanford.rsl.conrad.utils
+
+# Add Save / Load functions?
+
 class ImageUtil:
+    
+    ###################
+    ## Image Wrapper ##
+    ###################
+    
     def wrapGrid2D(grid2D):
         w = grid2D.getWidth()
         h = grid2D.getHeight()
@@ -20,12 +28,10 @@ class ImageUtil:
     def wrapGrid3D(grid3D):
         size = grid3D.getSize()
         array = np.zeros((size[1],size[0],size[2]))
-        iter = 0
         for id in range(size[2]):
             for ih in range (size[1]):
                 for iw in range (size[0]):
                     array[ih,iw,id] = grid3D.getAtIndex(iw,ih,id) 
-                    iter = iter + 1
         array = np.reshape(array, (size[1],size[0],size[2]))
         return array
     
@@ -43,3 +49,31 @@ class ImageUtil:
                 for iw in range (dim[0]):
                     grid.setAtIndex(ih,iw,id, array[iw,ih,id])
         return grid
+    
+    
+    #################
+    ## Save Images ##
+    #################
+    
+    def saveGridAsTiff(grid, path):
+        packageUtil.ImageUtil.saveAs(grid, path)
+        print("To be implemented")
+        
+    def saveArrayAsTiff(array, path):
+        dim = array.shape
+        if(len(dim) == 3):
+            grid = ImageUtil.wrapNumpyArrayToGrid3D(array)
+            ImageUtil.saveGridAsTiff(grid, path)
+        else:
+            print("Did not save, only available for 3D arrays")
+            
+     #################
+     ## Load Images ##
+     #################      
+    
+    def loadGrid2DfromTif(path):
+        print("Nothing loaded: to be implemented")
+        
+    def loadGrid3DfromTif(path):
+        print("Nothing Loaded: to be implemented")
+    
