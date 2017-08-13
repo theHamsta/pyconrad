@@ -23,7 +23,8 @@ class PyIJ:
             except JException as ex:
                 print(ex)
             self.javaInitalized = True
-        print("JVM already started")
+        else:
+            print("JVM already started")
 
     def startGui(self):
         if not self.isInitialized():
