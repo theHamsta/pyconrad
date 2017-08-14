@@ -100,6 +100,3 @@ outputGrid3 = ImageUtil.wrapNumpyArrayToGrid3D(outputArray3)
 outputGrid3.show("outputGrid3D")
 
 print("End")
-
-while True:
-    a = 2
