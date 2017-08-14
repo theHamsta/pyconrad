@@ -26,23 +26,11 @@ class ImageUtil:
         return array
     
     def wrapGrid3D(grid3D):
-        # import time
         size = grid3D.getSize()
         array = np.zeros((size[2],size[1],size[0]))
-        # start = time.time()
-        # for id in range(size[2]):
-        #     for ih in range (size[1]):
-        #         for iw in range (size[0]):
-        #             array[id,ih,iw] = grid3D.getAtIndex(iw,ih,id)
-        # end = time.time()
-        # print("method0: %f" % (end-start))
-
-        # start = time.time()
         for id in range(size[2]):
             subgrid = grid3D.getSubGrid(id)
             array[id, ...] = ImageUtil.wrapGrid2D(subgrid)
-        # end = time.time()
-        # print("method1: %f" % (end-start))
         return array
     
     def wrapNumpyArrayToGrid2D(array):
@@ -52,22 +40,11 @@ class ImageUtil:
         return grid
 
     def wrapNumpyArrayToGrid3D(array):
-        # import time
         dim = array.shape
         grid = package.Grid3D(dim[2], dim[1], dim[0])
-        # start = time.time()
-        # for id in range(dim[0]):
-        #     for ih in range (dim[1]):
-        #         for iw in range (dim[2]):
-        #             grid.setAtIndex(iw,ih,id, array[id,ih,iw])
-        # end = time.time()
-        # print("method0: %f" % (end-start))
-        # start = time.time()
         for id in range(dim[0]):
             subgrid = ImageUtil.wrapNumpyArrayToGrid2D(array[id, ...])
             grid.setSubGrid(id, subgrid)
-        # end = time.time()
-        # print("method1: %f" % (end-start))
         return grid
     
     
