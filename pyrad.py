@@ -101,13 +101,19 @@ class PyConrad:
             time.sleep(1)
 
     def __importLibs__(self):
-        os.getcwd()
         os.chdir('..')
         os.chdir("CONRAD")
-        conradPath = os.path.dirname(os.getcwd()) + '\\CONRAD'
+        conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
         conradPath = conradPath.replace('\\', '/')
         conradloc = conradPath + "/src/"
         s = "-Djava.class.path=" + conradloc
+
+        os.chdir('..')
+        os.chdir("CONRADRSL")
+        conradRSLPath = os.path.dirname(os.getcwd()) + '/CONRADRSL'
+        conradRSLPath = conradRSLPath.replace('\\', '/')
+        conradRSLloc = conradRSLPath + "/src/"
+        s = s + ';' + conradRSLloc
 
         libloc = conradPath + "/lib/"
         ll = os.listdir(libloc)
