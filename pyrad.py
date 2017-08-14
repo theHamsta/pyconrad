@@ -28,7 +28,7 @@ class PyConrad:
     def setup(self):
         if not self.isJavaInitalized():
             try:
-                conradSourceAndLibs = self.__importLibs__()
+                conradSourceAndLibs = self.__importLibs__()#TODO: Either (TODO:)load conrad.1.x.x.jar or if not available the (Finished:) CONRAD git from relative path
                 startJVM(getDefaultJVMPath(), "-ea", conradSourceAndLibs)
                 print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('edu')
@@ -64,7 +64,7 @@ class PyConrad:
     def stopGui(self):
         self.ij.WindowManager.closeAllWindows()
         self.ijInstance.quit()
-        self.guiStarted = False
+        self.isGuiStarted = False
 
 
     def __startRPFGUI___(self):
