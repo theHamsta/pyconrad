@@ -26,6 +26,16 @@ w = 500
 h = 300
 d = 3
 
+numpyIn = np.random.rand(44,543)
+grid1 = ImageUtil.wrapNumpyArrayToGrid2D(numpyIn.astype(float))
+numpyOut = ImageUtil.wrapGrid2D(grid1)
+assert np.allclose(numpyIn, numpyOut)
+
+numpyIn = np.random.rand(6,57,42)
+grid1 = ImageUtil.wrapNumpyArrayToGrid3D(numpyIn.astype(float))
+numpyOut = ImageUtil.wrapGrid3D(grid1)
+assert np.allclose(numpyIn, numpyOut)
+
 grid2 = packagePhantom.MickeyMouseGrid2D(w,h)
 print(grid2)
 
@@ -46,7 +56,7 @@ plt.pause(0.001)
 
 plt.figure()
 outputArray3 = ImageUtil.wrapGrid3D(grid3)
-plt.imshow(outputArray3, interpolation='nearest')
+plt.imshow(outputArray3[0,...], interpolation='nearest')
 plt.title("Array 3D")
 plt.draw()
 plt.pause(0.001)

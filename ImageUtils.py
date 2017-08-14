@@ -27,12 +27,11 @@ class ImageUtil:
     
     def wrapGrid3D(grid3D):
         size = grid3D.getSize()
-        array = np.zeros((size[1],size[0],size[2]))
+        array = np.zeros((size[2],size[1],size[0]))
         for id in range(size[2]):
             for ih in range (size[1]):
                 for iw in range (size[0]):
-                    array[ih,iw,id] = grid3D.getAtIndex(iw,ih,id) 
-        array = np.reshape(array, (size[1],size[0],size[2]))
+                    array[id,ih,iw] = grid3D.getAtIndex(iw,ih,id)
         return array
     
     def wrapNumpyArrayToGrid2D(array):
@@ -43,11 +42,11 @@ class ImageUtil:
 
     def wrapNumpyArrayToGrid3D(array):
         dim = array.shape
-        grid = package.Grid3D(dim[1], dim[0], dim[2])
-        for id in range(dim[2]):
+        grid = package.Grid3D(dim[2], dim[1], dim[0])
+        for id in range(dim[0]):
             for ih in range (dim[1]):
-                for iw in range (dim[0]):
-                    grid.setAtIndex(ih,iw,id, array[iw,ih,id])
+                for iw in range (dim[2]):
+                    grid.setAtIndex(iw,ih,id, array[id,ih,iw])
         return grid
     
     
