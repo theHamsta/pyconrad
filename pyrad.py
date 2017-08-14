@@ -63,7 +63,7 @@ class PyConrad:
 
     def stopGui(self):
         self.ij.WindowManager.closeAllWindows()
-        self.ijGuiInstance.quit()
+        self.ijInstance.quit()
         self.guiStarted = False
 
 
@@ -76,7 +76,7 @@ class PyConrad:
         # detachThreadFromJVM()
         while self.isGuiStarted:
             if not self.ijInstance is None:#TODO: get ij Instance from ReconstructionPipelineFrame
-                if (self.ijGuiInstance.quitting() == 1):
+                if (self.ijInstance.quitting() == 1):
                     self.stopGui()
             time.sleep(1)
 
@@ -89,7 +89,7 @@ class PyConrad:
         # detachThreadFromJVM()
         while self.isGuiStarted:
             if not self.ijInstance is None:  # TODO: get ij Instance from CONRAD
-                if (self.ijGuiInstance.quitting() == 1):
+                if (self.ijInstance.quitting() == 1):
                     self.stopGui()
             time.sleep(1)
 
