@@ -14,6 +14,7 @@ class PyConrad:
     isGuiStarted = None
     imageJInstance = None
 
+    ijInstance = None
     guiInstance = None
     guiThread = None
     _instance = None
@@ -65,15 +66,6 @@ class PyConrad:
         self.ijGuiInstance.quit()
         self.guiStarted = False
 
-    def __startRPFGUI___(self):
-        attachThreadToJVM()
-        self.guiInstance = JPackage("edu").stanford.rsl.apps.gui
-        self.guiInstance.ReconstructionPipelineFrame.main(JArray(JString)(''))
-        self.isGuiStarted = True
-        print('Gui started', self.guiInstance)
-        # detachThreadFromJVM()
-        while self.isGuiStarted:
-            time.sleep(1)
 
     def __startRPFGUI___(self):
         attachThreadToJVM()
@@ -83,6 +75,9 @@ class PyConrad:
         print('Gui started', self.guiInstance)
         # detachThreadFromJVM()
         while self.isGuiStarted:
+            if not self.ijInstance is None:#TODO: get ij Instance from ReconstructionPipelineFrame
+                if (self.ijGuiInstance.quitting() == 1):
+                    self.stopGui()
             time.sleep(1)
 
     def __startIJGUI___(self):
@@ -93,6 +88,9 @@ class PyConrad:
         print('Gui started', self.guiInstance)
         # detachThreadFromJVM()
         while self.isGuiStarted:
+            if not self.ijInstance is None:  # TODO: get ij Instance from CONRAD
+                if (self.ijGuiInstance.quitting() == 1):
+                    self.stopGui()
             time.sleep(1)
 
     def __importLibs__(self):
