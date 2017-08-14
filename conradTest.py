@@ -4,9 +4,9 @@ import pyrad
 conrad = pyrad.PyConrad()
 conrad.setup()
 conrad.startReconstructionFilterPipeline()
+#conrad.startConrad()
 
-
-imagePath = 'C:\\Data\\0016.tif'
+imagePath = 'D:\\Data\\mrt_raw\\0016.tif'
 #
 # print('Load Image')
 #

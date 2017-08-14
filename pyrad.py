@@ -43,6 +43,8 @@ class PyConrad:
         if self.guiThread is None:
             self.guiThread = threading.Thread(target=self.__startIJGUI___)
             self.guiThread.start()
+            while not self.isGuiStarted:
+                time.sleep(1)
         else:
             print("Some GUI is already started")
 
@@ -50,6 +52,8 @@ class PyConrad:
         if self.guiThread is None:
             self.guiThread = threading.Thread(target=self.__startRPFGUI___)
             self.guiThread.start()
+            while not self.isGuiStarted:
+                time.sleep(1)
         else:
             print("Some GUI is already started")
 
@@ -63,32 +67,36 @@ class PyConrad:
 
     def __startRPFGUI___(self):
         attachThreadToJVM()
-        #self.ijGuiInstance = JPackage('ij').ImageJ()
         self.guiInstance = JPackage("edu").stanford.rsl.apps.gui
         self.guiInstance.ReconstructionPipelineFrame.main(JArray(JString)(''))
-        self.guiStarted = True
+        self.isGuiStarted = True
         print('Gui started', self.guiInstance)
         # detachThreadFromJVM()
-        while self.guiStarted:
-            if (self.isGuiStarted == True):
-                self.stopGui()
+        while self.isGuiStarted:
+            time.sleep(1)
+
+    def __startRPFGUI___(self):
+        attachThreadToJVM()
+        self.guiInstance = JPackage("edu").stanford.rsl.apps.gui
+        self.guiInstance.ReconstructionPipelineFrame.main(JArray(JString)(''))
+        self.isGuiStarted = True
+        print('Gui started', self.guiInstance)
+        # detachThreadFromJVM()
+        while self.isGuiStarted:
             time.sleep(1)
 
     def __startIJGUI___(self):
         attachThreadToJVM()
-        #self.ijGuiInstance = JPackage('ij').ImageJ()
         self.guiInstance = JPackage("edu").stanford.rsl.conrad.utils
         self.guiInstance.CONRAD.setup()
-        self.guiStarted = True
+        self.isGuiStarted = True
         print('Gui started', self.guiInstance)
         # detachThreadFromJVM()
-        while self.guiStarted:
-            if (self.isGuiStarted == True):
-                self.stopGui()
+        while self.isGuiStarted:
             time.sleep(1)
 
     def __importLibs__(self):
-        os.getcwd();
+        os.getcwd()
         os.chdir('..')
         os.chdir("CONRAD")
         conradPath = os.path.dirname(os.getcwd()) + '\\CONRAD'

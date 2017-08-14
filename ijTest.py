@@ -6,11 +6,11 @@ ij = pyIJ.PyIJ()
 ij.initJava()
 ij.startGui()
 
-imagePath = 'C:\\Data\\0016.tif'
+imagePath = 'D:/Data/mrt_raw/0016.tif'
 
 print('Load Image')
 
-test = ij.ijGuiInstance.ImagePlus(JString(imagePath))
+test = ij.classes.ImagePlus(JString(imagePath))
 test.show()
 time.sleep(2)
 print('10 sec over, closing imagej....')

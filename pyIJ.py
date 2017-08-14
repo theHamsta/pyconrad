@@ -32,6 +32,8 @@ class PyIJ:
         self.guiThread = threading.Thread(target=self.test)
         self.guiThread.setDaemon(False)
         self.guiThread.start()
+        while not self.guiStarted:
+            time.sleep(1)
 
     def isInitialized(self):
         return self.javaInitalized
