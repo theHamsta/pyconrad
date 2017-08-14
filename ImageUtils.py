@@ -1,14 +1,15 @@
 # author Bastian Bier
 
-from jpype import  *
 import numpy as np
+import pyrad
+from jpype import  *
 from PIL import Image
 from matplotlib import pyplot as plt
 
-startJVM(getDefaultJVMPath(),
-"-Djava.class.path=/localhome/local/projects/CONRAD 1.0.6/conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G")
-package = JPackage("edu").stanford.rsl.conrad.data.numeric
-packageUtil = JPackage("edu").stanford.rsl.conrad.utils
+#startJVM(getDefaultJVMPath(),
+#"-Djava.class.path=/localhome/local/projects/CONRAD 1.0.6/conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G")
+#package = JPackage("edu").stanford.rsl.conrad.data.numeric
+#packageUtil = JPackage("edu").stanford.rsl.conrad.utils
 
 # Add Save / Load functions?
 
@@ -46,18 +47,18 @@ class ImageUtil:
         return array
 
     def wrapNumpyArrayToGrid1D(array):
-        grid = package.Grid1D(array)
+        grid = pyrad.getInstance().classes.stanford.rsl.conrad.data.numeric.Grid1D(array)
         return grid
 
     def wrapNumpyArrayToGrid2D(array):
         dim = array.shape
         flattened = array.flatten()
-        grid = package.Grid2D(flattened, dim[1], dim[0])
+        grid = pyrad.getInstance().classes.stanford.rsl.conrad.data.numeric.Grid2D(flattened, dim[1], dim[0])
         return grid
 
     def wrapNumpyArrayToGrid3D(array):
         dim = array.shape
-        grid = package.Grid3D(dim[2], dim[1], dim[0])
+        grid = pyrad.getInstance().classes.stanford.rsl.conrad.data.numeric.Grid3D(dim[2], dim[1], dim[0])
         for id in range(dim[0]):
             subgrid = ImageUtil.wrapNumpyArrayToGrid2D(array[id, ...])
             grid.setSubGrid(id, subgrid)
@@ -65,7 +66,7 @@ class ImageUtil:
 
     def wrapNumpyArrayToGrid4D(array):
         dim = array.shape
-        grid = package.Grid4D(dim[3], dim[2], dim[1], dim[0], False)
+        grid = pyrad.getInstance().classes.stanford.rsl.conrad.data.numeric.Grid4D(dim[3], dim[2], dim[1], dim[0], False)
         for id in range(dim[0]):
             subgrid = ImageUtil.wrapNumpyArrayToGrid3D(array[id, ...])
             grid.setSubGrid(id, subgrid)
@@ -76,7 +77,7 @@ class ImageUtil:
     #################
     
     def saveGridAsTiff(grid, path):
-        packageUtil.ImageUtil.saveAs(grid, path)
+        pyrad.getInstance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
         print("To be implemented")
         
     def saveArrayAsTiff(array, path):
