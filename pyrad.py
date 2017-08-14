@@ -6,7 +6,14 @@ import os
 conradPath = 'CONRAD/src'
 libPath = 'CONRAD/lib'
 
+
+def getInstance():
+    if PyConrad._instance is None:
+        PyConrad._instance = PyConrad()
+    return PyConrad._instance
+
 class PyConrad:
+
     classes = None
     ij = None
 
