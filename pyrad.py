@@ -107,7 +107,4 @@ class PyConrad:
         for i in ll:
             if ".jar" in i:
                 s = s + ";" + libloc + i
-
-        s = s.replace('/','\\')
-        print(s)
         return s
