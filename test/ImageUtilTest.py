@@ -34,7 +34,8 @@ try:
     numpyIn = np.random.rand(543)
     grid1 = ImageUtil.wrapNumpyArrayToGrid1D(numpyIn.astype(float))
     numpyOut = ImageUtil.wrapGrid1D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
+    assert np.allclose(numpyIn,
+                        numpyOut)
     print("Test Grid1D passed")
 except Exception as ex:
     print("Test Grid1D failed with exception:",ex)
