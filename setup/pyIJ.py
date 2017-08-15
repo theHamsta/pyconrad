@@ -1,4 +1,5 @@
 from jpype import *
+import os
 import threading
 import time
 
@@ -17,6 +18,7 @@ class PyIJ:
     def initJava(self):
         if not self.isInitialized():
             try:
+                os.chdir('..')
                 startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=lib/ij.jar")
                 print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('ij')
