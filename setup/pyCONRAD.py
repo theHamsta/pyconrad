@@ -101,26 +101,52 @@ class PyConrad:
             time.sleep(1)
 
     def __importLibs__(self):
+        # check whether CONRAD + RSL can be found nearby
+        # yes: navigate there
+        # no: use conrad.jar
+        s = ""
         os.chdir('..')
-        os.chdir("CONRAD")
-        conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
-        conradPath = conradPath.replace('\\', '/')
-        conradloc = conradPath + "/src/"
-        s = "-Djava.class.path=" + conradloc
-
         os.chdir('..')
-        os.chdir("CONRADRSL")
-        conradRSLPath = os.path.dirname(os.getcwd()) + '/CONRADRSL'
-        conradRSLPath = conradRSLPath.replace('\\', '/')
-        conradRSLloc = conradRSLPath + "/src/"
-        s = s + ';' + conradRSLloc
+        # list directories, check whether CONRAD/RSL are there
+        directories = os.listdir()
+        if "CONRAD" in directories and "CONRADRSL" in directories:
+            os.chdir("CONRAD")
+            conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
+            conradPath = conradPath.replace('\\', '/')
+            conradloc = conradPath + "/src/"
+            s = "-Djava.class.path=" + conradloc
 
-        libloc = conradPath + "/lib/"
-        ll = os.listdir(libloc)
-        for i in ll:
-            if ".jar" in i:
-                s = s + ";" + libloc + i
+            os.chdir('..')
+            os.chdir("CONRADRSL")
+            conradRSLPath = os.path.dirname(os.getcwd()) + '/CONRADRSL'
+            conradRSLPath = conradRSLPath.replace('\\', '/')
+            conradRSLloc = conradRSLPath + "/src/"
+            s = s + ';' + conradRSLloc
+            
+            libloc = conradPath + "/lib/"
+            ll = os.listdir(libloc)
+            for i in ll:
+                if ".jar" in i:
+                    s = s + ";" + libloc + i
+        
+        elif "CONRAD" in directories:
+            os.chdir("CONRAD")
+            conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
+            conradPath = conradPath.replace('\\', '/')
+            conradloc = conradPath + "/src/"
+            s = "-Djava.class.path=" + conradloc
+            
+            libloc = conradPath + "/lib/"
+            ll = os.listdir(libloc)
+            for i in ll:
+                if ".jar" in i:
+                    s = s + ";" + libloc + i
+            s = s + ";" + libloc + i
+        
+        else:
+            s = "-Djava.class.path=pyCONRAD/lib/conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G"
 
+                
         # Unix-like systems use : instead of ; to separate classpaths
         if os.name != 'nt':  # Windows
             s = s.replace(';',':')

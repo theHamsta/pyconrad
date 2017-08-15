@@ -1,9 +1,8 @@
 from jpype import *
-import pyIJ
 import time
-import pyrad
+from setup import pyCONRAD as pyCONRAD
 
-conrad = pyrad.PyConrad()
+conrad = pyCONRAD.PyConrad()
 conrad.setup()
 conrad.startReconstructionFilterPipeline()
 

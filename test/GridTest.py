@@ -1,7 +1,7 @@
 #from jpype import *
-import pyrad
+from setup import pyCONRAD as pyCONRAD
 
-conrad = pyrad.getInstance()
+conrad = pyCONRAD.getInstance()
 conrad.setup()
 #conrad.startReconstructionFilterPipeline()
 conrad.startConrad()

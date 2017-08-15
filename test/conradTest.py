@@ -1,7 +1,7 @@
 from jpype import *
-import pyrad
+from setup import pyCONRAD as pyCONRAD
 
-conrad = pyrad.getInstance()
+conrad = pyCONRAD.getInstance()
 conrad.setup()
 conrad.startReconstructionFilterPipeline()
 #conrad.startConrad()
@@ -15,8 +15,8 @@ test = conrad.ij.ImagePlus(JString(imagePath))
 test.show()
 
 #Test for Singleton
-conradSecondInstance = pyrad.getInstance()
-conradThirdInstance = pyrad.PyConrad()
+conradSecondInstance = pyCONRAD.getInstance()
+conradThirdInstance = pyCONRAD.PyConrad()
 
 if conrad is conradSecondInstance is conradThirdInstance:
     print('Singleton test: passed')

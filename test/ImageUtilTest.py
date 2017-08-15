@@ -1,11 +1,11 @@
 #author Bastian Bier
 
-import pyrad
-from ImageUtils import ImageUtil
+from setup import pyCONRAD as pyCONRAD
+from utils.ImageUtils import ImageUtil
 import numpy as np
 from matplotlib import pyplot as plt
 
-conrad = pyrad.getInstance()
+conrad = pyCONRAD.getInstance()
 conrad.setup()
 #conrad.startReconstructionFilterPipeline()
 conrad.startConrad()

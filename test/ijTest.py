@@ -1,5 +1,5 @@
 from jpype import *
-import pyIJ
+from setup import pyIJ as pyIJ
 import time
 
 ij = pyIJ.PyIJ()
