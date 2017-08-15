@@ -125,5 +125,5 @@ class PyConrad:
         if os.name == 'nt':  # Windows
             s = s.replace('/','\\')
         else:
-	            s = s.replace(';',':')
+            s = s.replace(';',':')
         return s
