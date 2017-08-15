@@ -67,8 +67,7 @@ try:
     sinogram = conrad.classes.stanford.rsl.conrad.data.numeric.Grid2D
     if fanBeamGeometry is False:
         radon = conrad.classes.stanford.rsl.science.bier.flatPanel.Radon()
-        #sinogram = radon.calculateSinogram(phantom,projections_p,detectorSpacing,detectorRows,scanRange_p)
-        sinogram = radon.calculateSinogram(JClass('edu.stanford.rsl.science.bier.flatPanel.myPhantom')(phantom), JInt(projections_p), JDouble(detectorSpacing), JInt(detectorRows),JDouble(scanRange_p))
+        sinogram = radon.calculateSinogram(phantom, JInt(projections_p), JDouble(detectorSpacing), JInt(detectorRows), JDouble(scanRange_p))
     else:
         fbp = conrad.classes.stanford.rsl.science.bier.flatPanel.FanBeamProjector(detectorSpacing, 512, angularIncrement_f, projections_f, d_si, d_sd)
         sinogram = fbp.calculateFanOgram(phantom)
