@@ -36,7 +36,7 @@ class PyConrad:
         if not self.isJavaInitalized():
             try:
                 conradSourceAndLibs = self.__importLibs__()#TODO: Either (TODO:)load conrad.1.x.x.jar or if not available the (Finished:) CONRAD git from relative path
-                startJVM(getDefaultJVMPath(), "-ea", conradSourceAndLibs)
+                startJVM(getDefaultJVMPath(), conradSourceAndLibs)
                 print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
