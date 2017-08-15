@@ -122,8 +122,6 @@ class PyConrad:
                 s = s + ";" + libloc + i
 
         # Unix-like systems use : instead of ; to separate classpaths
-        if os.name == 'nt':  # Windows
-            s = s.replace('/','\\')
-        else:
+        if os.name != 'nt':  # Windows
             s = s.replace(';',':')
         return s
