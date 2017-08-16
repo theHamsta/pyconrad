@@ -2,6 +2,7 @@ from jpype import *
 import threading
 import time
 import os
+import pyconrad.window_listener as wl
 
 conradPath = 'CONRAD/src'
 libPath = 'CONRAD/lib'
@@ -69,35 +70,32 @@ class PyConrad:
         return self.javaInitalized
 
     def stopGui(self):
-        self.ij.WindowManager.closeAllWindows()
-        self.ijInstance.quit()
+        java.lang.System.exit(0)
         self.isGuiStarted = False
-
 
     def __startRPFGUI___(self):
         attachThreadToJVM()
         self.guiInstance = JPackage("edu").stanford.rsl.apps.gui
-        self.guiInstance.ReconstructionPipelineFrame.main(JArray(JString)(''))
+        listener = wl.WindowListener()
+        proxy = JProxy("java.awt.event.WindowListener", inst=listener)
+        self.guiInstance.ReconstructionPipelineFrame
+        self.guiInstance.ReconstructionPipelineFrame.startConrad(proxy)
         self.isGuiStarted = True
         print('Gui started', self.guiInstance)
-        # detachThreadFromJVM()
+        #detachThreadFromJVM()
         while self.isGuiStarted:
-            if not self.ijInstance is None:#TODO: get ij Instance from ReconstructionPipelineFrame
-                if (self.ijInstance.quitting() == 1):
-                    self.stopGui()
             time.sleep(1)
 
     def __startIJGUI___(self):
         attachThreadToJVM()
         self.guiInstance = JPackage("edu").stanford.rsl.conrad.utils
-        self.guiInstance.CONRAD.setup()
+        listener = wl.WindowListener()
+        proxy = JProxy("java.awt.event.WindowListener", inst=listener)
+        self.guiInstance.CONRAD.setup(proxy)
         self.isGuiStarted = True
         print('Gui started', self.guiInstance)
         # detachThreadFromJVM()
         while self.isGuiStarted:
-            if not self.ijInstance is None:  # TODO: get ij Instance from CONRAD
-                if (self.ijInstance.quitting() == 1):
-                    self.stopGui()
             time.sleep(1)
 
     def __importLibs__(self):
