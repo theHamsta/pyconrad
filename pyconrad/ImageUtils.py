@@ -1,7 +1,7 @@
 # author Bastian Bier
 
 import numpy as np
-from setup import pyCONRAD as pyCONRAD
+from . import pyCONRAD
 from jpype import  *
 from PIL import Image
 from matplotlib import pyplot as plt
