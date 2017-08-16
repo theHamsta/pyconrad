@@ -104,6 +104,7 @@ class PyConrad:
         # check whether CONRAD + RSL can be found nearby
         # yes: navigate there
         # no: use conrad.jar
+        currDirectory = os.getcwd();
         s = ""
         os.chdir('..')
         os.chdir('..')
@@ -153,6 +154,8 @@ class PyConrad:
         if os.name != 'nt':  # Windows
             s = s.replace(';',':')
 
+        os.chdir(currDirectory)
+        
         return s
 
     def terminate(self):

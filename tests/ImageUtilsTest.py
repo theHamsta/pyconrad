@@ -76,7 +76,7 @@ grid2.show("Test Grid2D")
 grid3 = packagePhantom.Sphere3D(w,h,d)
 grid3.setSubGrid(0, grid2)
 grid3.show("Test Grid3D")
-ImageUtil.saveGridAsTiff(grid3,"bsadf.tif")
+ImageUtil.saveGrid3DAsTiff(grid3,"bsadf.tif")
 
 plt.ion()
 outputArray2 = ImageUtil.wrapGrid2D(grid2)
@@ -91,7 +91,7 @@ plt.imshow(outputArray3[0,...], interpolation='nearest')
 plt.title("Array 3D")
 plt.draw()
 plt.pause(0.001)
-ImageUtil.saveArrayAsTiff(outputArray3,"bsadfARRAY.tif")
+ImageUtil.saveArray3DAsTiff(outputArray3,"bsadfARRAY.tif")
 
 
 outputGrid2 = ImageUtil.wrapNumpyArrayToGrid2D(outputArray2)
@@ -99,6 +99,15 @@ outputGrid2.show("outputGrid2D")
 
 outputGrid3 = ImageUtil.wrapNumpyArrayToGrid3D(outputArray3)
 outputGrid3.show("outputGrid3D")
+
+#loadedGrid = ImageUtil.loadGrid3DfromTif("C:\\StanfordRepo\\CONRADRSL\\bsadf.tif")
+#loadedGrid.show("Loaded Grid")
+
+#loadedArray = ImageUtil.loadArray3DfromTif("C:\\StanfordRepo\\CONRADRSL\\bsadf.tif")
+#loadedGrid.show("Loaded Grid")
+
+#loadedGrid2 = ImageUtil.loadGrid2DfromTif("C:\\StanfordRepo\\CONRADRSL\\bsadf0000.tif")
+#loadedGrid2.show("Loaded Grid2D")
 
 print("End")
 
