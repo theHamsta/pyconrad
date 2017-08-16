@@ -82,7 +82,7 @@ class PyConrad:
         self.guiInstance.ReconstructionPipelineFrame.startConrad(proxy)
         self.isGuiStarted = True
         print('Gui started', self.guiInstance)
-        #detachThreadFromJVM()
+        detachThreadFromJVM()
         while self.isGuiStarted:
             time.sleep(1)
 
@@ -94,7 +94,7 @@ class PyConrad:
         self.guiInstance.CONRAD.setup(proxy)
         self.isGuiStarted = True
         print('Gui started', self.guiInstance)
-        # detachThreadFromJVM()
+        detachThreadFromJVM()
         while self.isGuiStarted:
             time.sleep(1)
 
