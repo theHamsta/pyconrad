@@ -80,23 +80,28 @@ class ImageUtil:
             grid.setSubGrid(id, subgrid)
         return grid
 
-    #################
+       #################
     ## Save Images ##
     #################
     
     @staticmethod
-    def saveGridAsTiff(grid, path):
+    def saveGrid3DAsTiff(grid, path):
         pyCONRAD.getInstance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
-        print("To be implemented")
     
     @staticmethod
-    def saveArrayAsTiff(array, path):
-        dim = array.shape
-        if(len(dim) == 3):
-            grid = ImageUtil.wrapNumpyArrayToGrid3D(array)
-            ImageUtil.saveGridAsTiff(grid, path)
-        else:
-            print("Did not save, only available for 3D arrays")
+    def saveGrid2DAsTiff(grid, path):
+        tmp = pyCONRAD.getInstance().ij.IJ.ImagePlus("image", ImageUtil.wrapGrid2D(grid))
+        pyCONRAD.getInstance().ij.IJ.saveAsTiff(tmp, path)
+    
+    @staticmethod
+    def saveArray2DAsTiff(array, path):
+        grid = ImageUtil.wrapNumpyArrayToGrid2D(array)
+        ImageUtil.saveGri2DdAsTiff(grid, path)
+            
+    @staticmethod
+    def saveArray3DAsTiff(array, path):
+        grid = ImageUtil.wrapNumpyArrayToGrid3D(array)
+        ImageUtil.saveGrid3DAsTiff(grid, path)
             
      #################
      ## Load Images ##
@@ -104,7 +109,22 @@ class ImageUtil:
     
     @staticmethod
     def loadGrid2DfromTif(path):
-        print("Nothing loaded: to be implemented")
+        grid2D = pyCONRAD.getInstance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(pyCONRAD.getInstance().ij.IJ.openImage(path))
+        return grid2D
+    
     @staticmethod 
     def loadGrid3DfromTif(path):
-        print("Nothing Loaded: to be implemented")    
+        grid3D = pyCONRAD.getInstance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(pyCONRAD.getInstance().ij.IJ.openImage(path)) 
+        return grid3D 
+    
+    @staticmethod 
+    def loadArray2DfromTif(path):
+        grid2D = pyCONRAD.getInstance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(pyCONRAD.getInstance().ij.IJ.openImage(path))
+        array2D = ImageUtil.wrapGrid2D(grid2D)
+        return array2D
+    
+    @staticmethod 
+    def loadArray3DfromTif(path):
+        grid3D = pyCONRAD.getInstance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(pyCONRAD.getInstance().ij.IJ.openImage(path))
+        array3D = ImageUtil.wrapGrid3D(grid3D)
+        return array3D 
