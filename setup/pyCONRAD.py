@@ -32,11 +32,11 @@ class PyConrad:
                 cls, *args, **kwargs)
         return cls._instance
 
-    def setup(self):
+    def setup(self, max_ram = '8G', min_ram = '7G'):
         if not self.isJavaInitalized():
             try:
                 conradSourceAndLibs = self.__importLibs__()#TODO: Either (TODO:)load conrad.1.x.x.jar or if not available the (Finished:) CONRAD git from relative path
-                startJVM(getDefaultJVMPath(), conradSourceAndLibs)
+                startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn7G" % min_ram )
                 print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
@@ -122,7 +122,7 @@ class PyConrad:
             conradRSLPath = conradRSLPath.replace('\\', '/')
             conradRSLloc = conradRSLPath + "/src/"
             s = s + ';' + conradRSLloc
-            
+
             libloc = conradPath + "/lib/"
             ll = os.listdir(libloc)
             for i in ll:
@@ -138,21 +138,21 @@ class PyConrad:
             conradPath = conradPath.replace('\\', '/')
             conradloc = conradPath + "/src/"
             s = "-Djava.class.path=" + conradloc
-            
+
             libloc = conradPath + "/lib/"
             ll = os.listdir(libloc)
             for i in ll:
                 if ".jar" in i:
                     s = s + ";" + libloc + i
             s = s + ";" + libloc + i
-            # Unix-like systems use : instead of ; to separate classpaths
-            if os.name != 'nt':  # Windows
-                s = s.replace(';',':')
-        
-        else:
-            s = "-Djava.class.path=pyCONRAD/lib/conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G"
 
-                
+        else:
+            s = "-Djava.class.path=pyCONRAD/lib/conrad_1.0.6.jar"
+
+        # Unix-like systems use : instead of ; to separate classpaths
+        if os.name != 'nt':  # Windows
+            s = s.replace(';',':')
+
         return s
 
     def terminate(self):
