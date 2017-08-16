@@ -128,7 +128,10 @@ class PyConrad:
             for i in ll:
                 if ".jar" in i:
                     s = s + ";" + libloc + i
-        
+            # Unix-like systems use : instead of ; to separate classpaths
+            if os.name != 'nt':  # Windows
+                s = s.replace(';',':')
+
         elif "CONRAD" in directories:
             os.chdir("CONRAD")
             conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
@@ -142,12 +145,15 @@ class PyConrad:
                 if ".jar" in i:
                     s = s + ";" + libloc + i
             s = s + ";" + libloc + i
+            # Unix-like systems use : instead of ; to separate classpaths
+            if os.name != 'nt':  # Windows
+                s = s.replace(';',':')
         
         else:
             s = "-Djava.class.path=pyCONRAD/lib/conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G"
 
                 
-        # Unix-like systems use : instead of ; to separate classpaths
-        if os.name != 'nt':  # Windows
-            s = s.replace(';',':')
         return s
+
+    def terminate(self):
+        shutdownJVM()
