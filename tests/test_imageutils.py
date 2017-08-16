@@ -1,7 +1,7 @@
 #author Bastian Bier
 
-from setup import pyCONRAD as pyCONRAD
-from utils.ImageUtils import ImageUtil
+from pyconrad import pyCONRAD
+from pyconrad.ImageUtils import ImageUtil
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -30,42 +30,6 @@ w = 500
 h = 300
 d = 3
 
-try:
-    numpyIn = np.random.rand(543)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid1D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid1D(grid1)
-    assert np.allclose(numpyIn,
-                        numpyOut)
-    print("Test Grid1D passed")
-except Exception as ex:
-    print("Test Grid1D failed with exception:",ex)
-
-try:
-    numpyIn = np.random.rand(44,543)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid2D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid2D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
-    print("Test Grid2D passed")
-except Exception as ex:
-    print("Test Grid2D failed with exception:",ex)
-
-try:
-    numpyIn = np.random.rand(6,57,42)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid3D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid3D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
-    print("Test Grid3D passed")
-except Exception as ex:
-    print("Test Grid3D failed with exception:",ex)
-
-try:
-    numpyIn = np.random.rand(7, 6,57,42)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid4D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid4D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
-    print("Test Grid4D passed")
-except Exception as ex:
-    print("Test Grid4D failed with exception:",ex)
 
 grid2 = packagePhantom.MickeyMouseGrid2D(w,h)
 print(grid2)
@@ -101,3 +65,27 @@ outputGrid3 = ImageUtil.wrapNumpyArrayToGrid3D(outputArray3)
 outputGrid3.show("outputGrid3D")
 
 print("End")
+
+def test_grid1d():
+    numpyIn = np.random.rand(543)
+    grid1 = ImageUtil.wrapNumpyArrayToGrid1D(numpyIn.astype(float))
+    numpyOut = ImageUtil.wrapGrid1D(grid1)
+    assert np.allclose(numpyIn, numpyOut)
+
+def test_grid2d():
+    numpyIn = np.random.rand(44,543)
+    grid1 = ImageUtil.wrapNumpyArrayToGrid2D(numpyIn.astype(float))
+    numpyOut = ImageUtil.wrapGrid2D(grid1)
+    assert np.allclose(numpyIn, numpyOut)
+
+def test_grid3d():
+    numpyIn = np.random.rand(6,57,42)
+    grid1 = ImageUtil.wrapNumpyArrayToGrid3D(numpyIn.astype(float))
+    numpyOut = ImageUtil.wrapGrid3D(grid1)
+    assert np.allclose(numpyIn, numpyOut)
+
+def test_grid4():
+    numpyIn = np.random.rand(7, 6,57,42)
+    grid1 = ImageUtil.wrapNumpyArrayToGrid4D(numpyIn.astype(float))
+    numpyOut = ImageUtil.wrapGrid4D(grid1)
+    assert np.allclose(numpyIn, numpyOut)
