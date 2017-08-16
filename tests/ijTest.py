@@ -1,6 +1,6 @@
 
 from jpype import *
-from setup import pyIJ as pyIJ
+from pyconrad import pyIJ
 import time
 
 ij = pyIJ.PyIJ()
