@@ -4,6 +4,7 @@ import time
 import os
 import pyconrad.window_listener as wl
 from . import __download_conrad as downloadconrad
+from pathlib import Path
 
 conradPath = 'CONRAD/src'
 libPath = 'CONRAD/lib'
@@ -19,6 +20,9 @@ class PyConrad:
 
     classes = None
     ij = None
+
+    conrad_repo_set = None
+    conrad_repo_path = None
 
     javaInitalized = None
     isGuiStarted = None
@@ -41,11 +45,11 @@ class PyConrad:
     def setup(self, max_ram = '8G', min_ram = '7G', devdir = ['']):
         if not self.isJavaInitalized():
             try:
-                conradSourceAndLibs = self.__importLibs__()
                 currDirectory = os.getcwd();
-                os.chdir(self.__libDir)
+                conradSourceAndLibs = self.__importLibs__(devdir)
+                os.chdir(self.conrad_repo_path)
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
-                os.chdir(self.__modulDir)
+                #os.chdir(self.__modulDir)
                 os.chdir(currDirectory)
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
@@ -108,56 +112,35 @@ class PyConrad:
         while self.isGuiStarted:
             time.sleep(1)
 
-    def __importLibs__(self):
+    def __importLibs__(self,devdir):
         # check whether CONRAD + RSL can be found nearby
         # yes: navigate there
         # no: use conrad.jar
+        self.conrad_repo_set = False
         s = ""
         self.__modulDir = os.path.dirname(__file__)
         os.chdir(self.__modulDir)
         os.chdir('..')
         os.chdir('..')
-        # list directories, check whether CONRAD/RSL are there
-        directories = os.listdir()
-        # if "CONRAD" in directories and "CONRADRSL" in directories:
-        #     os.chdir("CONRAD")
-        #     conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
-        #     conradPath = conradPath.replace('\\', '/')
-        #     conradloc = conradPath + "/src/"
-        #     s = "-Djava.class.path=" + conradloc
-        #
-        #     os.chdir('..')
-        #     os.chdir("CONRADRSL")
-        #     conradRSLPath = os.path.dirname(os.getcwd()) + '/CONRADRSL'
-        #     conradRSLPath = conradRSLPath.replace('\\', '/')
-        #     conradRSLloc = conradRSLPath + "/src/"
-        #     s = s + ';' + conradRSLloc
-        #
-        #     libloc = conradPath + "/lib/"
-        #     ll = os.listdir(libloc)
-        #     for i in ll:
-        #         if ".jar" in i:
-        #             s = s + ";" + libloc + i
-        #     # Unix-like systems use : instead of ; to separate classpaths
-        #     if os.name != 'nt':  # Windows
-        #         s = s.replace(';',':')
-        #
-        # elif "CONRAD" in directories:
-        #     os.chdir("CONRAD")
-        #     conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
-        #     conradPath = conradPath.replace('\\', '/')
-        #     conradloc = conradPath + "/src/"
-        #     s = "-Djava.class.path=" + conradloc
-        #
-        #     libloc = conradPath + "/lib/"
-        #     ll = os.listdir(libloc)
-        #     for i in ll:
-        #         if ".jar" in i:
-        #             s = s + ";" + libloc + i
-        #     s = s + ";" + libloc + i
-        #
-        # else:
-        if True: # TODO:
+        extra_libs=''
+        dev_src = []
+        for dev in devdir:
+            dev_path = Path(dev)
+            dev_src.append(dev_path.joinpath('src'))
+            if dev_path.match("CONRAD"):
+                self.conrad_repo_path = dev_path
+                self.conrad_repo_set = True
+                dev_lib = dev_path.joinpath('lib')
+                dev_classes = dev_path.joinpath('classes', 'production', 'CONRAD')
+                os.chdir(dev_path)
+                extra_libs = (dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if '.jar' == fn.suffix)
+                extra_libs = ';'.join(map(str, [dev_classes, *extra_libs]))
+
+        src = ';'.join(map(str,dev_src))
+
+        if self.conrad_repo_set:
+            return f'-Djava.class.path={src};{extra_libs}'
+        else:
             conrad_jar = downloadconrad.conrad_jar_fullpath()
             if not os.path.isfile(conrad_jar):
                 downloadconrad.download_conrad()
@@ -178,7 +161,7 @@ class PyConrad:
         if os.name != 'nt':  # Windows
             s = s.replace(';',':')
 
-        os.chdir(currDirectory)
+        os.chdir(self.__currDirectory)
         
         return s
 
