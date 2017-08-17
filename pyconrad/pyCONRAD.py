@@ -36,9 +36,8 @@ class PyConrad:
     def setup(self, max_ram = '8G', min_ram = '7G'):
         if not self.isJavaInitalized():
             try:
-                conradSourceAndLibs = self.__importLibs__()#TODO: Either (TODO:)load conrad.1.x.x.jar or if not available the (Finished:) CONRAD git from relative path
+                conradSourceAndLibs = self.__importLibs__()
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
-                print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
 
@@ -103,7 +102,9 @@ class PyConrad:
         # yes: navigate there
         # no: use conrad.jar
         currDirectory = os.getcwd();
+
         s = ""
+        os.chdir(os.path.dirname(__file__))
         os.chdir('..')
         os.chdir('..')
         # list directories, check whether CONRAD/RSL are there
