@@ -47,7 +47,10 @@ class PyConrad:
             try:
                 currDirectory = os.getcwd();
                 conradSourceAndLibs = self.__importLibs__(devdir)
-                os.chdir(self.conrad_repo_path)
+                if self.conrad_repo_path is not None:
+                    os.chdir(self.conrad_repo_path)
+                else:
+                    os.chdir(self.__libDir)
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
                 #os.chdir(self.__modulDir)
                 os.chdir(currDirectory)
@@ -139,7 +142,7 @@ class PyConrad:
         src = ';'.join(map(str,dev_src))
 
         if self.conrad_repo_set:
-            return f'-Djava.class.path={src};{extra_libs}'
+            s = f'-Djava.class.path={src};{extra_libs}'
         else:
             conrad_jar = downloadconrad.conrad_jar_fullpath()
             if not os.path.isfile(conrad_jar):
@@ -147,22 +150,15 @@ class PyConrad:
             if not os.path.isfile(conrad_jar):
                 raise Exception('Could not find %s' % conrad_jar)
 
+            dev_src.append(conrad_jar)
+            src = ';'.join(map(str, dev_src))
             self.__libDir = downloadconrad.conrad_jar_dir()
-            s = "-Djava.class.path=%s" % conrad_jar
-
-            plugloc = self.__libDir + "/plugins/"
-            ll = os.listdir(plugloc)
-            for i in ll:
-                if ".jar" in i:
-                    s = s + ";" + plugloc + i
-            s = s + ";" + plugloc + i
+            s = f'-Djava.class.path={src};{extra_libs}'
 
         #Unix-like systems use : instead of ; to separate classpaths
         if os.name != 'nt':  # Windows
             s = s.replace(';',':')
 
-        os.chdir(self.__currDirectory)
-        
         return s
 
     def terminate(self):
