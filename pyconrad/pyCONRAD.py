@@ -38,7 +38,6 @@ class PyConrad:
             try:
                 conradSourceAndLibs = self.__importLibs__()
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
-                print("JVM Started(main): ", isJVMStarted())
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
 
