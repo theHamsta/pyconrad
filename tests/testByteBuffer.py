@@ -8,6 +8,9 @@ from pyconrad.ImageUtils import ImageUtil
 import struct
 
 ## Grid2D.java should have the following method
+#
+# import java.nio.*;
+##
 # public static Grid2D createGrid2D(ByteBuffer b, int width, int height ) {
 #     float[] fArray = new float[width * height];
 #     b.asFloatBuffer().get(fArray);
