@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 conrad = pyCONRAD.getInstance()
 conrad.setup('8G', '1G')
 #conrad.startReconstructionFilterPipeline()
-conrad.startConrad()
+# conrad.startConrad()
 
 package = conrad.classes.stanford.rsl.conrad.data.numeric
 packagePhantom = conrad.classes.stanford.rsl.tutorial.phantoms

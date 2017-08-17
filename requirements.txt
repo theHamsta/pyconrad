@@ -1,4 +1,4 @@
 # Add your requirements here like:
 numpy
 jpype1
-https://www5.cs.fau.de/fileadmin/user_upload/CONRAD_1.0.7.zip
+urllib

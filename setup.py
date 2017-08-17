@@ -11,6 +11,10 @@
 import sys
 from setuptools import setup
 
+if sys.argv[1] == 'install':
+
+
+
 
 def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
