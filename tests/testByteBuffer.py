@@ -15,6 +15,7 @@ import struct
 #     float[] fArray = new float[width * height];
 #     b.asFloatBuffer().get(fArray);
 #     return new Grid2D(fArray, width, height);
+##     b.asFloatBuffer().array() does not work since b is not mapped onto a float array
 # }
 
 
