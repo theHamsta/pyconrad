@@ -2,3 +2,4 @@
 numpy
 jpype1
 urllib
+zipfile
