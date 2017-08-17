@@ -21,7 +21,7 @@ class ImageUtil:
 
     @staticmethod
     def wrapGrid1D(grid1D):
-        array = np.asarray(grid1D.getBuffer())
+        array = np.array(grid1D.getBuffer()[:])
         return array
     
     @staticmethod
