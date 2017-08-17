@@ -25,11 +25,10 @@ def floatToBits(f):
 
 
 jvm = PyConrad()
-jvm.setup()
+jvm.setup('8G','500M')
 
 numpyIn = np.ones([2, 23], np.float32)
 # grid1 =ImageUtil.wrapNumpyArrayToGrid2D(numpyIn)
-
 
 jByteBuffer = nio.convertToDirectBuffer(numpyIn.data)
 grid = jvm.classes.stanford.rsl.conrad.data.numeric.Grid2D.createGrid2D(jByteBuffer, numpyIn.shape[1], numpyIn.shape[0])

@@ -3,17 +3,10 @@ pyConrad
 ========
 
 
-Add a short description here!
+A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
+========
+CONRAD
+========
 
-Description
-===========
-
-A longer description of your project goes here...
-
-
-Note
-====
-
-This project has been set up using PyScaffold 2.5.7.post0.dev6+ngcef9d7f. For details and usage
-information on PyScaffold see http://pyscaffold.readthedocs.org/.
+CONRAD is a state-of-the-art software platform with extensive documentation. It is based on platform-independent technologies. Special libraries offer access to hardware acceleration such as CUDA and OpenCL. There is an easy interface for parallel processing. The software package includes different simulation tools that are able to generate 4-D projection and volume data and respective vector motion fields. Well known reconstruction algorithms such as FBP, DBP, and ART are included. All algorithms in the package are referenced to a scientific source. Please visit http://conrad.stanford.edu for more information.
