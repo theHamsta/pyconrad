@@ -103,7 +103,9 @@ class PyConrad:
         # yes: navigate there
         # no: use conrad.jar
         currDirectory = os.getcwd();
+
         s = ""
+        os.chdir(os.path.dirname(__file__))
         os.chdir('..')
         os.chdir('..')
         # list directories, check whether CONRAD/RSL are there
