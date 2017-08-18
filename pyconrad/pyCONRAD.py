@@ -57,7 +57,7 @@ class PyConrad:
         if self.__gui_thread is None:
             self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
             self.__gui_thread.start()
-            while not self.isGuiStarted:
+            while not self.__is_gui_started:
                 time.sleep(1)
         else:
             print("Some GUI is already started")
@@ -76,7 +76,7 @@ class PyConrad:
 
     def __stop_gui(self):
         java.lang.System.exit(0)
-        self.isGuiStarted = False
+        self.__is_gui_started = False
 
     def __start_rfp_gui(self):
         attachThreadToJVM()

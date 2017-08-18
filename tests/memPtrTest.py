@@ -1,13 +1,13 @@
-from pyconrad import pyCONRAD as pyC
+from pyconrad import PyConrad
 import numpy as np
 import jpype as jp
 from jpype import nio as nio
 import psutil
 import time
 
-conrad = pyC.getInstance()
+conrad = PyConrad.get_instance()
 conrad.setup()
-conrad.startConrad()
+conrad.start_conrad()
 
 w = 9999
 h = 9999

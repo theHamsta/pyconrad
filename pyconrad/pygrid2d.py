@@ -1,5 +1,5 @@
 import numpy as np
-from . import PyConrad
+from .pyCONRAD import PyConrad
 import jpype
 
 
