@@ -1,4 +1,4 @@
-import pyconrad as pr
+from . import pyCONRAD
 import jpype.awt.event.WindowAdapter as wa
 
 class WindowListener(wa):
@@ -28,4 +28,4 @@ class WindowListener(wa):
         pass
 
     def windowClosing(self, e):
-        pr.pyCONRAD.getInstance().stopGui()
+        pyCONRAD.getInstance().__stop_gui()
