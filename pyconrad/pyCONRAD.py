@@ -31,7 +31,7 @@ class PyConrad:
 
 
     @staticmethod
-    def getInstance():
+    def get_instance():
         if PyConrad.___instance is None:
             PyConrad.___instance = PyConrad()
         return PyConrad.___instance
