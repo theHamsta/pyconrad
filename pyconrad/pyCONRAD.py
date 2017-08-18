@@ -8,6 +8,7 @@ import pyconrad_java
 conradPath = 'CONRAD/src'
 libPath = 'CONRAD/lib'
 
+module_path = os.path.dirname(__file__)
 
 
 def getInstance():
@@ -32,8 +33,6 @@ class PyConrad:
     guiThread = None
     _instance = None
 
-    __modulDir = None
-    __libDir = None
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
@@ -48,7 +47,6 @@ class PyConrad:
                 conradSourceAndLibs = self.__importLibs__(dev_dirs)
                 os.chdir(pyconrad_java.conrad_jar_dir)
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
-
                 os.chdir(currDirectory)
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
@@ -58,8 +56,6 @@ class PyConrad:
             self.javaInitalized = True
         else:
             print("JVM already started")
-
-
 
     def startConrad(self):
         if self.guiThread is None:
@@ -116,56 +112,31 @@ class PyConrad:
         # yes: navigate there
         # no: use conrad.jar
         # list directories, check whether CONRAD/RSL are there
-        directories = os.listdir()
-        # if "CONRAD" in directories and "CONRADRSL" in directories:
-        #     os.chdir("CONRAD")
-        #     conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
-        #     conradPath = conradPath.replace('\\', '/')
-        #     conradloc = conradPath + "/src/"
-        #     s = "-Djava.class.path=" + conradloc
-        #
-        #     os.chdir('..')
-        #     os.chdir("CONRADRSL")
-        #     conradRSLPath = os.path.dirname(os.getcwd()) + '/CONRADRSL'
-        #     conradRSLPath = conradRSLPath.replace('\\', '/')
-        #     conradRSLloc = conradRSLPath + "/src/"
-        #     s = s + ';' + conradRSLloc
-        #
-        #     libloc = conradPath + "/lib/"
-        #     ll = os.listdir(libloc)
-        #     for i in ll:
-        #         if ".jar" in i:
-        #             s = s + ";" + libloc + i
-        #     # Unix-like systems use : instead of ; to separate classpaths
-        #     if os.name != 'nt':  # Windows
-        #         s = s.replace(';',':')
-        #
-        # elif "CONRAD" in directories:
-        #     os.chdir("CONRAD")
-        #     conradPath = os.path.dirname(os.getcwd()) + '/CONRAD'
-        #     conradPath = conradPath.replace('\\', '/')
-        #     conradloc = conradPath + "/src/"
-        #     s = "-Djava.class.path=" + conradloc
-        #
-        #     libloc = conradPath + "/lib/"
-        #     ll = os.listdir(libloc)
-        #     for i in ll:
-        #         if ".jar" in i:
-        #             s = s + ";" + libloc + i
-        #     s = s + ";" + libloc + i
-        #
-        # else:
-        if True: # TODO:
 
-            s = "-Djava.class.path=%s" % pyconrad_java.conrad_jar_path
+        conrad_dev_dir = module_path + "/../../CONRAD/src"
+        conrad_dev_libdir = module_path + "/../../CONRAD/lib"
+        conrad_dev_plugindir = module_path + "/../../CONRAD/plugins"
+        conradrsl_dev_dir = module_path + "/../../CONRADRSL/src"
+
+        s = "-Djava.class.path="
+        if os.path.exists(conrad_dev_dir):
+            dev_dirs.append(conrad_dev_dir)
+            dev_dirs.append(conrad_dev_libdir)
+            dev_dirs.append(conrad_dev_plugindir)
+            if os.path.exists(conradrsl_dev_dir):
+                dev_dirs.append(conradrsl_dev_dir)
+
+        else:
+            s += pyconrad_java.conrad_jar_path
             dev_dirs.append(pyconrad_java.conrad_jar_dir + "/plugins")
 
-            for dir in dev_dirs:
-                ll = os.listdir(dir)
-                for i in ll:
-                    if ".jar" in i:
-                        s = s + ";" + dir + i
-                s = s + ";" + dir
+
+        for dir in dev_dirs:
+            ll = os.listdir(dir)
+            for i in ll:
+                if ".jar" in i:
+                    s = s + ";" + dir + i
+            s = s + ";" + dir
 
         #Unix-like systems use : instead of ; to separate classpaths
         if os.name != 'nt':  # Windows
