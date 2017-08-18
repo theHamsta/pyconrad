@@ -1,9 +1,8 @@
 from jpype import *
-from pyconrad import pyCONRAD
-import pyconrad as pyC
+from pyconrad import PyConrad
 
 # def test_conrad():
-conrad = pyC.PyConrad.get_instance()
+conrad = PyConrad.get_instance()
 #conrad.setup('8G', '1G',devdir=["C:\\Reconstruction\\CONRAD","C:\\Reconstruction\\CONRADRSL"])
 conrad.setup('8G', '1G',dev_dirs=["C:\\Reconstruction\\CONRADRSL"])
 #conrad.setup('8G', '1G')
@@ -20,8 +19,8 @@ test = conrad.ij.ImagePlus(JString(imagePath))
 test.show()
 
 #Test for Singleton
-conradSecondInstance = pyC.PyConrad.get_instance()
-conradThirdInstance = pyCONRAD.PyConrad()
+conradSecondInstance = PyConrad.get_instance()
+conradThirdInstance = PyConrad()
 
 if conrad is conradSecondInstance is conradThirdInstance:
     print('Singleton test: passed')

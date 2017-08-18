@@ -1,16 +1,15 @@
-from pyconrad import pyCONRAD
-from pyconrad.ImageUtils import ImageUtil
+from pyconrad import PyConrad, ImageUtil
 import numpy as np
-from matplotlib import pyplot as plt
 
-conrad = pyCONRAD.getInstance()
-conrad.setup('8G', '1G')
 
 def test_grid1d():
+    conrad = PyConrad.get_instance()
+    conrad.setup('8G', '1G')
     numpyIn = np.random.rand(543)
     grid1 = ImageUtil.wrapNumpyArrayToGrid1D(numpyIn.astype(float))
     numpyOut = ImageUtil.wrapGrid1D(grid1)
     assert np.allclose(numpyIn, numpyOut)
+    conrad.terminate()
 
 def test_grid2d():
     numpyIn = np.random.rand(44,543)

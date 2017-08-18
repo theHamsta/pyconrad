@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .ImageUtils import ImageUtil
-from .pygrid2d import PyGrid2D
-from .pyCONRAD import PyConrad
+from ._imageutils import ImageUtil
+from ._pygrid2d import PyGrid2D
+from ._pyconrad import PyConrad

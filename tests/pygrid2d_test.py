@@ -1,7 +1,7 @@
 from pyconrad import PyGrid2D, PyConrad, ImageUtil
 import numpy as np
 
-PyConrad.get_instance().setup()
+PyConrad.get_instance().setup(min_ram='400M')
 
 phantom_package = PyConrad.get_instance().classes.stanford.rsl.tutorial.phantoms
 shape = [230, 330]

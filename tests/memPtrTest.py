@@ -6,7 +6,7 @@ import psutil
 import time
 
 conrad = PyConrad.get_instance()
-conrad.setup()
+conrad.setup(min_ram = '300M')
 conrad.start_conrad()
 
 w = 9999

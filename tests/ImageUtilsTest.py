@@ -5,7 +5,7 @@ from pyconrad.ImageUtils import ImageUtil
 import numpy as np
 from matplotlib import pyplot as plt
 
-conrad = pyCONRAD.getInstance()
+conrad = pyCONRAD.get_instance()
 conrad.setup('8G', '1G')
 #conrad.startReconstructionFilterPipeline()
 # conrad.startConrad()

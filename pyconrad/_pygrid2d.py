@@ -1,6 +1,6 @@
 import numpy as np
-from .pyCONRAD import PyConrad
 import jpype
+from ._pyconrad import PyConrad
 
 
 float_dtype = np.dtype(">f4")

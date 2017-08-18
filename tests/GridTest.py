@@ -1,10 +1,10 @@
 #from jpype import *
-from pyconrad import pyCONRAD
+from pyconrad import PyConrad
 
-conrad = pyCONRAD.getInstance()
+conrad = PyConrad().get_instance()
 conrad.setup('8G','1G')
 #conrad.startReconstructionFilterPipeline()
-conrad.startConrad()
+conrad.start_conrad()
 
 grid = conrad.classes.stanford.rsl.conrad.data.numeric.Grid2D(30,30)
 grid.show("Grid2D Python")
