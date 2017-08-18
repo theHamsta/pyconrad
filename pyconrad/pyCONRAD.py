@@ -1,4 +1,5 @@
-from jpype import *
+from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
+from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy
 import threading
 import time
 import os
