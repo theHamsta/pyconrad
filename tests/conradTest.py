@@ -1,12 +1,14 @@
 from jpype import *
 from pyconrad import pyCONRAD
+import pyconrad as pyC
 
 # def test_conrad():
-conrad = pyCONRAD.getInstance()
+conrad = pyC.PyConrad.get_instance()
 #conrad.setup('8G', '1G',devdir=["C:\\Reconstruction\\CONRAD","C:\\Reconstruction\\CONRADRSL"])
-conrad.setup('8G', '1G',devdir=["C:\\Reconstruction\\CONRADRSL"])
+conrad.setup('8G', '1G',dev_dirs=["C:\\Reconstruction\\CONRADRSL"])
 #conrad.setup('8G', '1G')
-conrad.startReconstructionFilterPipeline()
+#conrad.setup('8G', '1G')
+conrad.start_reconstruction_filter_pipeline()
 #conrad.startConrad()
 
 
@@ -18,7 +20,7 @@ test = conrad.ij.ImagePlus(JString(imagePath))
 test.show()
 
 #Test for Singleton
-conradSecondInstance = pyCONRAD.getInstance()
+conradSecondInstance = pyC.PyConrad.get_instance()
 conradThirdInstance = pyCONRAD.PyConrad()
 
 if conrad is conradSecondInstance is conradThirdInstance:
