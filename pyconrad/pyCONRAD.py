@@ -124,12 +124,13 @@ class PyConrad:
                 extra_libs = ';'.join(map(str, [dev_classes, *extra_libs]))
 
         if self.__conrad_repo_set:
-            s = f'-Djava.class.path={src};{extra_libs}'
+            src = ';'.join(map(str, dev_src))
+            s = '-Djava.class.path=%s;%s' % (src, extra_libs)
         else:
             self.__conrad_path = pyconrad_java.conrad_jar_dir
             dev_src.append(pyconrad_java.conrad_jar_path)
             src = ';'.join(map(str, dev_src))
-            s = f'-Djava.class.path={src};{extra_libs}'
+            s = '-Djava.class.path=%s;%s' % (src, extra_libs)
 
         #Unix-like systems use : instead of ; to separate classpaths
         if os.name != 'nt':  # Windows
