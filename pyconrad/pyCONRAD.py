@@ -3,163 +3,136 @@ import threading
 import time
 import os
 import pyconrad.window_listener as wl
-from . import __download_conrad as downloadconrad
+import pyconrad_java
 from pathlib import Path
 
-conradPath = 'CONRAD/src'
-libPath = 'CONRAD/lib'
-
-
+module_path = os.path.dirname(__file__)
 
 class PyConrad:
 
-    classes = None
-    ij = None
+    #Namespaces
+    classes, ij, java = None,None,None
 
-    conrad_repo_set = None
-    conrad_repo_path = None
+    __conrad_path = None
+    __conrad_repo_set = None
 
-    javaInitalized = None
-    isGuiStarted = None
-    imageJInstance = None
+    __is_gui_started = None
 
-    ijInstance = None
-    guiInstance = None
-    guiThread = None
-    _instance = None
+    __gui_instance = None
+    __gui_thread = None
+    ___instance = None
 
-    __modulDir = None
-    __libDir = None
 
     def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(PyConrad, cls).__new__(
+        if not cls.___instance:
+            cls.___instance = super(PyConrad, cls).__new__(
                 cls, *args, **kwargs)
-        return cls._instance
+        return cls.___instance
+
 
     @staticmethod
     def getInstance():
-        if PyConrad._instance is None:
-            PyConrad._instance = PyConrad()
-        return PyConrad._instance
+        if PyConrad.___instance is None:
+            PyConrad.___instance = PyConrad()
+        return PyConrad.___instance
 
-    def setup(self, max_ram = '8G', min_ram = '7G', devdir = ['']):
-        if not self.isJavaInitalized():
+    def setup(self, max_ram = '8G', min_ram = '7G', dev_dirs = []):
+        if not self.is_java_initalized():
             try:
-                currDirectory = os.getcwd();
-                conradSourceAndLibs = self.__importLibs__(devdir)
-                if self.conrad_repo_path is not None:
-                    os.chdir(self.conrad_repo_path)
-                else:
-                    os.chdir(self.__libDir)
-                startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
-                #os.chdir(self.__modulDir)
-                os.chdir(currDirectory)
+                curr_directory = os.getcwd();
+                conrad_source_and_libs = self.__import__libs(dev_dirs)
+                os.chdir(self.__conrad_path)
+                startJVM(getDefaultJVMPath(), conrad_source_and_libs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
+                os.chdir(curr_directory)
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
-
+                self.java = java
             except JException as ex:
                 print(ex)
-            self.javaInitalized = True
         else:
             print("JVM already started")
 
-
-
-    def startConrad(self):
-        if self.guiThread is None:
-            self.guiThread = threading.Thread(target=self.__startIJGUI___)
-            self.guiThread.start()
+    def start_conrad(self):
+        if self.__gui_thread is None:
+            self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
+            self.__gui_thread.start()
             while not self.isGuiStarted:
                 time.sleep(1)
         else:
             print("Some GUI is already started")
 
-    def startReconstructionFilterPipeline(self):
-        if self.guiThread is None:
-            self.guiThread = threading.Thread(target=self.__startRPFGUI___)
-            self.guiThread.start()
-            while not self.isGuiStarted:
+    def start_reconstruction_filter_pipeline(self):
+        if self.__gui_thread is None:
+            self.__gui_thread = threading.Thread(target=self.__start_rfp_gui)
+            self.__gui_thread.start()
+            while not self.__is_gui_started:
                 time.sleep(1)
         else:
             print("Some GUI is already started")
 
-    def isJavaInitalized(self):
-        return self.javaInitalized
+    def is_java_initalized(self):
+        return isJVMStarted()
 
-    def stopGui(self):
+    def __stop_gui(self):
         java.lang.System.exit(0)
         self.isGuiStarted = False
 
-    def __startRPFGUI___(self):
+    def __start_rfp_gui(self):
         attachThreadToJVM()
-        self.guiInstance = JPackage("edu").stanford.rsl.apps.gui
+        self.__gui_instance = JPackage("edu").stanford.rsl.apps.gui
         listener = wl.WindowListener()
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
-        self.guiInstance.ReconstructionPipelineFrame
-        self.guiInstance.ReconstructionPipelineFrame.startConrad(proxy)
-        self.isGuiStarted = True
-        print('Gui started', self.guiInstance)
+        self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
+        self.__is_gui_started = True
+        print('Gui started', self.__gui_instance)
         detachThreadFromJVM()
-        while self.isGuiStarted:
+        while self.__is_gui_started:
             time.sleep(1)
 
-    def __startIJGUI___(self):
+    def __start_ij_gui(self):
         attachThreadToJVM()
-        self.guiInstance = JPackage("edu").stanford.rsl.conrad.utils
+        self.__gui_instance = JPackage("edu").stanford.rsl.conrad.utils
         listener = wl.WindowListener()
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
-        self.guiInstance.CONRAD.setup(proxy)
-        self.isGuiStarted = True
-        print('Gui started', self.guiInstance)
+        self.__gui_instance.CONRAD.setup(proxy)
+        self.__is_gui_started = True
+        print('Gui started', self.__gui_instance)
         detachThreadFromJVM()
-        while self.isGuiStarted:
+        while self.__is_gui_started:
             time.sleep(1)
 
-    def __importLibs__(self,devdir):
+    def __import__libs(self, dev_dirs):
         # check whether CONRAD + RSL can be found nearby
         # yes: navigate there
         # no: use conrad.jar
+        # list directories, check whether CONRAD/RSL are there
         self.conrad_repo_set = False
-        s = ""
-        self.__modulDir = os.path.dirname(__file__)
-        os.chdir(self.__modulDir)
-        os.chdir('..')
-        os.chdir('..')
-        extra_libs=''
+
+        extra_libs = ''
         dev_src = []
-        for dev in devdir:
+        for dev in dev_dirs:
             dev_path = Path(dev)
             dev_src.append(dev_path.joinpath('src'))
             if dev_path.match("CONRAD"):
-                self.conrad_repo_path = dev_path
-                self.conrad_repo_set = True
+                self.__conrad_path = dev_path
+                self.__conrad_repo_set = True
                 dev_lib = dev_path.joinpath('lib')
                 dev_classes = dev_path.joinpath('classes', 'production', 'CONRAD')
                 os.chdir(dev_path)
                 extra_libs = (dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if '.jar' == fn.suffix)
                 extra_libs = ';'.join(map(str, [dev_classes, *extra_libs]))
 
-        src = ';'.join(map(str,dev_src))
-
-        if self.conrad_repo_set:
+        if self.__conrad_repo_set:
             s = f'-Djava.class.path={src};{extra_libs}'
         else:
-            conrad_jar = downloadconrad.conrad_jar_fullpath()
-            if not os.path.isfile(conrad_jar):
-                downloadconrad.download_conrad()
-            if not os.path.isfile(conrad_jar):
-                raise Exception('Could not find %s' % conrad_jar)
-
-            dev_src.append(conrad_jar)
+            self.__conrad_path = pyconrad_java.conrad_jar_dir
+            dev_src.append(pyconrad_java.conrad_jar_path)
             src = ';'.join(map(str, dev_src))
-            self.__libDir = downloadconrad.conrad_jar_dir()
             s = f'-Djava.class.path={src};{extra_libs}'
 
         #Unix-like systems use : instead of ; to separate classpaths
         if os.name != 'nt':  # Windows
             s = s.replace(';',':')
-
         return s
 
     def terminate(self):
