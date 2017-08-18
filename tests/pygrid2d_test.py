@@ -35,18 +35,35 @@ try:
     pygrid[3:8,10:20] = 1.
     pygrid.update_grid()
     pygrid.show_grid()
-    numpyOut = pygrid.numpy()
+    # numpyOut = pygrid.numpy()
 
 
     from scipy.misc import imshow
-    imshow(numpyOut)
+    # imshow(numpyOut)
 
     print(pygrid[1:4,5:8])
+    print("Test from_grid passed")
 except Exception as ex:
     print(ex)
     print("Test from_grid failed")
 
+shape3D = [ 830, 335,542]
+
+# try:
+gridIn = phantom_package.Sphere3D(shape3D[2],shape3D[1], shape3D[0])
+# gridIn = PyConrad.numeric_package().Grid2D(shape[1], shape[0])
+
+pygrid = PyGrid2D.from_grid(gridIn)
+# pygrid[3:8,10:20,...] = 1.
+pygrid.update_grid()
+pygrid.show_grid()
+numpyOut = pygrid.numpy()
 
 
+
+print(pygrid[1:4,5:8])
+# except Exception as ex:
+#     print(ex)
+#     print("Test from_grid failed")
 
 PyConrad.get_instance().terminate()
