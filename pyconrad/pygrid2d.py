@@ -7,6 +7,7 @@ float_dtype = np.dtype(">f4")
 
 #TODO: pack functionality in base class for all types of Grids
 class PyGrid2D:
+
     @staticmethod
     def java_float_type():
         return float_dtype
@@ -17,6 +18,7 @@ class PyGrid2D:
         self.__numpy = np.zeros( shape, float_dtype )
         self.__dbuffer = jpype.nio.convertToDirectBuffer(self.__numpy)
         self.shape = shape
+        self.typestr = ">f4"
 
     @staticmethod
     def from_numpy(array):
@@ -62,4 +64,12 @@ class PyGrid2D:
     def __str__(self):
         return self.__numpy.__str__()
 
+    def __getitem__(self, item):
+        return self.__numpy.__getitem__(item)
+
+    def __setitem__(self, idx, value):
+        self.__numpy.__setitem__(idx, value)
+
+    def asarray(self):
+        return self.__numpy.asarray()
 
