@@ -3,7 +3,12 @@ import threading
 import time
 import os
 import pyconrad.window_listener as wl
+<<<<<<< HEAD
 import pyconrad_java
+=======
+from . import __download_conrad as downloadconrad
+from pathlib import Path
+>>>>>>> 05df39aa72539ced148cad578db6163179ab2bae
 
 conradPath = 'CONRAD/src'
 libPath = 'CONRAD/lib'
@@ -19,6 +24,9 @@ class PyConrad:
 
     classes = None
     ij = None
+
+    conrad_repo_set = None
+    conrad_repo_path = None
 
     javaInitalized = None
     isGuiStarted = None
@@ -42,9 +50,19 @@ class PyConrad:
         if not self.isJavaInitalized():
             try:
                 currDirectory = os.getcwd();
+<<<<<<< HEAD
                 conradSourceAndLibs = self.__importLibs__(dev_dirs)
                 os.chdir(pyconrad_java.conrad_jar_dir)
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
+=======
+                conradSourceAndLibs = self.__importLibs__(devdir)
+                if self.conrad_repo_path is not None:
+                    os.chdir(self.conrad_repo_path)
+                else:
+                    os.chdir(self.__libDir)
+                startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
+                #os.chdir(self.__modulDir)
+>>>>>>> 05df39aa72539ced148cad578db6163179ab2bae
                 os.chdir(currDirectory)
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
@@ -107,15 +125,21 @@ class PyConrad:
         while self.isGuiStarted:
             time.sleep(1)
 
+<<<<<<< HEAD
     def __importLibs__(self, dev_dirs):
+=======
+    def __importLibs__(self,devdir):
+>>>>>>> 05df39aa72539ced148cad578db6163179ab2bae
         # check whether CONRAD + RSL can be found nearby
         # yes: navigate there
         # no: use conrad.jar
+        self.conrad_repo_set = False
         s = ""
         self.__modulDir = os.path.dirname(__file__)
         os.chdir(self.__modulDir)
         os.chdir('..')
         os.chdir('..')
+<<<<<<< HEAD
         # list directories, check whether CONRAD/RSL are there
         directories = os.listdir()
         # if "CONRAD" in directories and "CONRADRSL" in directories:
