@@ -14,7 +14,16 @@ class PyGrid2D:
 
     def __init__(self, shape):
         self.__numericpackage = PyConrad.getInstance().classes.stanford.rsl.conrad.data.numeric
-        self.__grid = self.__numericpackage.Grid2D(shape[1], shape[0])
+        if len(shape) == 1:
+            self.__grid = self.__numericpackage.Grid1D(shape[0])
+        elif len(shape) == 2:
+            self.__grid = self.__numericpackage.Grid2D(shape[1], shape[0])
+        elif len(shape) == 3:
+            self.__grid = self.__numericpackage.Grid3D(shape[2], shape[1], shape[0])
+        elif len(shape) == 4:
+            self.__grid = self.__numericpackage.Grid4D(shape[3], shape[2], shape[1], shape[0])
+        else:
+            raise Exception('shape dimension not supported')
         self.__numpy = np.zeros( shape, float_dtype )
         self.__dbuffer = jpype.nio.convertToDirectBuffer(self.__numpy)
         self.shape = shape
@@ -23,19 +32,31 @@ class PyGrid2D:
     @staticmethod
     def from_numpy(array):
         instance = PyGrid2D([0,0])
-        instance.__grid = instance.__numericpackage.Grid2D(array.shape[1], array.shape[0])
+        shape = array.shape
         instance.__numpy = array
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
         instance.shape = array.shape
+
+        if len(shape) == 1:
+            instance.__grid = instance.__numericpackage.Grid1D(shape[0])
+        elif len(shape) == 2:
+            instance.__grid = instance.__numericpackage.Grid2D(shape[1], shape[0])
+        elif len(shape) == 3:
+            instance.__grid = instance.__numericpackage.Grid3D(shape[2], shape[1], shape[0])
+        elif len(shape) == 4:
+            instance.__grid = instance.__numericpackage.Grid4D(shape[3], shape[2], shape[1], shape[0])
+        else:
+            raise Exception('shape dimension not supported')
         instance.update_grid()
-        assert(array.dtype == float_dtype, "Must be Big Endian 32bit float")
+        assert array.dtype == float_dtype, "Must be Big Endian 32bit float"
         return instance
 
     @staticmethod
     def from_grid(grid):
         instance = PyGrid2D([0,0])
         instance.__grid = grid
-        instance.__numpy = np.zeros([grid.getHeight(), grid.getWidth()], float_dtype)
+        size = list(reversed(grid.getSize()[:]))
+        instance.__numpy = np.zeros(size, float_dtype)
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(instance.__numpy)
         instance.shape = instance.__numpy.shape
         instance.update_numpy()
@@ -49,10 +70,36 @@ class PyGrid2D:
 
     def update_numpy(self):
         assert (self.__numpy.shape == self.shape)
-        self.__dbuffer.asFloatBuffer().put(self.__grid.getBuffer())
+        shape = self.shape
+
+        if len(shape) == 1 or len(shape) == 2:
+            self.__dbuffer.asFloatBuffer().put(self.__grid.getBuffer())
+        elif len(shape) == 3:
+            for z in range(shape[0]):
+                self.__dbuffer.asFloatBuffer().put(self.__grid.getSubGrid(z).getBuffer(), z * shape[2] * shape[1], shape[2] * shape[1]) #TODO: stride == 0?
+
+        elif len(shape) == 4:
+            for f in range(shape[0]):
+                for z in range(shape[1]):
+                    self.__dbuffer.asFloatBuffer().put(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer(), f * z * shape[2] * shape[1], shape[2] * shape[1]) #TODO: stride == 0?
+        else:
+            raise Exception('shape dimension not supported')
 
     def update_grid(self):
-        self.__dbuffer.asFloatBuffer().get(self.__grid.getBuffer())
+        assert (self.__numpy.shape == self.shape)
+        shape = self.shape
+
+        if len(shape) == 1 or len(shape) == 2:
+            self.__dbuffer.asFloatBuffer().get(self.__grid.getBuffer())
+        elif len(shape) == 3:
+            for z in range(shape[0]):
+                self.__dbuffer.asFloatBuffer().get(self.__grid.getSubGrid(z).getBuffer(), z * shape[2] * shape[1], shape[2] * shape[1]) #TODO: stride == 0?
+        elif len(shape) == 4:
+            for f in range(shape[0]):
+                for z in range(shape[1]):
+                    self.__dbuffer.asFloatBuffer().get(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer(), f * z * shape[2] * shape[1], shape[2] * shape[1]) #TODO: stride == 0?
+        else:
+            raise Exception('shape dimension not supported')
 
     def save_numpy(self, name):
         from scipy.misc import imsave
@@ -72,4 +119,10 @@ class PyGrid2D:
 
     def asarray(self):
         return self.__numpy.asarray()
+
+    def show_grid(self):
+        if not PyConrad.isGuiStarted:
+            PyConrad.getInstance().startConrad()
+        self.__grid.show()
+
 
