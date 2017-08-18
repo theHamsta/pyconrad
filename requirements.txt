@@ -1,5 +1,7 @@
 # Add your requirements here like:
 numpy
 jpype1
-urllib
-zipfile
+#urllib
+#zipfile
+-e git+https://git5.cs.fau.de/seitz/pyconrad_java.git#egg=pyconrad_java
+#file:// /localhome/local/projects/pyconrad_java/pyconrad_java#egg=pyconrad_java

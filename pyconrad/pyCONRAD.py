@@ -3,7 +3,7 @@ import threading
 import time
 import os
 import pyconrad.window_listener as wl
-from . import __download_conrad as downloadconrad
+import pyconrad_java
 
 conradPath = 'CONRAD/src'
 libPath = 'CONRAD/lib'
@@ -38,14 +38,13 @@ class PyConrad:
                 cls, *args, **kwargs)
         return cls._instance
 
-    def setup(self, max_ram = '8G', min_ram = '7G', devdir = ['']):
+    def setup(self, max_ram = '8G', min_ram = '7G', dev_dirs = []):
         if not self.isJavaInitalized():
             try:
-                conradSourceAndLibs = self.__importLibs__()
                 currDirectory = os.getcwd();
-                os.chdir(self.__libDir)
+                conradSourceAndLibs = self.__importLibs__(dev_dirs)
+                os.chdir(pyconrad_java.conrad_jar_dir)
                 startJVM(getDefaultJVMPath(), conradSourceAndLibs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
-                os.chdir(self.__modulDir)
                 os.chdir(currDirectory)
                 self.classes = JPackage('edu')
                 self.ij = JPackage('ij')
@@ -108,7 +107,7 @@ class PyConrad:
         while self.isGuiStarted:
             time.sleep(1)
 
-    def __importLibs__(self):
+    def __importLibs__(self, dev_dirs):
         # check whether CONRAD + RSL can be found nearby
         # yes: navigate there
         # no: use conrad.jar
@@ -158,28 +157,21 @@ class PyConrad:
         #
         # else:
         if True: # TODO:
-            conrad_jar = downloadconrad.conrad_jar_fullpath()
-            if not os.path.isfile(conrad_jar):
-                downloadconrad.download_conrad()
-            if not os.path.isfile(conrad_jar):
-                raise Exception('Could not find %s' % conrad_jar)
 
-            self.__libDir = downloadconrad.conrad_jar_dir()
-            s = "-Djava.class.path=%s" % conrad_jar
+            s = "-Djava.class.path=%s" % pyconrad_java.conrad_jar_path
+            dev_dirs.append(pyconrad_java.conrad_jar_dir + "/plugins")
 
-            plugloc = self.__libDir + "/plugins/"
-            ll = os.listdir(plugloc)
-            for i in ll:
-                if ".jar" in i:
-                    s = s + ";" + plugloc + i
-            s = s + ";" + plugloc + i
+            for dir in dev_dirs:
+                ll = os.listdir(dir)
+                for i in ll:
+                    if ".jar" in i:
+                        s = s + ";" + dir + i
+                s = s + ";" + dir
 
         #Unix-like systems use : instead of ; to separate classpaths
         if os.name != 'nt':  # Windows
             s = s.replace(';',':')
 
-        os.chdir(currDirectory)
-        
         return s
 
     def terminate(self):
