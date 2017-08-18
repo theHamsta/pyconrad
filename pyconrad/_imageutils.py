@@ -3,6 +3,7 @@ import numpy as np
 from jpype import  *
 from PIL import Image
 from matplotlib import pyplot as plt
+from .constants import java_float_dtype
 
 #startJVM(getDefaultJVMPath(),
 #"-Djava.class.path=/localhome/local/projects/CONRAD 1.0.6/conrad_1.0.6.jar", "-Xmx8G", "-Xmn7G")
@@ -26,8 +27,9 @@ class ImageUtil:
     def wrapGrid2D(grid2D):
         w = grid2D.getWidth()
         h = grid2D.getHeight()
-        array = np.array(grid2D.getBuffer()[:])
-        array = np.reshape(array, (h, w))
+        array = np.zeros([h, w], java_float_dtype)
+        dBuffer = nio.convertToDirectBuffer(array)
+        dBuffer.asFloatBuffer().get(grid2D.getBuffer())
         return array
 
     @staticmethod

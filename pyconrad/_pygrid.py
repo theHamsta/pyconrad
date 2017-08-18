@@ -1,16 +1,14 @@
 import numpy as np
 import jpype
 from ._pyconrad import PyConrad
-
-
-float_dtype = np.dtype(">f4")
+from .constants import java_float_dtype
 
 #TODO: pack functionality in base class for all types of Grids
 class PyGrid:
 
     @staticmethod
     def java_float_type():
-        return float_dtype
+        return java_float_dtype
 
     def __init__(self, shape):
         self.__numericpackage = PyConrad.get_instance().classes.stanford.rsl.conrad.data.numeric
