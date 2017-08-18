@@ -6,7 +6,7 @@ from ._pyconrad import PyConrad
 float_dtype = np.dtype(">f4")
 
 #TODO: pack functionality in base class for all types of Grids
-class PyGrid2D:
+class PyGrid:
 
     @staticmethod
     def java_float_type():
@@ -32,7 +32,7 @@ class PyGrid2D:
 
     @staticmethod
     def from_numpy(array):
-        instance = PyGrid2D([0,0])
+        instance = PyGrid([0,0])
         shape = array.shape
         instance.__numpy = array
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
@@ -54,7 +54,7 @@ class PyGrid2D:
 
     @staticmethod
     def from_grid(grid):
-        instance = PyGrid2D([0,0])
+        instance = PyGrid([0,0])
         instance.__grid = grid
         size = list(reversed(grid.getSize()[:]))
         instance.__numpy = np.zeros(size, float_dtype)
