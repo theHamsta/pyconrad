@@ -1,9 +1,9 @@
 from pyconrad import PyGrid2D, PyConrad, ImageUtil
 import numpy as np
 
-PyConrad.getInstance().setup()
+PyConrad.get_instance().setup()
 
-phantom_package = PyConrad.getInstance().classes.stanford.rsl.tutorial.phantoms
+phantom_package = PyConrad.get_instance().classes.stanford.rsl.tutorial.phantoms
 shape = [230, 330]
 
 pygrid = PyGrid2D(shape)
@@ -49,4 +49,4 @@ except Exception as ex:
 
 
 
-PyConrad.getInstance().terminate()
+PyConrad.get_instance().terminate()

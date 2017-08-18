@@ -13,7 +13,7 @@ class PyGrid2D:
         return float_dtype
 
     def __init__(self, shape):
-        self.__numericpackage = PyConrad.getInstance().classes.stanford.rsl.conrad.data.numeric
+        self.__numericpackage = PyConrad.get_instance().classes.stanford.rsl.conrad.data.numeric
         if len(shape) == 1:
             self.__grid = self.__numericpackage.Grid1D(shape[0])
         elif len(shape) == 2:
