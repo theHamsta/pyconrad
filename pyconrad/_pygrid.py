@@ -121,7 +121,7 @@ class PyGrid:
         return self.shape
 
     def __str__(self):
-        return self.__numpy.__str__()
+        return "size: " + self.shape.__str__() + "\n" + self.__numpy.__str__()
 
     def __getitem__(self, item):
         return self.__numpy.__getitem__(item)
