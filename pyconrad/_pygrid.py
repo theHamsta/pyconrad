@@ -29,11 +29,13 @@ class PyGrid:
             self.__dbuffer = jpype.nio.convertToDirectBuffer(self.__numpy)
         self.shape = shape
         self.typestr = ">f4"
+        self.__array_interface__ = { "shape": shape, "typestr": ">f4", "version" : 3, "data": self.__numpy.data}
 
     @staticmethod
     def from_numpy(array):
         instance = PyGrid([0,0])
         shape = array.shape
+        instance.__array_interface__ = { "shape": shape, "dtype": ">f4", "version" : 3, "data":array.data}
         instance.__numpy = array
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
         instance.shape = array.shape
@@ -60,6 +62,7 @@ class PyGrid:
         instance.__numpy = np.zeros(size, float_dtype)
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(instance.__numpy)
         instance.shape = instance.__numpy.shape
+        instance.__array_interface__ = { "shape": instance.shape, "typestr": ">f4", "version" : 3, "data":instance.__numpy.data}
         instance.update_numpy()
         return instance
 
@@ -134,4 +137,6 @@ class PyGrid:
             PyConrad.get_instance().start_conrad()
         self.__grid.show()
 
+    def __array__(self, dtype=None):
+        return self.__numpy.__array__(dtype)
 
