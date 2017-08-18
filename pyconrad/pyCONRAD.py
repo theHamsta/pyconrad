@@ -11,11 +11,6 @@ libPath = 'CONRAD/lib'
 
 
 
-def getInstance():
-    if PyConrad._instance is None:
-        PyConrad._instance = PyConrad()
-    return PyConrad._instance
-
 class PyConrad:
 
     classes = None
@@ -41,6 +36,12 @@ class PyConrad:
             cls._instance = super(PyConrad, cls).__new__(
                 cls, *args, **kwargs)
         return cls._instance
+
+    @staticmethod
+    def getInstance():
+        if PyConrad._instance is None:
+            PyConrad._instance = PyConrad()
+        return PyConrad._instance
 
     def setup(self, max_ram = '8G', min_ram = '7G', devdir = ['']):
         if not self.isJavaInitalized():
