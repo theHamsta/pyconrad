@@ -6,7 +6,6 @@ import numpy as np
 import jpype
 from ._pyconrad import PyConrad
 from .constants import java_float_dtype
-from ._imageutils import ImageUtil
 
 #TODO: pack functionality in base class for all types of Grids
 class PyGrid:
