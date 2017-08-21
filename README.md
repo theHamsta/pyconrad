@@ -1,4 +1,3 @@
-
 # pyConrad
 
 
@@ -70,6 +69,10 @@ To transfer data from NumPy to Conrad use the class PyGrid:
 Data changes have to be synchronized:
 ``` python
     ...
+
+    # Create PyGrid from numpy array (must be of type pyconrad.java_float_dtype)
+    array = np.random.rand(4,2,3).astype(java_float_dtype)
+    pygrid2 = PyGrid.from_numpy(array)
 
     # Manipulate data in using CONRAD at Position (x,y,z) = (1,2,4)
     pygrid2.grid().setValue(5.0, [0,1,3])
