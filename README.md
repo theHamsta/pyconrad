@@ -1,35 +1,34 @@
-========
-pyConrad
-========
+
+# pyConrad
+
 
 
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
-========
-CONRAD
-========
+
+# CONRAD
+
 
 CONRAD is a state-of-the-art software platform with extensive documentation. It is based on platform-independent technologies. Special libraries offer access to hardware acceleration such as CUDA and OpenCL. There is an easy interface for parallel processing. The software package includes different simulation tools that are able to generate 4-D projection and volume data and respective vector motion fields. Well known reconstruction algorithms such as FBP, DBP, and ART are included. All algorithms in the package are referenced to a scientific source. Please visit http://conrad.stanford.edu for more information.
 
-========
-Installation
-========
+# Installation
 
-Install via pip::
+
+Install via pip:
 
     pip install pyconrad
 
-This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD::
-
+This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
+``` python
     import pyconrad_java
     print( pyconrad_java.conrad_jar_dir )
+```
 
-========
-Usage
-========
+# Usage
 
-The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface::
 
+The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface:
+``` python
     from pyconrad import PyConrad
     
     # PyConrad is a singleton class
@@ -49,9 +48,9 @@ The central class of the pyconrad package is PyConrad. You can use it to access 
     
     # start CONRAD GUI
     pyconrad.start_conrad()
-    
-To transfer data from NumPy to Conrad use the class PyGrid::
-
+```
+To transfer data from NumPy to Conrad use the class PyGrid:
+```python
     from pyconrad import PyConrad, PyGrid, java_float_dtype
     import numpy as np
     
@@ -67,3 +66,28 @@ To transfer data from NumPy to Conrad use the class PyGrid::
     # use Python method
     from scipy.misc import imshow
     imshow(pygrid1.numpy()) # or imshow(pygrid1)
+```
+Data changes have to be synchronized:
+``` python
+    ...
+
+    # Manipulate data in using CONRAD at Position (x,y,z) = (1,2,4)
+    pygrid2.grid().setValue(5.0, [0,1,3])
+    
+    # Print this pixel using Python indexes [z,y,x]
+    print("Before update: %f" % pygrid2[3,1,0])
+    # Python data must be synchronized with CONRAD
+    pygrid2.update_numpy()
+    print("After update: %f" % pygrid2[3,1,0])
+    
+    # Manipulate pixel using python
+    pygrid2[1,1,1] = 3.0
+    # Update CONRAD data
+    pygrid2.update_grid()
+    
+    # Print
+    print(pygrid2)    
+
+```
+
+More examples can found [here](examples)
