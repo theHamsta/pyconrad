@@ -30,6 +30,8 @@ w = 500
 h = 300
 d = 3
 
+
+#TODO does not work for Grid1D because Gri1D.getBuffer() doesn't return the buffer but a copy of it
 try:
     numpyIn = np.random.rand(543)
     grid1 = ImageUtil.grid_from_numpy(numpyIn.astype(java_float_dtype))
@@ -37,7 +39,7 @@ try:
     assert np.allclose(numpyIn, numpyOut)
     print("Test Grid1D passed")
 except Exception as ex:
-    print("Test Grid1D failed with exception:",ex)
+    print("Test Grid1D failed with exception: %s" % ex)
 
 try:
     numpyIn = np.random.rand(44,543)
