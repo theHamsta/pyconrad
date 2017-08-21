@@ -6,6 +6,7 @@ import numpy as np
 import jpype
 from ._pyconrad import PyConrad
 from .constants import java_float_dtype
+from ._imageutils import ImageUtil
 
 #TODO: pack functionality in base class for all types of Grids
 class PyGrid:
@@ -142,10 +143,10 @@ class PyGrid:
     def __array__(self, dtype=None):
         return self.__numpy.__array__(dtype)
 
-    def saveGridAsTiff(self, path):
-        PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(self.__grid, path)
+    def save_grid_as_tiff(self, path):
+        ImageUtil.save_grid_as_tiff(self.__grid)
 
-    def fromTiff(self, path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.IJ.openImage(path))
+    def from_tiff(self, path):
+        grid = ImageUtil.grid_from_tiff(path)
         return self.__class__.from_grid(grid)
 
