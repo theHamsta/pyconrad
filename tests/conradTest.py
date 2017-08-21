@@ -4,7 +4,7 @@ from pyconrad import PyConrad
 # def test_conrad():
 conrad = PyConrad.get_instance()
 #conrad.setup('8G', '1G',devdir=["C:\\Reconstruction\\CONRAD","C:\\Reconstruction\\CONRADRSL"])
-conrad.setup('8G', '1G',dev_dirs=["C:\\Reconstruction\\CONRADRSL"])
+conrad.setup('8G', '1G',dev_dirs=[])
 #conrad.setup('8G', '1G')
 #conrad.setup('8G', '1G')
 conrad.start_reconstruction_filter_pipeline()

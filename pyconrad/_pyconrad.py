@@ -3,7 +3,7 @@ from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy
 import threading
 import time
 import os
-import pyconrad.window_listener as wl
+from . import _windowlistener as wl
 import pyconrad_java
 from pathlib import Path
 
@@ -40,7 +40,7 @@ class PyConrad:
     def setup(self, max_ram = '8G', min_ram = '7G', dev_dirs = []):
         if not self.is_java_initalized():
             try:
-                curr_directory = os.getcwd();
+                curr_directory = os.getcwd()
                 conrad_source_and_libs = self.__import__libs(dev_dirs)
                 os.chdir(self.__conrad_path)
                 startJVM(getDefaultJVMPath(), conrad_source_and_libs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram )
