@@ -2,4 +2,4 @@
 numpy
 jpype1
 pathlib 
--e git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git#egg=pyconrad_java
+-e git+https://git5.cs.fau.de/PyConrad/pyconrad_java#egg=pyconrad_java
