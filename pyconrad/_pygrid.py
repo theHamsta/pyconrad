@@ -53,7 +53,7 @@ class PyGrid:
         else:
             raise Exception('shape dimension not supported')
         instance.update_grid()
-        assert array.dtype == java_float_dtype, "Must be Big Endian 32bit float"
+        assert array.dtype == java_float_dtype, "Numpy array must be Big Endian 32bit float! Use pyconrad.java_float_dtype!"
         return instance
 
     @staticmethod
