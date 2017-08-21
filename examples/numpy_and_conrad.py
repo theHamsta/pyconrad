@@ -9,10 +9,10 @@ phantom = pyconrad.get_phantom_package().MickeyMouseGrid2D(200,200)
 # Create PyGrid from Grid2D
 pygrid1 = PyGrid.from_grid(phantom)
 # use Java method
-# pygrid1.grid().show()
+pygrid1.grid().show()
 # use Python method
 from scipy.misc import imshow
-# imshow(pygrid1.numpy()) # or imshow(pygrid1)
+imshow(pygrid1.numpy()) # or imshow(pygrid1)
 
 # Create PyGrid from numpy array (must be of type pyconrad.java_float_dtype)
 array = np.random.rand(4,2,3).astype(java_float_dtype)

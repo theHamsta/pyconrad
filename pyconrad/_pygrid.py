@@ -139,6 +139,9 @@ class PyGrid:
             PyConrad.get_instance().start_conrad()
         self.__grid.show()
 
+    def typestr(self):
+        return ">f4"
+
     def __array__(self, dtype=None):
         return self.__numpy.__array__(dtype)
 

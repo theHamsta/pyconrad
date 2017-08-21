@@ -145,3 +145,11 @@ class PyConrad:
     def is_gui_started(self):
         return self.__is_gui_started
 
+    def get_data_numeric_package(self):
+        return self.classes.stanford.rsl.conrad.data.numeric
+
+    def get_phantom_package(self):
+        return self.classes.stanford.rsl.tutorial.phantoms
+
+    def get_utils_package(self):
+        return self.classes.stanford.rsl.conrad.utils
