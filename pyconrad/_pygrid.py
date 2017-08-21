@@ -142,3 +142,10 @@ class PyGrid:
     def __array__(self, dtype=None):
         return self.__numpy.__array__(dtype)
 
+    def saveGridAsTiff(self, path):
+        PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(self.__grid, path)
+
+    def fromTiff(self, path):
+        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.IJ.openImage(path))
+        return self.__class__.from_grid(grid)
+

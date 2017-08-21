@@ -1,11 +1,10 @@
 #author Bastian Bier
 
-from pyconrad import pyCONRAD
-from pyconrad.ImageUtils import ImageUtil
+from pyconrad import PyConrad, ImageUtil, PyGrid
 import numpy as np
 from matplotlib import pyplot as plt
 
-conrad = pyCONRAD.get_instance()
+conrad = PyConrad.get_instance()
 conrad.setup('8G', '1G')
 #conrad.startReconstructionFilterPipeline()
 # conrad.startConrad()
@@ -30,43 +29,6 @@ w = 500
 h = 300
 d = 3
 
-try:
-    numpyIn = np.random.rand(543)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid1D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid1D(grid1)
-    assert np.allclose(numpyIn,
-                       numpyOut)
-    print("Test Grid1D passed")
-except Exception as ex:
-    print("Test Grid1D failed with exception:",ex)
-
-try:
-    numpyIn = np.random.rand(44,543)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid2D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid2D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
-    print("Test Grid2D passed")
-except Exception as ex:
-    print("Test Grid2D failed with exception:",ex)
-
-try:
-    numpyIn = np.random.rand(6,57,42)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid3D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid3D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
-    print("Test Grid3D passed")
-except Exception as ex:
-    print("Test Grid3D failed with exception:",ex)
-
-try:
-    numpyIn = np.random.rand(7, 6,57,42)
-    grid1 = ImageUtil.wrapNumpyArrayToGrid4D(numpyIn.astype(float))
-    numpyOut = ImageUtil.wrapGrid4D(grid1)
-    assert np.allclose(numpyIn, numpyOut)
-    print("Test Grid4D passed")
-except Exception as ex:
-    print("Test Grid4D failed with exception:",ex)
-
 grid2 = packagePhantom.MickeyMouseGrid2D(w,h)
 print(grid2)
 
@@ -79,14 +41,14 @@ grid3.show("Test Grid3D")
 ImageUtil.saveGrid3DAsTiff(grid3,"bsadf.tif")
 
 plt.ion()
-outputArray2 = ImageUtil.wrapGrid2D(grid2)
+outputArray2 = PyGrid.from_grid(grid2).numpy()
 plt.imshow(outputArray2, interpolation='nearest')
 plt.title("Array2D")
 plt.draw()
 plt.pause(0.001)
 
 plt.figure()
-outputArray3 = ImageUtil.wrapGrid3D(grid3)
+outputArray3 = PyGrid.from_grid(grid3).numpy()
 plt.imshow(outputArray3[0,...], interpolation='nearest')
 plt.title("Array 3D")
 plt.draw()

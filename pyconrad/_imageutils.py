@@ -1,5 +1,5 @@
 # author Bastian Bier
-
+from ._pyconrad import PyConrad
 
 class ImageUtil:
 
