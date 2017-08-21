@@ -17,6 +17,10 @@ def setup_package():
     sphinx = ['sphinx'] if needs_sphinx else []
     setup( name='pyconrad',
         version='0.0.1',
+           package=['pyconrad'],
+           author='xxx',
+           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
+           download_url='https://git5.cs.fau.de/PyConrad/pyconrad_java/repository/archive.tar.gz?ref=0.0.1',
         setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
           use_pyscaffold=True)
 
