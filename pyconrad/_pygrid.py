@@ -7,7 +7,6 @@ import jpype
 from ._pyconrad import PyConrad
 from .constants import java_float_dtype
 
-#TODO: pack functionality in base class for all types of Grids
 class PyGrid:
 
     @staticmethod
