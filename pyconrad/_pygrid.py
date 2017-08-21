@@ -22,7 +22,7 @@ class PyGrid:
             self.__grid = self.__numericpackage.Grid4D(shape[3], shape[2], shape[1], shape[0])
         else:
             raise Exception('shape dimension not supported')
-        self.__numpy = np.zeros( shape, float_dtype )
+        self.__numpy = np.zeros( shape, java_float_dtype )
         if shape[0] != 0:
             self.__dbuffer = jpype.nio.convertToDirectBuffer(self.__numpy)
         self.shape = shape
@@ -49,7 +49,7 @@ class PyGrid:
         else:
             raise Exception('shape dimension not supported')
         instance.update_grid()
-        assert array.dtype == float_dtype, "Must be Big Endian 32bit float"
+        assert array.dtype == java_float_dtype, "Must be Big Endian 32bit float"
         return instance
 
     @staticmethod
@@ -57,7 +57,7 @@ class PyGrid:
         instance = PyGrid([0,0])
         instance.__grid = grid
         size = list(reversed(grid.getSize()[:]))
-        instance.__numpy = np.zeros(size, float_dtype)
+        instance.__numpy = np.zeros(size, java_float_dtype)
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(instance.__numpy)
         instance.shape = instance.__numpy.shape
         instance.__array_interface__ = { "shape": instance.shape, "typestr": ">f4", "version" : 3, "data":instance.__numpy.data}
