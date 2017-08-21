@@ -27,9 +27,9 @@ class ImageUtil:
     def wrapGrid2D(grid2D):
         w = grid2D.getWidth()
         h = grid2D.getHeight()
-        array = np.zeros([h, w], java_float_dtype)
-        dBuffer = nio.convertToDirectBuffer(array)
-        dBuffer.asFloatBuffer().get(grid2D.getBuffer())
+        array = np.array(grid2D.getBuffer()[:])
+        array = np.reshape(array, [h,w])
+
         return array
 
     @staticmethod
