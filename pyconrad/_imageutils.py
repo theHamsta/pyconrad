@@ -26,8 +26,8 @@ class ImageUtil:
 
     @staticmethod
     def save_numpy_as_tiff(array, path):
-        tmp = PyConrad.get_instance().ij.IJ.ImagePlus("image", ImageUtil.grid_from_numpy(array))
-        PyConrad.get_instance().ij.IJ.saveAsTiff(tmp, path)
+        grid = ImageUtil.grid_from_numpy(array)
+        PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
 
     #################
     ## Load Images ##
@@ -35,11 +35,11 @@ class ImageUtil:
 
     @staticmethod
     def grid_from_tiff(path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.IJ.openImage(path))
+        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.openImage(path))
         return grid
 
     @staticmethod
     def array_from_tiff(path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.IJ.openImage(path))
+        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.openImage(path))
         return ImageUtil.numpy_from_grid(grid)
 
