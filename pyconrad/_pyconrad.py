@@ -1,3 +1,7 @@
+
+# Copyright (C) 2010-2017 - Andreas Maier
+# CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
+
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
 from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy
 import threading
