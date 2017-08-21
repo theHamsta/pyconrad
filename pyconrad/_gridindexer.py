@@ -25,17 +25,25 @@ class GridIndexer:
                 yield self.__grid.getAtIndex(x,y)
 
     def __array__(self, dtype = java_float_dtype):
-        start = [self.__slice[0].start or 0, self.__slice[1].start or 0 ]
-        end = [self.__slice[0].stop or self.shape[0], self.__slice[1].stop or self.shape[1] ]
-        step = [self.__slice[0].step or 1, self.__slice[1].step or 1 ]
-        out = np.zeros( [int((end[1]-start[1]) / step[1]),int((end[1]-start[1]) / step[1])] , dtype )
-        for y in range(self.__slice[0].start or 0, self.__slice[0].stop or self.shape[0], self.__slice[0].step or 1 ):
-            for x in range(self.__slice[1].start or 0, self.__slice[1].stop or self.shape[1], self.__slice[1].step or 1 ):
-                out[y,x] = self.__grid.getAtIndex(x,y)
-        return out
+        print(self.__slice)
+        if self.__slice == Ellipsis:
+            start = [0,0]
+            end = self.shape
+            step = [ 1, 1]
+        else:
+            start = [self.__slice[0].start or 0, self.__slice[1].start or 0 ]
+            end = [self.__slice[0].stop or self.shape[0], self.__slice[1].stop or self.shape[1] ]
+            step = [self.__slice[0].step or 1, self.__slice[1].step or 1 ]
 
-    # def __str__(self):
-    #     return self.__array__().__str__()
+        out = np.zeros( [int((end[1]-start[1]) / step[1]),int((end[1]-start[1]) / step[1])] , dtype )
+        for y in range(start[0], end[0], step[0]):
+            for x in range(start[1], end[1], step[1]):
+                out[y-start[0],x-start[1]] = self.__grid.getAtIndex(x,y)
+        return out.__array__()
+
+    def __str__(self):
+        return "GridIndexer " + self.shape.__str__()
+
 
     def grid(self):
         return self.__grid
