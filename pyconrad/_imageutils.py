@@ -29,7 +29,6 @@ class ImageUtil:
         h = grid2D.getHeight()
         array = np.array(grid2D.getBuffer()[:])
         array = np.reshape(array, [h,w])
-
         return array
 
     @staticmethod
@@ -80,7 +79,7 @@ class ImageUtil:
             grid.setSubGrid(id, subgrid)
         return grid
 
-       #################
+    #################
     ## Save Images ##
     #################
 

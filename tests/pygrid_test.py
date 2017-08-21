@@ -58,7 +58,7 @@ pygrid = PyGrid.from_grid(gridIn)
 pygrid.update_grid()
 pygrid.show_grid()
 
-import mathplotlib.pyplt as plt
+import matplotlib.pyplt as plt
 
 numpyOut = pygrid.numpy()
 

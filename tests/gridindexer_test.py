@@ -14,6 +14,6 @@ print(grid_indexer)
 from scipy.misc import *
 
 
-imshow(grid_indexer[2:4,4:100])
+imshow(grid_indexer[2:4])
 
 
