@@ -157,3 +157,6 @@ class PyConrad:
 
     def get_utils_package(self):
         return self.classes.stanford.rsl.conrad.utils
+
+    def get_shapes_simple_package(self):
+        return self.classes.stanford.rsl.conrad.geometry.shapes.simple
