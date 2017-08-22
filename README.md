@@ -15,7 +15,9 @@ CONRAD is a state-of-the-art software platform with extensive documentation. It 
 
 Install via pip:
 
+    pip install git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git
     pip install pyconrad
+
 
 This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
 ``` python
@@ -25,8 +27,7 @@ This will automatically install CONRAD and all python dependencies. You can use 
 
 # Usage
 
-
-The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface:
+You can start CONRAD like this:
 ``` python
 
     from pyconrad import PyConrad
@@ -34,6 +35,16 @@ The central class of the pyconrad package is PyConrad. You can use it to access 
     # PyConrad is a singleton class
     pyconrad = PyConrad()
     # setup PyConrad
+    pyconrad.setup()
+    # start CONRAD
+    pyconrad.start_conrad()  # or pyconrad.start_reconstruction_filter_pipeline()
+```
+
+The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface:
+``` python
+    from pyconrad import PyConrad
+    
+    pyconrad = PyConrad()
     pyconrad.setup()
     # Optional parameters for Java Virtual Machine RAM and own Java projects
     # pyconrad.setup(max_ram = '8G', min_ram= '500M', dev_dirs=['path/to/project/with/own/java/classes']
