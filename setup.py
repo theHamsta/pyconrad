@@ -20,7 +20,7 @@ def setup_package():
            packages=['pyconrad'],
            author='xxx',
            install_requires=[
-               'jpype1','numpy', 'pathlib'
+               'jpype1','numpy', 'pathlib', 'pyconrad_java'
            ],
            dependency_links=[
                "git+git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git@v0.0.1#egg=pyconrad_java"
