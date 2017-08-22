@@ -156,9 +156,18 @@ class PyConrad:
 
     def __getitem__(self, classname):
         success = None
+
+        # Default namespace
+        try:
+            rtn = JClass(classname)
+            success = rtn
+        except:
+            pass
+
+        # Imported namespaces
         for package in self.__imported_namespaces:
             try:
-                rtn = JClass(package+ "."+classname)
+                rtn = JClass(package + "." + classname)
                 success = rtn
             except:
                 pass
