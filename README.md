@@ -15,7 +15,9 @@ CONRAD is a state-of-the-art software platform with extensive documentation. It 
 
 Install via pip:
 
+    pip install git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git
     pip install pyconrad
+
 
 This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
 ``` python
@@ -25,6 +27,17 @@ This will automatically install CONRAD and all python dependencies. You can use 
 
 # Usage
 
+You can start CONRAD like this:
+``` python
+    from pyconrad import PyConrad
+    
+    # PyConrad is a singleton class
+    pyconrad = PyConrad()
+    # setup PyConrad
+    pyconrad.setup()
+    # start CONRAD
+    pyconrad.start_conrad()  # or pyconrad.start_reconstruction_filter_pipeline()
+```
 
 The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface:
 ``` python
@@ -44,9 +57,6 @@ The central class of the pyconrad package is PyConrad. You can use it to access 
     
     # Use Java method of class MickeyMouseGrid2D
     phantom.show()
-    
-    # start CONRAD GUI
-    pyconrad.start_conrad()
 ```
 To transfer data from NumPy to Conrad use the class PyGrid:
 ```python
