@@ -10,6 +10,7 @@ pyconrad = PyConrad()
 pyconrad.setup()
 # Optional parameters for Java Virtual Machine RAM and own Java projects
 # pyconrad.setup(max_ram = '8G', min_ram= '500M', dev_dirs=['path/to/project/with/own/java/classes']
+pyconrad.start_conrad()
 
 # Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
 phantom = pyconrad.classes.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
