@@ -43,9 +43,8 @@ The central class of the pyconrad package is PyConrad. You can use it to access 
 ``` python
     from pyconrad import PyConrad
     
-    # PyConrad is a singleton class
+
     pyconrad = PyConrad()
-    # setup PyConrad
     pyconrad.setup()
     # Optional parameters for Java Virtual Machine RAM and own Java projects
     # pyconrad.setup(max_ram = '8G', min_ram= '500M', dev_dirs=['path/to/project/with/own/java/classes']
