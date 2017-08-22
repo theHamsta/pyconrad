@@ -48,6 +48,8 @@ The central class of the pyconrad package is PyConrad. You can use it to access 
     # Optional parameters for Java Virtual Machine RAM and own Java projects
     # pyconrad.setup(max_ram = '8G', min_ram= '500M', dev_dirs=['path/to/project/with/own/java/classes']
     
+    pyconrad.startConrad()
+    
     # Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
     phantom = pyconrad.classes.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
     # Some packages can be accessed more easily
