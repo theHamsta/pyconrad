@@ -160,6 +160,7 @@ class PyConrad:
             try:
                 rtn = JClass(package+ "."+classname)
                 success = rtn
+                break
             except:
                 pass
 
