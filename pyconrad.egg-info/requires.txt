@@ -1,0 +1,4 @@
+jpype1
+numpy
+pathlib
+pyconrad_java==0.0.1
