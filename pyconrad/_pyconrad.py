@@ -3,15 +3,18 @@
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
-from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy, JClass
+from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy, JClass, JDouble, JArray
 import threading
 import time
 import os
 from . import _windowlistener as wl
 import pyconrad_java
 from pathlib import Path
+from ._proxyclasses import pointNdConstructor, simpleVectorConstructor
 
 module_path = os.path.dirname(__file__)
+
+
 
 class PyConrad:
 
@@ -159,6 +162,11 @@ class PyConrad:
         self.__imported_namespaces.append(package_name)
 
     def __getitem__(self, classname):
+        if(classname == 'PointND'):
+            return pointNdConstructor
+        if(classname == 'SimpleVector'):
+            return simpleVectorConstructor
+
         success = None
         for package in self.__imported_namespaces:
             try:
