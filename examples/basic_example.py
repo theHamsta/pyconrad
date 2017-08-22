@@ -14,8 +14,9 @@ pyconrad.start_conrad()
 
 # Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
 phantom = pyconrad.classes.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
-# Some packages can be accessed more easily
-phantom2 = pyconrad.get_phantom_package().MickeyMouseGrid2D(200,200)
+# Access more easily using imports
+pyconrad.add_import('edu.stanford.rsl.tutorial.phantoms')
+phantom2 = pyconrad['MickeyMouseGrid2D'](200,200)
 
 # Use Java method of class MickeyMouseGrid2D
 phantom.show()

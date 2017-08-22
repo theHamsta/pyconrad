@@ -3,7 +3,7 @@
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
-from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy
+from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy, JClass
 import threading
 import time
 import os
@@ -26,6 +26,8 @@ class PyConrad:
     __gui_instance = None
     __gui_thread = None
     ___instance = None
+
+    __imported_namespaces = []
 
 
     def __new__(cls, *args, **kwargs):
@@ -149,14 +151,19 @@ class PyConrad:
     def is_gui_started(self):
         return self.__is_gui_started
 
-    def get_data_numeric_package(self):
-        return self.classes.stanford.rsl.conrad.data.numeric
+    def add_import(self, package_name):
+        self.__imported_namespaces.append(package_name)
 
-    def get_phantom_package(self):
-        return self.classes.stanford.rsl.tutorial.phantoms
+    def __getitem__(self, classname):
+        success = None
+        for package in self.__imported_namespaces:
+            try:
+                rtn = JClass(package+ "."+classname)
+                success = rtn
+            except:
+                pass
 
-    def get_utils_package(self):
-        return self.classes.stanford.rsl.conrad.utils
+        if success == None:
+            raise Exception('Class not found')
 
-    def get_shapes_simple_package(self):
-        return self.classes.stanford.rsl.conrad.geometry.shapes.simple
+        return success

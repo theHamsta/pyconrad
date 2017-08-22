@@ -147,3 +147,4 @@ class PyGrid:
         grid = ImageUtil.grid_from_tiff(path)
         return self.__class__.from_grid(grid)
 
+
