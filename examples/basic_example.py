@@ -19,6 +19,4 @@ phantom2 = pyconrad.get_phantom_package().MickeyMouseGrid2D(200,200)
 # Use Java method of class MickeyMouseGrid2D
 phantom.show()
 
-# start CONRAD GUI
-pyconrad.start_conrad()
 
