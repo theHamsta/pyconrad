@@ -164,6 +164,6 @@ class PyConrad:
                 pass
 
         if success == None:
-            raise Exception('Class not found')
+            raise Exception('Class \"%s\" not found in the following namespaces:\n %s' % (classname,self.__imported_namespaces))
 
         return success
