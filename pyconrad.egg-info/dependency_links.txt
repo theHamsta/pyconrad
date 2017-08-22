@@ -1,1 +1,0 @@
-/localhome/local/projects/pyconrad_java/pyconrad_java/dist/pyconrad_java-0.0.1.tar.gz#egg=pyconrad_java-0.0.1
