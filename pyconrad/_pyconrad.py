@@ -109,6 +109,10 @@ class PyConrad:
             time.sleep(1)
 
     def __import__libs(self, dev_dirs):
+        # if user forgets the brackets
+        if isinstance(dev_dirs, str):
+            dev_dirs = [dev_dirs]
+
         # check whether CONRAD + RSL can be found nearby
         # yes: navigate there
         # no: use conrad.jar
@@ -168,3 +172,9 @@ class PyConrad:
             raise Exception('Class \"%s\" not found in the following namespaces:\n %s' % (classname,self.__imported_namespaces))
 
         return success
+
+    def enumval_from_int(self, enum_name, value_int):
+        return self[enum_name].values()[value_int]
+
+    def enumval_from_string(self, enum_name, value_string):
+        return self[enum_name].valueOf(value_string)
