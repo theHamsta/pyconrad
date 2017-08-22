@@ -1,1 +1,2 @@
 /localhome/local/projects/pyconrad_java/pyconrad_java/dist/pyconrad_java-0.0.1.tar.gz#egg=pyconrad_java-0.0.1
+-e git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git#egg=pyconrad_java-0.0.1
