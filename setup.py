@@ -23,7 +23,7 @@ def setup_package():
                'jpype1','numpy', 'pathlib', 'pyconrad_java'
            ],
            dependency_links=[
-               "https://git5.cs.fau.de/PyConrad/pyconrad_java/repository/archive.tar.gz?ref=0.0.1#egg=pyconrad-java-0.0.1"
+               "git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git#egg=pyconrad-java-0.0.1"
            ],
            url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
            download_url='https://git5.cs.fau.de/PyConrad/pyCONRAD/repository/archive.tar.gz?ref=0.0.1')
