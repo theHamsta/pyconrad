@@ -18,7 +18,8 @@ def setup_package():
     setup( name='pyconrad',
         version='0.0.1',
            packages=['pyconrad'],
-           author='xxx',
+           author='Andreas Maier',
+           author_email='andreas.maier@fau.de',
            install_requires=[
                'jpype1','numpy', 'pathlib', 'pyconrad_java'
            ],
