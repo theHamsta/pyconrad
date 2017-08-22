@@ -20,7 +20,10 @@ def setup_package():
            packages=['pyconrad'],
            author='xxx',
            install_requires=[
-               '-e git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git@v0.0.1#egg=pyconrad_java'
+               'jpype1','numpy', 'pathlib'
+           ],
+           dependency_links=[
+               "git+ssh://git@github.com/mwilliamson/mayo.git@0.2.1#egg=mayo-0.2.1"
            ],
            url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
            download_url='https://git5.cs.fau.de/PyConrad/pyCONRAD/repository/archive.tar.gz?ref=0.0.1')
