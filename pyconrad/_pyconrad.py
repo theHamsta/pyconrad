@@ -191,7 +191,7 @@ class PyConrad:
         return success
 
     def enumval_from_int(self, enum_name, value_int):
-        return self[enum_name].values()[value_int]
+        return self[enum_name].values()[int(value_int)]
 
     def enumval_from_string(self, enum_name, value_string):
         return self[enum_name].valueOf(value_string)
