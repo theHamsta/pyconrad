@@ -91,4 +91,4 @@ pygrid2.update_grid()
 print(pygrid2)  # Print
 ```
 
-More examples can found [here](examples).
+More examples can be found [here](examples).
