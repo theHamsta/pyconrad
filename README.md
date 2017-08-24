@@ -113,7 +113,7 @@ More examples can be found [here](examples)
     jvm['PointND'](JArray(JDouble)([3,2]))  # works
     makePointND([3, 3])  # works
 
-    # the same applies for , SimpleVector
+    # the same applies for SimpleVector
     jvm['SimpleVector'](JArray(JDouble)([3,2]))  # works
     makeSimpleVector([3, 3])  # works
 
