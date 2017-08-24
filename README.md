@@ -103,4 +103,28 @@ Data changes have to be synchronized:
     print(pygrid2)    
 ```
 
-More examples can found [here](examples)
+More examples can be found [here](examples)
+
+## Frequently encountered problems
+```python
+    # Creating a PointND
+    jvm['PointND'](3,3)  # does not work
+    jvm['PointND']([3,3])  # neither does this
+    jvm['PointND'](JArray(JDouble)([3,2]))  # works
+    makePointND([3, 3])  # works
+
+    # the same applies for , SimpleVector
+    jvm['SimpleVector'](JArray(JDouble)([3,2]))  # works
+    makeSimpleVector([3, 3])  # works
+
+    # Grid.setOrigin(...), setSpacing
+    jvm['Grid2D'](3,2).setOrigin(JArray(JDouble)([2,3]))
+    PyGrid.from_grid(jvm['Grid2D'](3,2)).set_origin([2,3])
+    PyGrid.from_grid(jvm['Grid2D'](3,2)).set_spacing([2,3])
+
+    # Creating nested enums
+    traj = jvm['HelicalTrajectory']()
+    print(traj.getDetectorOffsetU())  # returns a float
+    enumval = jvm['Projection$CameraAxisDirection'].values()[int(traj.getDetectorOffsetU())] # Convert back to enum
+    enumval = jvm.enumval_from_int('Projection$CameraAxisDirection', traj.getDetectorOffsetU())  # or like that
+```
