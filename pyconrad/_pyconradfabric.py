@@ -2,10 +2,7 @@ from jpype import *
 from ._pyconrad import PyConrad
 
 def makeSimpleVector(vec):
-    return PyConrad()['PyConradFabric'].makeSimpleVector(JArray(JDouble)(vec))
+    return JClass('edu.stanford.rsl.conrad.numerics.SimpleVector')(JArray(JDouble)(array))
 
 def makePointND(vec):
-    return PyConrad()['PyConradFabric'].makePointND(JArray(JDouble)(vec))
-
-def makeCameraAxisDirection(val):
-    return PyConrad()['PyConradFabric'].makeCameraAxisDirection(JInt(val))
+    return JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')(JArray(JDouble)(vec))

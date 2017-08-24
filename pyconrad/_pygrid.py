@@ -147,4 +147,9 @@ class PyGrid:
         grid = ImageUtil.grid_from_tiff(path)
         return self.__class__.from_grid(grid)
 
+    def set_origin(self, vec):
+        self.__grid.setOrigin(jpype.JArray(jpype.JDouble)(vec))
+
+    def set_spacing(self, vec):
+        self.__grid.setSpacing(jpype.JArray(jpype.JDouble)(vec))
 
