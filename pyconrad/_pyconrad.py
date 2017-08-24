@@ -10,7 +10,6 @@ import os
 from . import _windowlistener as wl
 import pyconrad_java
 from pathlib import Path
-from ._constructorproxies import pointNdConstructor, simpleVectorConstructor
 
 module_path = os.path.dirname(__file__)
 
