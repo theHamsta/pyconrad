@@ -29,7 +29,6 @@ This will automatically install CONRAD and all python dependencies. You can use 
 
 You can start CONRAD like this:
 ``` python
-
     from pyconrad import PyConrad
 
     # PyConrad is a singleton class
@@ -102,7 +101,6 @@ Data changes have to be synchronized:
     
     # Print
     print(pygrid2)    
-
 ```
 
 More examples can found [here](examples)
