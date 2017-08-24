@@ -128,11 +128,10 @@ class PyConrad:
             dev_path = Path(dev)
             dev_src.append(dev_path.joinpath('src'))
             if dev_path.match("CONRAD"):
-                self.__conrad_path = dev_path
+                self.__conrad_path = str(dev_path)
                 self.__conrad_repo_set = True
                 dev_lib = dev_path.joinpath('lib')
                 dev_classes = dev_path.joinpath('classes', 'production', 'CONRAD')
-                os.chdir(dev_path)
                 extra_libs = (dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if '.jar' == fn.suffix)
                 extra_libs = ';'.join(map(str, [dev_classes, *extra_libs]))
 
