@@ -1,65 +1,54 @@
 
-# Copyright (C) 2010-2017 - Andreas Maier 
+# Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
-import numpy as np
 import jpype
+import numpy as np
+
 from ._pyconrad import PyConrad
 from .constants import java_float_dtype
 
-class PyGrid:
 
+class PyGrid:
     def __init__(self, shape):
         self.__numericpackage = PyConrad.get_instance().classes.stanford.rsl.conrad.data.numeric
-        if len(shape) == 1:
-            self.__grid = self.__numericpackage.Grid1D(shape[0])
-        elif len(shape) == 2:
-            self.__grid = self.__numericpackage.Grid2D(shape[1], shape[0])
-        elif len(shape) == 3:
-            self.__grid = self.__numericpackage.Grid3D(shape[2], shape[1], shape[0])
-        elif len(shape) == 4:
-            self.__grid = self.__numericpackage.Grid4D(shape[3], shape[2], shape[1], shape[0])
-        else:
-            raise Exception('shape dimension not supported')
-        self.__numpy = np.zeros( shape, java_float_dtype )
+        if not 0 < len(shape) < 5:
+            raise Exception("shape dimension of %d not supported" % len(shape))
+        self.__grid = getattr(self.__numericpackage, "Grid{}D".format(len(shape)))(*reversed(shape))
+
+        self.__numpy = np.zeros(shape, java_float_dtype)
         if shape[0] != 0:
             self.__dbuffer = jpype.nio.convertToDirectBuffer(self.__numpy)
         self.shape = shape
         self.typestr = ">f4"
-        self.__array_interface__ = { "shape": shape, "typestr": ">f4", "version" : 3, "data": self.__numpy.data}
+        self.__array_interface__ = {"shape": shape, "typestr": self.typestr, "version": 3, "data": self.__numpy.data}
 
     @staticmethod
     def from_numpy(array):
-        instance = PyGrid([0,0])
+        instance = PyGrid([0, 0])
         shape = array.shape
-        instance.__array_interface__ = { "shape": shape, "dtype": ">f4", "version" : 3, "data":array.data}
+        instance.__array_interface__ = {"shape": shape, "dtype": ">f4", "version": 3, "data": array.data}
         instance.__numpy = array
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
-        instance.shape = array.shape
+        instance.shape = shape
 
-        if len(shape) == 1:
-            instance.__grid = instance.__numericpackage.Grid1D(shape[0])
-        elif len(shape) == 2:
-            instance.__grid = instance.__numericpackage.Grid2D(shape[1], shape[0])
-        elif len(shape) == 3:
-            instance.__grid = instance.__numericpackage.Grid3D(shape[2], shape[1], shape[0])
-        elif len(shape) == 4:
-            instance.__grid = instance.__numericpackage.Grid4D(shape[3], shape[2], shape[1], shape[0])
-        else:
-            raise Exception('shape dimension not supported')
+        if not 0 < array.ndim < 5:
+            raise Exception("shape dimension of %d not supported" % array.ndim)
+        instance.__grid = getattr(instance.__numericpackage, "Grid{}D".format(array.ndim))(*reversed(shape))
+
         instance.update_grid()
         assert array.dtype == java_float_dtype, "Numpy array must be Big Endian 32bit float! Use pyconrad.java_float_dtype!"
         return instance
 
     @staticmethod
     def from_grid(grid):
-        instance = PyGrid([0,0])
+        instance = PyGrid([0, 0])
         instance.__grid = grid
         size = list(reversed(grid.getSize()[:]))
         instance.__numpy = np.zeros(size, java_float_dtype)
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(instance.__numpy)
         instance.shape = instance.__numpy.shape
-        instance.__array_interface__ = { "shape": instance.shape, "typestr": ">f4", "version" : 3, "data":instance.__numpy.data}
+        instance.__array_interface__ = {"shape": instance.shape, "typestr": ">f4", "version": 3, "data": instance.__numpy.data}
         instance.update_numpy()
         return instance
 
@@ -72,43 +61,41 @@ class PyGrid:
     def update_numpy(self):
         assert (self.__numpy.shape == self.shape)
         shape = self.shape
-        if shape[0] == 0:
+        if 0 == shape[0]:
             return
 
-        fBuffer = self.__dbuffer.asFloatBuffer()
-        if len(shape) == 1 or len(shape) == 2:
-            fBuffer.put(self.__grid.getBuffer())
-        elif len(shape) == 3:
-            fBuffer = self.__dbuffer.asFloatBuffer()
-            for z in range(0,shape[0]):
-                subgrid = self.__grid.getSubGrid(z).getBuffer()
-                fBuffer.put(subgrid) #TODO: stride == 0?
-
-        elif len(shape) == 4:
-            fBuffer = self.__dbuffer.asFloatBuffer()
+        f_buffer = self.__dbuffer.asFloatBuffer()
+        if 0 < len(shape) < 3:
+            f_buffer.put(self.__grid.getBuffer())
+        elif len(shape) is 3:
+            f_buffer = self.__dbuffer.asFloatBuffer()
+            for z in range(0, shape[0]):
+                f_buffer.put(self.__grid.getSubGrid(z).getBuffer())  # TODO: stride == 0?
+        elif len(shape) is 4:
+            f_buffer = self.__dbuffer.asFloatBuffer()
             for f in range(shape[0]):
                 for z in range(shape[1]):
-                    fBuffer.put(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer()) #TODO: stride == 0?
+                    f_buffer.put(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer())  # TODO: stride == 0?
         else:
-            raise Exception('shape dimension not supported')
+            raise Exception("shape dimension not supported")
 
     def update_grid(self):
-        assert (self.__numpy.shape == self.shape)
+        assert self.__numpy.shape == self.shape
         shape = self.shape
-        if shape[0] == 0:
+        if 0 == shape[0]:
             return
-        fBuffer = self.__dbuffer.asFloatBuffer()
-        if len(shape) == 1 or len(shape) == 2:
-            fBuffer.get(self.__grid.getBuffer())
-        elif len(shape) == 3:
+        f_buffer = self.__dbuffer.asFloatBuffer()
+        if 0 < len(shape) < 3:
+            f_buffer.get(self.__grid.getBuffer())
+        elif len(shape) is 3:
             for z in range(shape[0]):
-                fBuffer.get(self.__grid.getSubGrid(z).getBuffer()) #TODO: stride == 0?
-        elif len(shape) == 4:
+                f_buffer.get(self.__grid.getSubGrid(z).getBuffer())  # TODO: stride == 0?
+        elif len(shape) is 4:
             for f in range(shape[0]):
                 for z in range(shape[1]):
-                    fBuffer.get(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer()) #TODO: stride == 0?
+                    f_buffer.get(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer())  # TODO: stride == 0?
         else:
-            raise Exception('shape dimension not supported')
+            raise Exception("shape dimension not supported")
 
     def save_numpy(self, name):
         from scipy.misc import imsave
@@ -134,17 +121,16 @@ class PyGrid:
             PyConrad.get_instance().start_conrad()
         self.__grid.show()
 
-    def typestr(self):
+    @staticmethod
+    def typestr():
         return ">f4"
 
     def __array__(self, dtype=None):
         return self.__numpy.__array__(dtype)
 
     def save_grid_as_tiff(self, path):
-        ImageUtil.save_grid_as_tiff(self.__grid)
+        ImageUtil.save_grid_as_tiff(self.__grid, path)
 
     def from_tiff(self, path):
         grid = ImageUtil.grid_from_tiff(path)
         return self.__class__.from_grid(grid)
-
-
