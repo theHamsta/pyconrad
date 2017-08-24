@@ -161,11 +161,6 @@ class PyConrad:
         self.__imported_namespaces.append(package_name)
 
     def __getitem__(self, classname):
-        if(classname == 'PointND'):
-            return pointNdConstructor
-        if(classname == 'SimpleVector'):
-            return simpleVectorConstructor
-
         success = None
 
         # Default namespace
