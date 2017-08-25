@@ -60,6 +60,8 @@ class PyConrad:
             print("JVM already started")
 
     def start_conrad(self):
+        if not self.is_java_initalized():
+            raise Exception('JVM not started! Use Pyconrad().setup()')
         if self.__gui_thread is None:
             self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
             self.__gui_thread.start()
@@ -159,6 +161,8 @@ class PyConrad:
         self.__imported_namespaces.append(package_name)
 
     def __getitem__(self, classname):
+        if not self.is_java_initalized():
+            raise Exception('JVM not started! Use Pyconrad().setup()')
         success = None
 
         # Default namespace
