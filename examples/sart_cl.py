@@ -3,10 +3,12 @@ import numpy as np
 from matplotlib import pyplot as plt
 from jpype import *
 
+# Compare to Java-Version: CONRAD/src/edu/stanford/rsl/tutorial/iterative/SartCL.java
 
 #, '/localhome/local/projects/CONRADRSL/'
 jvm = PyConrad()
-jvm.setup(dev_dirs =['/localhome/local/eclipse-workspace/pyconrad_helper', '/localhome/local/projects/CONRAD/' ])
+jvm.setup()
+# jvm.setup(dev_dirs =['/localhome/local/eclipse-workspace/pyconrad_helper', '/localhome/local/projects/CONRAD/' ])
 
 jvm.add_import('edu.stanford.rsl.conrad.data.numeric')
 jvm.add_import('edu.stanford.rsl.tutorial.phantoms')
