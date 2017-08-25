@@ -1,5 +1,5 @@
 # Add your requirements here like:
-numpy
-jpype1
-pathlib 
+numpy>=1.9
+jpype1>=0.6
+pathlib>=1.0
 -e git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git#egg=pyconrad_java-0.0.1
