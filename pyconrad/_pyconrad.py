@@ -165,7 +165,7 @@ class PyConrad:
         try:
             rtn = JClass(classname)
             success = rtn
-        except RuntimeError:
+        except Exception:
             pass
 
         # Imported namespaces
@@ -174,7 +174,7 @@ class PyConrad:
                 rtn = JClass(package + "." + classname)
                 success = rtn
                 break
-            except RuntimeError:
+            except Exception:
                 pass
 
         if success is None:
