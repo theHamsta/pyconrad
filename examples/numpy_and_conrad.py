@@ -8,7 +8,8 @@ import numpy as np
 pyconrad = PyConrad()
 pyconrad.setup()
 
-phantom = pyconrad.get_phantom_package().MickeyMouseGrid2D(200,200)
+pyconrad.add_import('edu.stanford.rsl.tutorial.phantoms')
+phantom = pyconrad['MickeyMouseGrid2D'](200,200)
 
 # Create PyGrid from Grid2D
 pygrid1 = PyGrid.from_grid(phantom)
