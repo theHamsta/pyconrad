@@ -16,7 +16,7 @@ def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
     sphinx = ['sphinx'] if needs_sphinx else []
     setup( name='pyconrad',
-        version='0.0.3',
+        version='change_version_manually_in_setup.py_when_uploading_via_twine',
            packages=['pyconrad'],
            author='Andreas Maier',
            author_email='andreas.maier@fau.de',
