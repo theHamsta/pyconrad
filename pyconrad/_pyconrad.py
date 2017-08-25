@@ -177,7 +177,7 @@ class PyConrad:
             except Exception:
                 pass
 
-        if success is None:
+        if not success:
             raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (classname, self.__imported_namespaces))
 
         return success
