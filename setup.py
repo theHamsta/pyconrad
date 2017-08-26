@@ -11,6 +11,24 @@
 import sys
 from setuptools import setup
 
+import os
+from distutils.core import setup
+from distutils.command.install import install as _install
+
+
+def _post_install(dir):
+    cwd=os.path.join(dir, 'pyconrad')
+    print(cwd)
+
+
+class install(_install):
+    def run(self):
+        _install.run(self)
+        self.execute(_post_install, (self.install_lib,),
+                     msg="Running post install task")
+
+
+
 
 def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
@@ -26,6 +44,7 @@ def setup_package():
            dependency_links=[
                "git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git#egg=pyconrad-java-0.0.1"
            ],
+           cmdclass={'install': install},
            url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
            download_url='https://git5.cs.fau.de/PyConrad/pyCONRAD/repository/archive.tar.gz?ref=0.0.1')
         #setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
