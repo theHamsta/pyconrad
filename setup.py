@@ -8,24 +8,27 @@
     http://pyscaffold.readthedocs.org/
 """
 
+import os
 import sys
+from distutils.command.install import install as _install
+from distutils.core import setup
+
 from setuptools import setup
 
-import os
-from distutils.core import setup
-from distutils.command.install import install as _install
-
-
+# post install hint from:
+# https://stackoverflow.com/questions/17806485/execute-a-python-script-post-install-using-distutils-setuptools
 def _post_install(dir):
+    from pyconrad import download_conrad
     cwd=os.path.join(dir, 'pyconrad')
-    print(cwd)
+    download_conrad.download_conrad(cwd)
+    print("CONRAD has been installed to %s" % download_conrad.conrad_jar_dir())
 
 
 class install(_install):
     def run(self):
         _install.run(self)
         self.execute(_post_install, (self.install_lib,),
-                     msg="Running post install task")
+                     msg="Installing Java dependencies...")
 
 
 
@@ -39,10 +42,7 @@ def setup_package():
            author='Andreas Maier',
            author_email='andreas.maier@fau.de',
            install_requires=[
-               'jpype1','numpy', 'pathlib', 'pyconrad_java'
-           ],
-           dependency_links=[
-               "git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git#egg=pyconrad-java-0.0.1"
+               'jpype1','numpy', 'pathlib', 'zipfile', 'urllib'
            ],
            cmdclass={'install': install},
            url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',

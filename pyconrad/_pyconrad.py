@@ -7,11 +7,11 @@ import threading
 import time
 from pathlib import Path
 
-import pyconrad_java
 from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy, JClass, JDouble, JArray
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
 
 from . import _windowlistener as wl
+from . import download_conrad
 
 module_path = os.path.dirname(__file__)
 
@@ -139,8 +139,8 @@ class PyConrad:
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
         else:
-            self.__conrad_path = pyconrad_java.conrad_jar_dir
-            dev_src.append(pyconrad_java.conrad_jar_path)
+            self.__conrad_path = download_conrad.conrad_jar_dir()
+            dev_src.append(download_conrad.conrad_jar_path())
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
 
