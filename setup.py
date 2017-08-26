@@ -42,7 +42,7 @@ def setup_package():
            author='Andreas Maier',
            author_email='andreas.maier@fau.de',
            install_requires=[
-               'jpype1','numpy', 'pathlib', 'urllib'
+               'jpype1','numpy', 'pathlib', 'urllib3'
            ],
            cmdclass={'install': install},
            url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
