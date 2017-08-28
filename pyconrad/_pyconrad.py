@@ -48,6 +48,9 @@ class PyConrad:
             try:
                 curr_directory = os.getcwd()
                 conrad_source_and_libs = self.__import__libs(dev_dirs)
+
+                if not os.path.exists(self.__conrad_path):
+                    download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
                 startJVM(getDefaultJVMPath(), conrad_source_and_libs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
                 os.chdir(curr_directory)
