@@ -1,5 +1,8 @@
-from pyconrad import PyGrid, PyConrad, ImageUtil
-import numpy as np
+from pyconrad import PyGrid, PyConrad
+
+import _oldwrapmethods
+
+
 
 PyConrad.get_instance().setup(min_ram='400M')
 
@@ -10,18 +13,18 @@ pygrid = PyGrid(shape)
 print(pygrid)
 
 try:
-    numpyIn = np.random.rand(shape[0],shape[1]).astype(PyGrid.java_float_type())
+    numpyIn = np.random.rand(shape[0],shape[1]).astype(PyGrid.java_float_dtype())
     pygrid2 = PyGrid.from_numpy(numpyIn)
 
-    numpyOut = ImageUtil.wrapGrid2D(pygrid2.grid())
+    numpyOut = _oldwrapmethods.wrapGrid2D(pygrid2.grid())
     print(pygrid2)
     print(numpyOut)
     assert np.allclose(numpyIn,numpyOut)
 
     pygrid2.grid().setAtIndex(3,3, 0.4)
     pygrid2.update_numpy()
-    numpyOut = ImageUtil.wrapGrid2D(pygrid2.grid())
-    assert np.allclose(pygrid2.numpy(),numpyOut)
+    numpyOut = _oldwrapmethods.wrapGrid2D(pygrid2.grid())
+    assert np.allclose(pygrid2,numpyOut)
     print("Test from_numpy passed")
 except Exception as ex:
     print(ex)
@@ -58,9 +61,9 @@ pygrid = PyGrid.from_grid(gridIn)
 pygrid.update_grid()
 pygrid.show_grid()
 
-import matplotlib.pyplt as plt
+import matplotlib.pyplot as plt
 
-numpyOut = pygrid.numpy()
+numpyOut = pygrid
 
 plt.imshow( pygrid[100])
 
