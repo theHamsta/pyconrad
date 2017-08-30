@@ -13,7 +13,11 @@ from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPacka
 from . import _windowlistener as wl
 from . import download_conrad
 
+from . import _extend_conrad_classes
+
 module_path = os.path.dirname(__file__)
+
+
 
 
 class PyConrad:
@@ -57,6 +61,7 @@ class PyConrad:
                 self.classes = JPackage("edu")
                 self.ij = JPackage("ij")
                 self.java = java
+                _extend_conrad_classes.extend_all_classes()
             except JException as ex:
                 print(ex)
         else:
