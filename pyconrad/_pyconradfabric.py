@@ -1,4 +1,4 @@
-from jpype import *
+from jpype import JArray, JDouble, JInt
 from ._pyconrad import PyConrad
 
 def makeSimpleVector(vec):
