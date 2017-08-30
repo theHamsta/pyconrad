@@ -194,3 +194,7 @@ class PyConrad:
 
     def enumval_from_string(self, enum_name, value_string):
         return self[enum_name].valueOf(value_string)
+
+    @property
+    def is_initialized(self):
+        return self.__is_gui_started
