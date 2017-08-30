@@ -68,7 +68,7 @@ pygrid1 = PyGrid.from_grid(phantom)  # Create PyGrid from Grid2D
 pygrid1.grid().show()  # Use Java method
 
 from scipy.misc import imshow
-imshow(pygrid1.numpy()) # or imshow(pygrid1) to use a Python method
+imshow(pygrid1()) # or imshow(pygrid1) to use a Python method
 ```
 Data changes have to be synchronized:
 ``` python
