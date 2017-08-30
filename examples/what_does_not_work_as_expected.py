@@ -24,11 +24,11 @@ jvm.add_import('edu.stanford.rsl.conrad.data.numeric.opencl')
 jvm['PointND'](3,3)  # does not work
 jvm['PointND']([3,3])  # neither does this
 jvm['PointND'](JArray(JDouble)([3,2]))  # works
-makePointND([3, 3])  # works
+jvm['PointND'].from_list([3,2])  # works
 
 # the same applies for SimpleVector
 jvm['SimpleVector'](JArray(JDouble)([3,2]))  # works
-makeSimpleVector([3, 3])  # works
+jvm['SimpleVector'].from_list([3, 3])  # works
 
 # Grid.setOrigin(...), setSpacing
 jvm['Grid2D'](3,2).setOrigin(JArray(JDouble)([2,3]))
