@@ -11,15 +11,18 @@ CONRAD is a state-of-the-art software platform with extensive documentation. It 
 Install via pip:
 
 ```bash
-pip install git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git
 pip install pyconrad
 ```
 
 This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
 ```python
-import pyconrad_java
-print(pyconrad_java.conrad_jar_dir)
+import pyconrad
+
+print("CONRAD installation directory is:")
+print(pyconrad.conrad_jar_dir())
 ```
+
+If you encounter any problems during installtion please have a look at our [wiki](https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home)!
 
 # Usage
 
