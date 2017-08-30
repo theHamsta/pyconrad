@@ -11,8 +11,8 @@ jvm.add_import('edu.stanford.rsl.conrad.geometry.shapes.simple')
 
 
 point = jvm['PointND'](JArray(JDouble)([3.2,1.]))
-point.say_hello()
-point.numpy()
+print(type(point.numpy()))
+print(point.numpy())
 
 # print(type(aclass))
 #
