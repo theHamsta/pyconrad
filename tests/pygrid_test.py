@@ -1,6 +1,7 @@
 from pyconrad import PyGrid, PyConrad
 
 import _oldwrapmethods
+import numpy as np
 
 
 
