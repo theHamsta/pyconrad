@@ -14,11 +14,11 @@ def _extend_pointnd():
     def _pointnd_from_list(cls, array):
         return cls(pyconrad.JArray(pyconrad.JDouble)(array))
 
-    def numpy_pointnd(self):
+    def _numpy_pointnd(self):
         return np.array(self.getCoordinates()[:])
 
     pointnd_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.geometry.shapes.simple.PointND
-    pointnd_class.as_numpy = numpy_pointnd
+    pointnd_class.as_numpy = _numpy_pointnd
     pointnd_class.from_numpy = _pointnd_from_numpy
     pointnd_class.from_list = _pointnd_from_list
 
@@ -31,11 +31,11 @@ def _extend_simple_vector():
     def _simple_vector_from_list(cls, array):
         return cls(pyconrad.JArray(pyconrad.JDouble)(array))
 
-    def numpy_simple_vector(self):
+    def _numpy_simple_vector(self):
         return np.array(self.copyAsDoubleArray())
 
     simple_vector_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.numerics.SimpleVector
-    simple_vector_class.as_numpy = numpy_simple_vector
+    simple_vector_class.as_numpy = _numpy_simple_vector
     simple_vector_class.from_numpy = _simple_vector_from_numpy
     simple_vector_class.from_list = _simple_vector_from_list
 
@@ -48,11 +48,11 @@ def _extend_simple_matrix():
     def _simple_matrix_from_list(cls, array):
         return cls(pyconrad.JArray(pyconrad.JDouble, np.ndim(array))(array))
 
-    def numpy_simple_matrix(self):
+    def _numpy_simple_matrix(self):
         return np.matrix(self.copyAsDoubleArray())
 
     simple_matrix_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.numerics.SimpleMatrix
-    simple_matrix_class.as_numpy = numpy_simple_matrix
+    simple_matrix_class.as_numpy = _numpy_simple_matrix
     simple_matrix_class.from_numpy = _simple_matrix_from_numpy
     simple_matrix_class.from_list = _simple_matrix_from_list
 
