@@ -14,6 +14,9 @@ point = jvm['PointND'](JArray(JDouble)([3.2,1.]))
 print(type(point.numpy()))
 print(point.numpy())
 
+otherpoint = point.clone()
+print(otherpoint.numpy())
+
 # print(type(aclass))
 #
 # def say_hello(self):
