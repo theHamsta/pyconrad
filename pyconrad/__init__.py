@@ -10,7 +10,7 @@ try:
     __version__ = pkg_resources.get_distribution(__name__).version
 except:
     __version__ = 'unknown'
-
+from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 from ._pyconrad import PyConrad
