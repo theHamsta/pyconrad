@@ -38,6 +38,16 @@ numpy_matrix3 = java_matrix3.as_numpy()
 pyconrad.add_import('edu.stanford.rsl.tutorial.phantoms')
 phantom = pyconrad['MickeyMouseGrid2D'](200,200)
 
+#extension methods are added tu numeric grid, which is the parent class of Grid1D, Grid2D, Grid3D,...
+pyconrad.add_import("edu.stanford.rsl.conrad.data.numeric")
+java_grid3D = pyconrad["Grid3D"](100,100,100)
+java_grid3D2 = pyconrad["Grid3D"].from_numpy(np.array([[[2.1,3.1],[2.2,3.2],[2.3,3.3]]]))
+java_grid3D3 = pyconrad["Grid3D"].from_list([[[2.1,3.1],[2.2,3.2],[2.3,3.3]]])
+
+np_grid3D = java_grid3D.as_numpy()
+np_grid3D2 = java_grid3D2.as_numpy()
+np_grid3D3 = java_grid3D3.as_numpy()
+
 # Create PyGrid from Grid2D
 pygrid1 = PyGrid.from_grid(phantom)
 # use Java method
