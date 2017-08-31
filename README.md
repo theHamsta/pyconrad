@@ -14,7 +14,12 @@ Install via pip:
 pip install pyconrad
 ```
 
-This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
+This will automatically install CONRAD and all python dependencies.
+Start the CONRAD reconstruction pipeline using (from bash or Windows cmd):
+```bash
+pyconrad
+```
+You can use the following python code to get the installation directory of CONRAD:
 ```python
 import pyconrad
 
