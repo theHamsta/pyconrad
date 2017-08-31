@@ -32,4 +32,4 @@ class WindowListener(wa):
         pass
 
     def windowClosing(self, e):
-        pyconrad.PyConrad.get_instance().__stop_gui()
+        pyconrad.PyConrad.get_instance().stop_gui()

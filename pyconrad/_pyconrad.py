@@ -91,7 +91,7 @@ class PyConrad:
     def is_java_initalized():
         return isJVMStarted()
 
-    def __stop_gui(self):
+    def stop_gui(self):
         java.lang.System.exit(0)
         self.__is_gui_started = False
 
