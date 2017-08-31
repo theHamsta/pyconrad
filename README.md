@@ -95,6 +95,19 @@ print(pygrid2)
 
 More examples can be found [here](examples)
 
+## Extension methods for java classes
+For easy transition between java and python we extent the java classes in python to convert easiliy between the respective java class and the respective numpy structure.
+The following java classes are extended:
+- PointND
+- SimpleVector
+- SimpleMatrix
+- Numeric Grid(therefore all Grid1D - Grid4D)
+
+with the methods:
+- as_numpy (array or matrix depending on the class representation)
+- from_numpy
+- from_list
+
 ## Frequently encountered problems
 ```python
 # Creating a PointND
