@@ -10,10 +10,9 @@
 
 import os
 import sys
-from distutils.command.install import install as _install
-from distutils.core import setup
-
 from setuptools import setup
+from setuptools.command.develop import develop
+from setuptools.command.install import _install
 
 # post install hint from:
 # https://stackoverflow.com/questions/17806485/execute-a-python-script-post-install-using-distutils-setuptools
@@ -40,15 +39,21 @@ def setup_package():
     sphinx = ['sphinx'] if needs_sphinx else []
     setup( name='pyconrad',
            version='change_version_manually_in_setup.py_when_uploading_via_twine',
-           packages=['pyconrad'],
-           author='Andreas Maier',
-           author_email='andreas.maier@fau.de',
-           install_requires=[
-               'jpype1','numpy', 'pathlib', 'urllib3'
-           ],
-           cmdclass={'install': install},
-           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/'
-           )
+            packages=['pyconrad'],
+            author='Andreas Maier',
+            author_email='andreas.maier@fau.de',
+            license ='GPL 3.0',
+            install_requires=[
+                'jpype1','numpy', 'pathlib', 'urllib3'
+                ],
+            cmdclass={'install': install},
+            url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
+            entry_points={
+                'console_scripts': [
+                    'pyconrad = pyconrad.__main__:main',
+                    ]
+                },
+            )
         #setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
           #use_pyscaffold=True)
 
