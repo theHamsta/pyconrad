@@ -7,18 +7,6 @@ from ._pygrid import PyGrid
 
 class ImageUtil:
 
-    ###################
-    ## Image Wrapper ##
-    ###################
-
-    @staticmethod
-    def numpy_from_grid(grid):
-        return PyGrid.from_grid(grid).numpy()
-
-    @staticmethod
-    def grid_from_numpy(array):
-        return PyGrid.from_numpy(array).grid()
-
     #################
     ## Save Images ##
     #################

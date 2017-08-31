@@ -98,17 +98,46 @@ print(pygrid2)
 
 More examples can be found [here](examples)
 
+## Extension methods for java classes
+For easy transition between java and python we extent the java classes in python to convert easiliy between the respective java class and the respective numpy structure.
+The following java classes are extended:
+- PointND
+- SimpleVector
+- SimpleMatrix
+- Numeric Grid(therefore all Grid1D - Grid4D)
+
+with the methods:
+- as_numpy (array or matrix depending on the class representation)
+- from_numpy
+- from_list
+
 ## Frequently encountered problems
 ```python
 # Creating a PointND
 jvm['PointND'](3,3)  # does not work
 jvm['PointND']([3,3])  # neither does this
 jvm['PointND'](JArray(JDouble)([3,2]))  # works
-makePointND([3, 3])  # works
+jvm['PointND'].from_numpy(np.array([2.1,3.1])) #works, uses extension method
+jvm['PointND'].from_list([2.1,3.1]) #works, uses extension method
+
+# Getting PointND as numpy array
+numpy_point = java_point.as_numpy()
 
 # the same applies for SimpleVector
 jvm['SimpleVector'](JArray(JDouble)([3,2]))  # works
-makeSimpleVector([3, 3])  # works
+jvm['SimpleVector'].from_numpy(np.array([2.1,3.1])) #works, uses extension method
+jvm['SimpleVector'].from_list([2.1,3.1]) #works, uses extension method
+
+#Getting SimpleVector as numpy array
+numpy_vector = java_vector.as_numpy()
+
+#the same applies for SimpleMatrix
+jvm['SimpleMatrix'](JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
+jvm['SimpleMatrix'].from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
+jvm['SimpleMatrix'].from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
+
+#Getting SimpleMatrix as numpy matrix
+numpy_matrix = java_matrix.as_numpy()
 
 # Grid.setOrigin(...), setSpacing
 jvm['Grid2D'](3,2).setOrigin(JArray(JDouble)([2,3]))
