@@ -56,8 +56,29 @@ def _extend_simple_matrix():
     simple_matrix_class.from_numpy = _simple_matrix_from_numpy
     simple_matrix_class.from_list = _simple_matrix_from_list
 
+def _extend_numeric_grid():
+
+    @classmethod
+    def _numeric_grid_from_numpy(cls,array):
+        if array.dtype == pyconrad.java_float_dtype:
+            return pyconrad.PyGrid.from_numpy(array).grid()
+        else:
+            return pyconrad.PyGrid.from_numpy(np.array(array,pyconrad.java_float_dtype)).grid()
+
+    @classmethod
+    def _numeric_grid_from_list(cls,input_list):
+        return pyconrad.PyGrid.from_numpy(np.array(input_list,pyconrad.java_float_dtype)).grid()
+
+    def _numpy_grid(self):
+        return np.array(pyconrad.PyGrid.from_grid(self))
+
+    simple_matrix_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.NumericGrid
+    simple_matrix_class.as_numpy = _numpy_grid
+    simple_matrix_class.from_numpy = _numeric_grid_from_numpy
+    simple_matrix_class.from_list = _numeric_grid_from_list
+
 def extend_all_classes():
     _extend_pointnd()
     _extend_simple_vector()
     _extend_simple_matrix()
-
+    _extend_numeric_grid()
