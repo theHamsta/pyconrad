@@ -84,10 +84,19 @@ def _extend_numeric_grid():
         else:
             return self.setValue(idxs, value)
 
+    def _save_as_tiff(self, path):
+        pyconrad.ImageUtil.save_grid_as_tiff(self, path)
+
+    @staticmethod
+    def _from_tiff(cls, path):
+        return pyconrad.ImageUtil.grid_from_tiff(path)
+
     grid_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.NumericGrid
     grid_class.as_numpy = _numpy_grid
     grid_class.from_numpy = _numeric_grid_from_numpy
     grid_class.from_list = _numeric_grid_from_list
+    grid_class.from_tiff = _from_tiff
+    grid_class.save_tiff = _save_as_tiff
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
 
