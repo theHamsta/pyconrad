@@ -72,10 +72,24 @@ def _extend_numeric_grid():
     def _numpy_grid(self):
         return np.array(pyconrad.PyGrid.from_grid(self))
 
-    simple_matrix_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.NumericGrid
-    simple_matrix_class.as_numpy = _numpy_grid
-    simple_matrix_class.from_numpy = _numeric_grid_from_numpy
-    simple_matrix_class.from_list = _numeric_grid_from_list
+    def _numeric_grid_getitem(self, idxs):
+        if isinstance(idxs, int) and not isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid1D):
+            return self.getSubGrid(idxs)
+        else:
+            return self.getValue(idxs)
+
+    def _numeric_grid_setitem(self, idxs, value):
+        if isinstance(idxs, int) and not isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid1D):
+            return self.setSubGrid(idxs, value)
+        else:
+            return self.setValue(idxs, value)
+
+    grid_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.NumericGrid
+    grid_class.as_numpy = _numpy_grid
+    grid_class.from_numpy = _numeric_grid_from_numpy
+    grid_class.from_list = _numeric_grid_from_list
+    grid_class.__getitem__ = _numeric_grid_getitem
+    grid_class.__setitem__ = _numeric_grid_setitem
 
 def extend_all_classes():
     _extend_pointnd()
