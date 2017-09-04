@@ -88,7 +88,7 @@ def _extend_numeric_grid():
         pyconrad.ImageUtil.save_grid_as_tiff(self, path)
 
     @staticmethod
-    def _from_tiff(cls, path):
+    def _from_tiff(path):
         return pyconrad.ImageUtil.grid_from_tiff(path)
 
     grid_class = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.NumericGrid
