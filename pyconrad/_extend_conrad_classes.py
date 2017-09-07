@@ -84,6 +84,10 @@ def _extend_numeric_grid():
         else:
             return self.setValue(idxs, value)
 
+    @property
+    def _numeric_grid_shape(self):
+        return list(reversed(self.getSize()[:]))
+
     def _save_as_tiff(self, path):
         pyconrad.ImageUtil.save_grid_as_tiff(self, path)
 
@@ -99,6 +103,7 @@ def _extend_numeric_grid():
     grid_class.save_tiff = _save_as_tiff
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
+    grid_class.shape = _numeric_grid_shape
 
 def extend_all_classes():
     _extend_pointnd()

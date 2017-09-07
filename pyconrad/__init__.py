@@ -14,5 +14,6 @@ from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 from ._pyconrad import PyConrad
+from ._classgetter import ClassGetter
 from .constants import java_float_dtype
 from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_file
