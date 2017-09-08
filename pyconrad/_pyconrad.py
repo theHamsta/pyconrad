@@ -59,6 +59,8 @@ class PyConrad:
                 os.chdir(self.__conrad_path)
                 startJVM(getDefaultJVMPath(), conrad_source_and_libs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
                 os.chdir(curr_directory)
+
+                self._check_jre_version()
                 self.classes = JPackage("edu")
                 self.ij = JPackage("ij")
                 self.java = java
@@ -209,3 +211,11 @@ class PyConrad:
     @property
     def is_initialized(self):
         return self.__is_gui_started
+
+    def _check_jre_version(self):
+        '''
+        Check JRE version. We need >1.8
+        '''
+        jre_version = java.lang.System.getProperty("java.version").split('.')
+        assert int(jre_version[0]) == 1, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+        assert int(jre_version[1]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"

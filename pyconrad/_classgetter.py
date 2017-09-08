@@ -2,6 +2,10 @@ from ._pyconrad import PyConrad, JClass
 
 
 class ClassGetter:
+    """
+    Does the same thing as the old PyConrad()['Class'] but not globally,
+    i.e. you can have multiple sets of namespaces (e.g. per file)
+    """
 
     def __init__(self, namespaces = []):
         if isinstance(namespaces,str):
