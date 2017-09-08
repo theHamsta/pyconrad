@@ -69,7 +69,7 @@ class PyConrad:
             except JavaException as ex:
                 print(ex)
         else:
-            print("JVM already started")
+            raise Exception("JVM already started")
 
     def start_conrad(self):
         if not self.is_java_initalized():
