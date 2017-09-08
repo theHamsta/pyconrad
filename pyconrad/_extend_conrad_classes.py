@@ -75,6 +75,15 @@ def _extend_numeric_grid():
     def _numeric_grid_getitem(self, idxs):
         if isinstance(idxs, int) and not isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid1D):
             return self.getSubGrid(idxs)
+        elif isinstance(idxs, slice) and isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D):
+            start = idxs.start or 0
+            end = idxs.stop or self.getSize()[2]
+            assert idxs.step == 1 or not idxs.step, "Only step==1 is supported"
+
+            rtn = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D(self.getSize()[0],self.getSize()[1], end - start, False)
+            for i in range(start, end):
+                rtn.setSubGrid(i - start, self.getSubGrid(i))
+            return rtn
         else:
             return self.getValue(idxs)
 
