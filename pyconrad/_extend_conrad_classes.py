@@ -81,6 +81,8 @@ def _extend_numeric_grid():
             assert idxs.step == 1 or not idxs.step, "Only step==1 is supported"
 
             rtn = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D(self.getSize()[0],self.getSize()[1], end - start, False)
+            rtn.setOrigin(self.getOrigin())
+            rtn.setSpacing(self.getSpacing())
             for i in range(start, end):
                 rtn.setSubGrid(i - start, self.getSubGrid(i))
             return rtn

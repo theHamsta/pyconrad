@@ -7,8 +7,8 @@ from jpype import *
 
 #, '/localhome/local/projects/CONRADRSL/'
 jvm = PyConrad()
-# jvm.setup()
-jvm.setup(dev_dirs =['/localhome/local/projects/CONRAD/' ])
+jvm.setup()
+#jvm.setup(dev_dirs =['/localhome/local/projects/CONRAD/' ])
 
 jvm.add_import('edu.stanford.rsl.conrad.data.numeric')
 jvm.add_import('edu.stanford.rsl.tutorial.phantoms')
@@ -75,7 +75,7 @@ try:
     sino.setOrigin(JArray(JDouble)([0, 0, 0]))
     sino.setSpacing(JArray(JDouble)([1, 1, 1]))
     cbp.fastProjectRayDrivenCL(sino, grid)
-    sino.save_tiff('/localhome/local/phatom.tiff')
+    #sino.save_tiff('/localhome/local/phatom.tiff')
 
     sart = jvm['SartCL'](grid.getSize(), grid.getSpacing(), grid.getOrigin(), sino, 0.8)
     start = java.lang.System.currentTimeMillis()

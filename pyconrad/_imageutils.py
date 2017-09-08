@@ -26,11 +26,17 @@ class ImageUtil:
 
     @staticmethod
     def grid_from_tiff(path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.IJ.openImage(path))
+        ij = PyConrad.get_instance().ij.IJ.openImage(path)
+        if not ij:
+            raise RuntimeError('Error opening file \'%s\'' % path)
+        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(ij)
         return grid
 
     @staticmethod
     def array_from_tiff(path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.IJ.openImage(path))
+        ij = PyConrad.get_instance().ij.IJ.openImage(path)
+        if not ij:
+            raise RuntimeError('Error opening file \'%s\'' % path)
+        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus()
         return ImageUtil.numpy_from_grid(grid)
 
