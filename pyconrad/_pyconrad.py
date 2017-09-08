@@ -171,12 +171,12 @@ class PyConrad:
         return self.__is_gui_started
 
     # Use ClassGetter
-    # @deprecated
+    @deprecated
     def add_import(self, package_name):
         self.__imported_namespaces.append(package_name)
 
     # Use ClassGetter
-    # @deprecated
+    @deprecated
     def __getitem__(self, classname):
         if not self.is_java_initalized():
             raise Exception('JVM not started! Use Pyconrad().setup()')
