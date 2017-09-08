@@ -86,7 +86,7 @@ try:
     java.lang.System.out.println("L1: %f" % foo.getGridOperator().normL1(foo))
     java.lang.System.out.println("RMSE: "+ str(foo.getGridOperator().rmse(foo, grid)))
     foo.show()
-except JException as e:
+except JavaException as e:
     e.printStackTrace()
 
 while True:

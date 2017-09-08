@@ -7,7 +7,7 @@ import threading
 import time
 from pathlib import Path
 
-from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy, JClass, JDouble, JArray
+from jpype import attachThreadToJVM, detachThreadFromJVM, JavaException, JProxy, JClass, JDouble, JArray
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
 
 from . import _windowlistener as wl
@@ -65,9 +65,8 @@ class PyConrad:
                 self.ij = JPackage("ij")
                 self.java = java
                 _extend_conrad_classes.extend_all_classes()
-            except AssertionError as err:
-                raise err
-            except JException as ex:
+
+            except JavaException as ex:
                 print(ex)
         else:
             print("JVM already started")

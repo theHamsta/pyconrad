@@ -12,7 +12,7 @@ except:
     __version__ = 'unknown'
 
 
-from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator,JException
+from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator,JavaException
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 from ._pyconrad import PyConrad
