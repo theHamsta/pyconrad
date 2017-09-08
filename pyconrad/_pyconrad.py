@@ -65,6 +65,8 @@ class PyConrad:
                 self.ij = JPackage("ij")
                 self.java = java
                 _extend_conrad_classes.extend_all_classes()
+            except AssertionError as err:
+                raise err
             except JException as ex:
                 print(ex)
         else:

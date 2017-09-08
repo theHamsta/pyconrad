@@ -12,11 +12,11 @@ class ClassGetter:
             namespaces = [namespaces]
         self._imported_namespaces = namespaces
 
-    def add_namespaces(self, namespace):
-        if isinstance(namespace, list):
-            for e in namespace:
+    def add_namespaces(self, namespaces):
+        if isinstance(namespaces, list):
+            for e in namespaces:
                 self.add_namespaces(e)
-        self._imported_namespaces.append(namespace)
+        self._imported_namespaces.append(namespaces)
 
     @property
     def SimpleVector(self):
