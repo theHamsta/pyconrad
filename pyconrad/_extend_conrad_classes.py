@@ -63,11 +63,11 @@ def _extend_numeric_grid():
         if array.dtype == pyconrad.java_float_dtype:
             return pyconrad.PyGrid.from_numpy(array).grid()
         else:
-            return pyconrad.PyGrid.from_numpy(np.array(array,pyconrad.java_float_dtype)).grid()
+            return pyconrad.PyGrid.from_numpy(np.array(array,pyconrad.java_float_dtype)).grid
 
     @classmethod
     def _numeric_grid_from_list(cls,input_list):
-        return pyconrad.PyGrid.from_numpy(np.array(input_list,pyconrad.java_float_dtype)).grid()
+        return pyconrad.PyGrid.from_numpy(np.array(input_list,pyconrad.java_float_dtype)).grid
 
     def _numpy_grid(self):
         return np.array(pyconrad.PyGrid.from_grid(self))

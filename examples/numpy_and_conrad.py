@@ -51,7 +51,7 @@ np_grid3D3 = java_grid3D3.as_numpy()
 # Create PyGrid from Grid2D
 pygrid1 = PyGrid.from_grid(phantom)
 # use Java method
-pygrid1.grid().show()
+pygrid1.grid.show()
 # use Python method
 from scipy.misc import imshow
 imshow(pygrid1)
@@ -61,7 +61,7 @@ array = np.random.rand(4,2,3).astype(java_float_dtype)
 pygrid2 = PyGrid.from_numpy(array)
 
 # Manipulate data in using CONRAD at Position (x,y,z) = (1,2,4)
-pygrid2.grid().setValue(5.0, [0,1,3])
+pygrid2.grid.setValue(5.0, [0,1,3])
 
 # Print this pixel using Python indexes [z,y,x]
 print("Before update: %f" % pygrid2[3,1,0])
