@@ -50,7 +50,7 @@ class PyGrid(np.ndarray):
     def grid(self):
         return self.__grid
 
-    def show(self, title):
+    def show(self, title=""):
         return self.__grid.show(title)
 
     def update_numpy(self):
