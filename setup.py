@@ -47,6 +47,8 @@ def setup_package():
                 ],
             cmdclass={'install': install},
             url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
+           description=read('Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography'),
+            long_description=read('README.md'),
             entry_points={
                 'console_scripts': [
                     'pyconrad = pyconrad.__main__:main',
