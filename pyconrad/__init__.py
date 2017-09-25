@@ -12,10 +12,35 @@ except:
     __version__ = 'unknown'
 
 
-from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator,JavaException
+
+from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator,JavaException, java, JPackage
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
-from ._pyconrad import PyConrad
+from ._pyconrad import setup_pyconrad, start_conrad, start_reconstruction_pipeline, is_initialized, is_gui_started
 from ._classgetter import ClassGetter
 from .constants import java_float_dtype
 from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_path
+
+
+def edu():
+    return JPackage('edu')
+
+
+def ij():
+    return JPackage('edu')
+
+# class pyconrad:
+#
+#     @property
+#     def edu(self):
+#         return JPackage('edu')
+#
+#     @property
+#     def ij(self):
+#         return JPackage('edu')
+
+
+class PyConrad(_pyconrad.PyConrad):
+
+    def __init__(self):
+        print("Use of class PyConrad deprecated")

@@ -11,7 +11,6 @@
 import os
 import sys
 from setuptools import setup
-from setuptools.command.develop import develop
 from setuptools.command.install import _install
 
 # post install hint from:
@@ -53,9 +52,8 @@ def setup_package():
                     'pyconrad = pyconrad.__main__:main',
                     ]
                 },
-            )
-        #setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
-          #use_pyscaffold=True)
+        setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
+          use_pyscaffold=True)
 
 
 

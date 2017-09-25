@@ -116,3 +116,6 @@ class PyGrid(np.ndarray):
 
     def __str__(self):
         return super(PyGrid,self).__str__()
+
+    def __getitem__(self, item):
+        return PyGrid.from_numpy(super(PyGrid,self).__getitem__(item))

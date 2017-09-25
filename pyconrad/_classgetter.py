@@ -1,4 +1,5 @@
 from ._pyconrad import PyConrad, JClass
+from jpype import JPackage
 
 
 class ClassGetter:
@@ -7,10 +8,12 @@ class ClassGetter:
     i.e. you can have multiple sets of namespaces (e.g. per file)
     """
 
-    def __init__(self, namespaces = []):
+    def __init__(self, *namespaces ):
         if isinstance(namespaces,str):
             namespaces = [namespaces]
-        self._imported_namespaces = namespaces
+        self._imported_namespaces = [ n for n in namespaces ]
+        self.edu = JPackage('edu')
+        self.ij = JPackage('ij')
 
     def add_namespaces(self, namespaces):
         if isinstance(namespaces, list):
@@ -41,6 +44,13 @@ class ClassGetter:
     @property
     def Grid3D(self):
         return JClass('edu.stanford.rsl.conrad.data.numeric.Grid3D')
+
+
+    def enumval_from_int(self, enum_name: str, value_int):
+        return self.__getattr__(enum_name).values()[int(value_int)]
+
+    def enumval_from_string(self, enum_name: str, value_string: str):
+        return self.__getattr__(enum_name).enum_name.valueOf(value_string)
 
 
     def __getattr__(self, classname):

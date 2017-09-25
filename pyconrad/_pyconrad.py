@@ -5,6 +5,7 @@
 import os
 import threading
 import time
+import sys
 from pathlib import Path
 
 from jpype import attachThreadToJVM, detachThreadFromJVM, JavaException, JProxy, JClass, JDouble, JArray
@@ -16,10 +17,32 @@ from . import download_conrad
 from . import _extend_conrad_classes
 from ._deprecated import deprecated
 
+
 module_path = os.path.dirname(__file__)
 
 
+def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs = []):
+    PyConrad().setup(max_ram, min_ram, dev_dirs )
 
+
+def start_conrad():
+    PyConrad().start_conrad()
+
+
+def start_reconstruction_pipeline():
+    PyConrad().start_reconstruction_filter_pipeline()
+
+
+def stop_gui():
+    PyConrad().stop_gui()
+
+# @property
+def is_initialized():
+    return PyConrad().is_initialized()
+
+# @property
+def is_gui_started():
+    return PyConrad().is_gui_started()
 
 class PyConrad:
     # Namespaces
@@ -138,15 +161,17 @@ class PyConrad:
         dev_src = []
         for dev in dev_dirs:
             dev_path = Path(dev)
-            dev_src.append(dev_path.joinpath("src"))
-            if dev_path.match("CONRAD"):
-                self.__conrad_path = str(dev_path)
-                self.__conrad_repo_set = True
-                dev_lib = dev_path.joinpath("lib")
-                dev_classes = dev_path.joinpath("classes", "production", "CONRAD")
-                extra_libs = list(dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
-                extra_libs.insert(0, dev_classes)
-                extra_libs = ";".join(map(str, extra_libs))
+            subdirs = [x for x in dev_path.iterdir() if x.is_dir()]
+            for d in subdirs:
+                dev_src.append(dev_path.joinpath(d))
+                if dev_path.match("CONRAD"):
+                    self.__conrad_path = str(dev_path)
+                    self.__conrad_repo_set = True
+                    dev_lib = dev_path.joinpath("lib")
+                    dev_classes = dev_path.joinpath("classes", "production", "CONRAD")
+                    extra_libs = list(dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
+                    extra_libs.insert(0, dev_classes)
+                    extra_libs = ";".join(map(str, extra_libs))
 
         if self.__conrad_repo_set:
             src = ";".join(map(str, dev_src))

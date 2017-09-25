@@ -1,14 +1,16 @@
+from dsareco._initconfig import change_detector_size
 from pyconrad import *
 import numpy as np
 from matplotlib import pyplot as plt
 from jpype import *
+import dsareco
 
 # Compare to Java-Version: CONRAD/src/edu/stanford/rsl/tutorial/iterative/SartCL.java
 
 #, '/localhome/local/projects/CONRADRSL/'
 jvm = PyConrad()
-jvm.setup()
-#jvm.setup(dev_dirs =['/localhome/local/projects/CONRAD/' ])
+# jvm.setup()
+jvm.setup(dev_dirs =['/localhome/local/projects/CONRAD/' ])
 
 jvm.add_import('edu.stanford.rsl.conrad.data.numeric')
 jvm.add_import('edu.stanford.rsl.tutorial.phantoms')
@@ -32,6 +34,8 @@ jvm['Configuration'].loadConfiguration()
 conf = jvm['Configuration'].getGlobalConfiguration()
 geo = conf.getGeometry()
 traj = conf.getGeometry()
+
+change_detector_size([620,480])
 
 if helix:
     traj = jvm['HelicalTrajectory'](jvm['Configuration'].getGlobalConfiguration().getGeometry())
@@ -75,7 +79,7 @@ try:
     sino.setOrigin(JArray(JDouble)([0, 0, 0]))
     sino.setSpacing(JArray(JDouble)([1, 1, 1]))
     cbp.fastProjectRayDrivenCL(sino, grid)
-    #sino.save_tiff('/localhome/local/phatom.tiff')
+    sino.save_tiff('/localhome/local/phantom.tif')
 
     sart = jvm['SartCL'](grid.getSize(), grid.getSpacing(), grid.getOrigin(), sino, 0.8)
     start = java.lang.System.currentTimeMillis()

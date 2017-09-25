@@ -74,13 +74,14 @@ def _extend_numeric_grid():
 
     def _numeric_grid_getitem(self, idxs):
         if isinstance(idxs, int) and not isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid1D):
-            return self.getSubGrid(idxs)
-        elif isinstance(idxs, slice) and isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D):
+            return self.__grid.getSubGrid(idxs)
+        elif isinstance(idxs, slice) and (isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D) or (isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid4D))):
             start = idxs.start or 0
             end = idxs.stop or self.getSize()[2]
             assert idxs.step == 1 or not idxs.step, "Only step==1 is supported"
 
-            rtn = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D(self.getSize()[0],self.getSize()[1], end - start, False)
+            rtn = self.type(reversed(*self.getSize()[:]),self.getsize()[1], end - start, False)
+            # rtn = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D(self.getSize()[0],self.getSize()[1], end - start, False)
             rtn.setOrigin(self.getOrigin())
             rtn.setSpacing(self.getSpacing())
             for i in range(start, end):
