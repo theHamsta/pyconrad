@@ -9,6 +9,12 @@ from ._pyconrad import PyConrad
 from .constants import java_float_dtype
 
 
+def grid_to_ndarray(grid):
+    return PyGrid.from_grid(grid).view(np.ndarray)
+
+def ndarray_to_grid(ndarray):
+    return PyGrid.from_numpy(ndarray).grid
+
 class PyGrid(np.ndarray):
     def __new__(cls, shape):
         return super().__new__(cls, shape=shape, dtype=java_float_dtype)
