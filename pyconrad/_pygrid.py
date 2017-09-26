@@ -24,11 +24,10 @@ class PyGrid(np.ndarray):
 
     @classmethod
     def from_numpy(cls, array):
-        # must work on copy if not c-order contiguos (e.g. after swapped axes)
+        # must work on copy if not c-order contiguous (e.g. after swapped axes)
         if not array.flags['C_CONTIGUOUS']:
             array = np.ascontiguousarray(array)
 
-        assert array.flags['C_CONTIGUOUS']
         instance = array.view(cls)
 
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
