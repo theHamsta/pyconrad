@@ -4,6 +4,7 @@
 
 import jpype
 import numpy as np
+import warnings
 
 from ._pyconrad import PyConrad
 from .constants import java_float_dtype
@@ -30,9 +31,11 @@ class PyGrid(np.ndarray):
 
     @classmethod
     def from_numpy(cls, array):
+        if array.dtype != java_float_dtype:
+            warnings.warn("Warning: Numpy array is not of type pyconrad.java_float_dtype! Additional copy necessary!")
         # must work on copy if not c-order contiguous (e.g. after swapped axes)
-        if not array.flags['C_CONTIGUOUS']:
-            array = np.ascontiguousarray(array)
+        if not array.flags['C_CONTIGUOUS'] or not array.dtype == java_float_dtype:
+            array = np.ascontiguousarray(array, java_float_dtype)
 
         instance = array.view(cls)
 
@@ -44,7 +47,6 @@ class PyGrid(np.ndarray):
         instance.__grid = getattr(instance.__numericpackage, "Grid{}D".format(array.ndim))(*reversed(array.shape))
 
         instance.update_grid()
-        assert array.dtype == java_float_dtype, "Numpy array must be Big Endian 32bit float! Use pyconrad.java_float_dtype!"
         return instance
 
     @classmethod
