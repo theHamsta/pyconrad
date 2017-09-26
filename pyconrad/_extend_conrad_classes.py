@@ -4,6 +4,7 @@
 
 import pyconrad
 import numpy as np
+import warnings
 
 def _extend_pointnd():
     @classmethod
@@ -61,6 +62,7 @@ def _extend_numeric_grid():
     @classmethod
     def _numeric_grid_from_numpy(cls,array):
         if array.dtype == pyconrad.java_float_dtype:
+            warnings.warn('Array type is not java_float_dtype. Additional copy was needed for conversion')
             return pyconrad.PyGrid.from_numpy(array).grid()
         else:
             return pyconrad.PyGrid.from_numpy(np.array(array,pyconrad.java_float_dtype)).grid
