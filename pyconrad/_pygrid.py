@@ -103,8 +103,6 @@ class PyGrid(np.ndarray):
         else:
             raise Exception("shape dimension not supported")
 
-
-
     def show_grid(self):
         if not PyConrad.get_instance().is_gui_started():
             PyConrad.get_instance().start_conrad()

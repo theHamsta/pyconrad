@@ -30,7 +30,8 @@ class install(_install):
         self.execute(_post_install, (self.install_lib,),
                      msg="Installing Java dependencies...")
 
-
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
 def setup_package():
@@ -47,14 +48,14 @@ def setup_package():
                 ],
             cmdclass={'install': install},
             url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
-           description=read('Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography'),
+           description='Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography',
             long_description=read('README.md'),
             entry_points={
                 'console_scripts': [
                     'pyconrad = pyconrad.__main__:main',
                     ]
                 },
-            )
+                )
         #setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
           #use_pyscaffold=True)
 
@@ -62,3 +63,5 @@ def setup_package():
 
 if __name__ == "__main__":
     setup_package()
+
+
