@@ -1,4 +1,3 @@
-from dsareco._initconfig import change_detector_size
 from pyconrad import *
 import numpy as np
 from matplotlib import pyplot as plt
@@ -77,7 +76,8 @@ try:
     sino.setOrigin(JArray(JDouble)([0, 0, 0]))
     sino.setSpacing(JArray(JDouble)([1, 1, 1]))
     cbp.fastProjectRayDrivenCL(sino, grid)
-    sino.save_tiff('/localhome/local/phantom.tif')
+    sino.show()
+    # sino.save_tiff('/localhome/local/phantom.tif')
 
     sart = jvm['SartCL'](grid.getSize(), grid.getSpacing(), grid.getOrigin(), sino, 0.8)
     start = java.lang.System.currentTimeMillis()

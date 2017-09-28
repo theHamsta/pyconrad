@@ -14,12 +14,12 @@ except:
 
 
 from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator,JavaException, java, JPackage
-from ._imageutils import ImageUtil
 from ._pygrid import PyGrid, ndarray_to_grid, grid_to_ndarray
 from ._pyconrad import setup_pyconrad, start_conrad, start_reconstruction_pipeline, is_initialized, is_gui_started, stop_gui
 from ._classgetter import ClassGetter
 from .constants import java_float_dtype
 from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_path
+from ._imageutils import ImageUtil
 
 
 def edu():

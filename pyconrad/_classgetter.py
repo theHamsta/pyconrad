@@ -9,8 +9,6 @@ class ClassGetter:
     """
 
     def __init__(self, *namespaces ):
-        if isinstance(namespaces,str):
-            namespaces = [namespaces]
         self._imported_namespaces = [ n for n in namespaces ]
         self.edu = JPackage('edu')
         self.ij = JPackage('ij')

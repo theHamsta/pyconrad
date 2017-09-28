@@ -164,14 +164,14 @@ class PyConrad:
             subdirs = [x for x in dev_path.iterdir() if x.is_dir()]
             for d in subdirs:
                 dev_src.append(dev_path.joinpath(d))
-                if dev_path.match("CONRAD"):
-                    self.__conrad_path = str(dev_path)
-                    self.__conrad_repo_set = True
-                    dev_lib = dev_path.joinpath("lib")
-                    dev_classes = dev_path.joinpath("classes", "production", "CONRAD")
-                    extra_libs = list(dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
-                    extra_libs.insert(0, dev_classes)
-                    extra_libs = ";".join(map(str, extra_libs))
+            if dev_path.match("CONRAD"):
+                self.__conrad_path = str(dev_path)
+                self.__conrad_repo_set = True
+                dev_lib = dev_path.joinpath("lib")
+                dev_classes = dev_path.joinpath("classes", "production", "CONRAD")
+                extra_libs = list(dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
+                extra_libs.insert(0, dev_classes)
+                extra_libs = ";".join(map(str, extra_libs))
 
         if self.__conrad_repo_set:
             src = ";".join(map(str, dev_src))

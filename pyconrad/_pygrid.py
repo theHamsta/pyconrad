@@ -120,7 +120,7 @@ class PyGrid(np.ndarray):
 
     def set_spacing(self, vec):
         self.__grid.setSpacing(jpype.JArray(jpype.JDouble)(vec))
-
+    
     @staticmethod
     def java_float_dtype():
         return java_float_dtype
