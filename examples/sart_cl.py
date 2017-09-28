@@ -35,8 +35,6 @@ conf = jvm['Configuration'].getGlobalConfiguration()
 geo = conf.getGeometry()
 traj = conf.getGeometry()
 
-change_detector_size([620,480])
-
 if helix:
     traj = jvm['HelicalTrajectory'](jvm['Configuration'].getGlobalConfiguration().getGeometry())
 
