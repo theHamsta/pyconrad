@@ -8,6 +8,7 @@ import warnings
 
 from ._pyconrad import PyConrad
 from .constants import java_float_dtype
+from ._imageutils import ImageUtil
 
 
 def grid_to_ndarray(grid):
