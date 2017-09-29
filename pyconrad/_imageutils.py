@@ -3,8 +3,22 @@
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
 import jpype
+import numpy as np
+import pyconrad
 
 class ImageUtil:
+
+    ########################
+    ## Convert Grid/numpy ##
+    ########################
+
+    @staticmethod
+    def grid_from_numpy(grid):
+        return np.ndarray.view(pyconrad.PyGrid.from_numpy(grid))
+
+    @staticmethod
+    def numpy_from_grid(ndarray):
+        return np.ndarray.view(pyconrad.PyGrid.from_grid(ndarray))
 
     #################
     ## Save Images ##
