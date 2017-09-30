@@ -5,7 +5,7 @@
 import pyconrad
 
 # setup PyConrad
-pyconrad.setup_pyconrad(min_ram='50M')
+pyconrad.setup_pyconrad()
 # Optional parameters for Java Virtual Machine RAM and own Java projects
 # pyconrad.setup(max_ram = '8G', min_ram= '500M', dev_dirs=['path/to/project/with/own/java/classes']
 
@@ -30,7 +30,3 @@ phantom3d = _.NumericalSheppLogan3D(200,200,200).getNumericalSheppLoganPhantom()
 # Use Java method of class MickeyMouseGrid2D
 phantom.show()
 phantom3d.show()
-
-
-
-
