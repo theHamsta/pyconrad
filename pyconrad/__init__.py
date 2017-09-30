@@ -20,6 +20,7 @@ from ._classgetter import ClassGetter
 from .constants import java_float_dtype
 from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_path
 from ._imageutils import ImageUtil
+from ._autocomplete import AutoCompleteConrad
 
 
 def edu():

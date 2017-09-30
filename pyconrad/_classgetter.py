@@ -1,5 +1,6 @@
 from ._pyconrad import PyConrad, JClass
 from jpype import JPackage
+from pyconrad._autocomplete import AutoCompleteConrad
 
 
 class ClassGetter:

@@ -15,13 +15,13 @@ pyconrad.start_conrad()
 phantom = pyconrad.edu().stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
 
 
-# Access more easily using ClassGetter
-
+# Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
 _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.tutorial.phantoms',
     'edu.stanford.rsl.conrad.phantom'
-)
+)# type: pyconrad.AutoCompleteConrad
 
+# You can add more namespaces also later
 _.add_namespaces('edu.stanford.rsl.tutorial.dmip')
 
 phantom2d = _.MickeyMouseGrid2D(200,200)
@@ -30,5 +30,7 @@ phantom3d = _.NumericalSheppLogan3D(200,200,200).getNumericalSheppLoganPhantom()
 # Use Java method of class MickeyMouseGrid2D
 phantom.show()
 phantom3d.show()
+
+
 
 
