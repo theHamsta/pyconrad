@@ -1,6 +1,5 @@
-from ._pyconrad import PyConrad, JClass
+import pyconrad
 from jpype import JPackage
-from pyconrad._autocomplete import AutoCompleteConrad
 
 
 class ClassGetter:
@@ -22,27 +21,27 @@ class ClassGetter:
 
     @property
     def SimpleVector(self):
-        return JClass('edu.stanford.rsl.conrad.numerics.SimpleVector')
+        return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleVector')
 
     @property
     def PointND(self):
-        return JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')
+        return pyconrad.JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')
 
     @property
     def SimpleMatrix(self):
-        return PyConrad().classes.stanford.rsl.conrad.numerics.SimpleMatrix
+        return pyconrad.PyConrad().classes.stanford.rsl.conrad.numerics.SimpleMatrix
 
     @property
     def Grid1D(self):
-        return JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D')
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D')
 
     @property
     def Grid2D(self):
-        return JClass('edu.stanford.rsl.conrad.data.numeric.Grid2D')
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid2D')
 
     @property
     def Grid3D(self):
-        return JClass('edu.stanford.rsl.conrad.data.numeric.Grid3D')
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid3D')
 
 
     def enumval_from_int(self, enum_name: str, value_int):
@@ -53,13 +52,13 @@ class ClassGetter:
 
 
     def __getattr__(self, classname):
-        if not PyConrad.is_java_initalized():
+        if not pyconrad.PyConrad.is_java_initalized():
             raise Exception('JVM not started! Use Pyconrad().setup()')
         success = None
 
         # Default namespace
         try:
-            rtn = JClass(classname)
+            rtn = pyconrad.JClass(classname)
             success = rtn
         except Exception:
             pass
@@ -67,7 +66,7 @@ class ClassGetter:
         # Imported namespaces
         for package in self._imported_namespaces:
             try:
-                rtn = JClass(package + "." + classname)
+                rtn = pyconrad.JClass(package + "." + classname)
                 success = rtn
                 break
             except Exception:

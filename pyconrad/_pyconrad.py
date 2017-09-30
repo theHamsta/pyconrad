@@ -38,11 +38,11 @@ def stop_gui():
 
 # @property
 def is_initialized():
-    return PyConrad().is_initialized()
+    return PyConrad().is_initialized
 
 # @property
 def is_gui_started():
-    return PyConrad().is_gui_started()
+    return PyConrad().is_gui_started
 
 class PyConrad:
     # Namespaces
