@@ -132,3 +132,13 @@ class PyGrid(np.ndarray):
 
     def __getitem__(self, item):
         return PyGrid.from_numpy(super(PyGrid,self).__getitem__(item))
+
+    def save_vtk(self, file, title="pygrid"):
+        from pyevtk.hl import imageToVTK
+        if np.abs(self.grid.getSpacing()[0]) < 1e-5:
+            spacing = [1.] * len(self.shape)
+        else:
+            spacing = tuple(self.grid.getSpacing()[:])
+        imageToVTK(file, tuple(self.grid.getOrigin()[:]), spacing, cellData={title: np.array(self) } )
+
+
