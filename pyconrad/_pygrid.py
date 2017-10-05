@@ -6,9 +6,9 @@ import jpype
 import numpy as np
 import warnings
 
-from ._pyconrad import PyConrad
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
+from jpype import JPackage
 
 
 def grid_to_ndarray(grid):
@@ -22,7 +22,7 @@ class PyGrid(np.ndarray):
         return super().__new__(cls, shape=shape, dtype=java_float_dtype)
 
     def __init__(self, shape):
-        self.__numericpackage = PyConrad.get_instance().classes.stanford.rsl.conrad.data.numeric
+        self.__numericpackage = JPackage('edu').stanford.rsl.conrad.data.numeric
         if not 0 < len(shape) < 5:
             raise Exception("shape dimension of %d not supported" % len(shape))
         self.__grid = getattr(self.__numericpackage, "Grid{}D".format(len(shape)))(*reversed(shape))
@@ -41,7 +41,7 @@ class PyGrid(np.ndarray):
         instance = array.view(cls)
 
         instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
-        instance.__numericpackage = PyConrad.get_instance().classes.stanford.rsl.conrad.data.numeric
+        instance.__numericpackage = JPackage('edu').stanford.rsl.conrad.data.numeric
 
         if not 0 < array.ndim < 5:
             raise Exception("shape dimension of %d not supported" % array.ndim)
@@ -105,8 +105,6 @@ class PyGrid(np.ndarray):
             raise Exception("shape dimension not supported")
 
     def show_grid(self):
-        if not PyConrad.get_instance().is_gui_started():
-            PyConrad.get_instance().start_conrad()
         self.__grid.show()
 
     def save_grid_as_tiff(self, path):

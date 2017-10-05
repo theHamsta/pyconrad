@@ -5,6 +5,7 @@
 from jpype import JPackage, JArray, JDouble
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
+from ._pygrid import PyGrid
 
 import numpy as np
 import warnings
