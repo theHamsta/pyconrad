@@ -75,6 +75,10 @@ def _extend_numeric_grid():
     def _numeric_grid_from_list(cls,input_list):
         return PyGrid.from_numpy(np.array(input_list,java_float_dtype)).grid
 
+    @classmethod
+    def _numeric_grid_from_size(cls,*size):
+        return PyGrid(list(size)).grid
+
     def _numpy_grid(self):
         return np.array(PyGrid.from_grid(self))
 
@@ -106,6 +110,10 @@ def _extend_numeric_grid():
     def _numeric_grid_shape(self):
         return list(reversed(self.getSize()[:]))
 
+    @property
+    def _pygrid(self):
+        return PyGrid.from_grid(self)
+
     def _save_as_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self, path)
 
@@ -117,11 +125,13 @@ def _extend_numeric_grid():
     grid_class.as_numpy = _numpy_grid
     grid_class.from_numpy = _numeric_grid_from_numpy
     grid_class.from_list = _numeric_grid_from_list
+    grid_class.from_size = _numeric_grid_from_size
     grid_class.from_tiff = _from_tiff
     grid_class.save_tiff = _save_as_tiff
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
     grid_class.shape = _numeric_grid_shape
+    grid_class.pygrid = _pygrid
 
 def extend_all_classes():
     _extend_pointnd()

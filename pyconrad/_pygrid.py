@@ -107,7 +107,7 @@ class PyGrid(np.ndarray):
     def show_grid(self):
         self.__grid.show()
 
-    def save_grid_as_tiff(self, path):
+    def save_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self.__grid, path)
 
     @classmethod
