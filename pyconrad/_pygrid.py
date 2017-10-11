@@ -5,6 +5,7 @@
 import jpype
 import numpy as np
 import warnings
+from pyconrad._deprecated import deprecated
 
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
@@ -26,21 +27,47 @@ class PyGrid(np.ndarray):
         if not 0 < len(shape) < 5:
             raise Exception("shape dimension of %d not supported" % len(shape))
         self.__grid = getattr(self.__numericpackage, "Grid{}D".format(len(shape)))(*reversed(shape))
-
         if shape[0] != 0:
             self.__dbuffer = jpype.nio.convertToDirectBuffer(self)
 
+    def __array_finalize__(self, obj):
+        # ``self`` is a new object resulting from
+        # ndarray.__new__(InfoArray, ...), therefore it only has
+        # attributes that the ndarray.__new__ constructor gave it -
+        # i.e. those of a standard ndarray.
+        #
+        # We could have got to the ndarray.__new__ call in 3 ways:
+        # From an explicit constructor - e.g. InfoArray():
+        #    obj is None
+        #    (we're in the middle of the InfoArray.__new__
+        #    constructor, and self.info will be set when we return to
+        #    InfoArray.__new__)
+        if obj is None: return
+        # From view casting - e.g arr.view(InfoArray):
+        #    obj is arr
+        #    (type(obj) can be InfoArray)
+        # From new-from-template - e.g infoarr[:3]
+        #    type(obj) is InfoArray
+        #
+        # Note that it is here, rather than in the __new__ method,
+        # that we set the default value for 'info', because this
+        # method sees all creation of default objects - with the
+        # InfoArray.__new__ constructor, but also with
+        # arr.view(InfoArray).
+        # see InfoArray.__array_finalize__ for comments
+        # self.info = getattr(obj, 'info', None)
+
     @classmethod
-    def from_numpy(cls, array):
+    def from_numpy(cls, array: np.ndarray):
+
         if array.dtype != java_float_dtype:
             warnings.warn("Warning: Numpy array is not of type pyconrad.java_float_dtype! Additional copy necessary!")
         # must work on copy if not c-order contiguous (e.g. after swapped axes)
-        if not array.flags['C_CONTIGUOUS'] or not array.dtype == java_float_dtype:
-            array = np.ascontiguousarray(array, java_float_dtype)
 
-        instance = array.view(cls)
+        # instance = np.ascontiguousarray(array, java_float_dtype).view(cls)
+        instance = np.ascontiguousarray(array, java_float_dtype).view(cls)
 
-        instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
+        # instance.__dbuffer = jpype.nio.convertToDirectBuffer(array)
         instance.__numericpackage = JPackage('edu').stanford.rsl.conrad.data.numeric
 
         if not 0 < array.ndim < 5:
@@ -65,9 +92,28 @@ class PyGrid(np.ndarray):
         return self.__grid
 
     def show(self, title=""):
+        if not hasattr(self, '__grid'):
+            self.update_grid()
         return self.__grid.show(title)
 
     def update_numpy(self):
+        if not hasattr(self, '__dbuffer'):
+            if not 0 < len(self.shape) < 5:
+                raise Exception("shape dimension of %d not supported" % len(self.shape))
+
+            if not self.flags['C_CONTIGUOUS'] or not self.flags['WRITEABLE']or not self.dtype == java_float_dtype:
+                # self.data = np.ascontiguousarray(self).data
+                copy = np.ascontiguousarray(self)
+                if not self.flags['WRITEABLE']:
+                    copy = copy.copy()
+                self.data = copy.data
+
+            assert self.flags['WRITEABLE']
+            assert self.flags['C_CONTIGUOUS'] # writable & behaved
+
+            self.__numericpackage = JPackage('edu').stanford.rsl.conrad.data.numeric
+            self.__dbuffer = jpype.nio.convertToDirectBuffer(self)
+
         shape = self.shape
         if 0 == shape[0]:
             return
@@ -88,6 +134,25 @@ class PyGrid(np.ndarray):
             raise Exception("shape dimension not supported")
 
     def update_grid(self):
+        if not hasattr(self, '__dbuffer'):
+            if not 0 < len(self.shape) < 5:
+                raise Exception("shape dimension of %d not supported" % len(self.shape))
+
+            if not self.flags['C_CONTIGUOUS'] or not self.flags['WRITEABLE'] or not self.dtype == java_float_dtype:
+                # self.data = np.ascontiguousarray(self).data
+                copy = np.ascontiguousarray(self)
+                if not self.flags['WRITEABLE']:
+                    copy = copy.copy()
+                self.data = copy.data
+
+            assert self.flags['WRITEABLE']
+            assert self.flags['C_CONTIGUOUS'] # writable & behaved
+
+            self.__numericpackage = JPackage('edu').stanford.rsl.conrad.data.numeric
+            self.__dbuffer = jpype.nio.convertToDirectBuffer(self)
+            self.__grid = getattr(self.__numericpackage, "Grid{}D".format(len(self.shape)))(*reversed(self.shape))
+
+
         shape = self.shape
         if 0 == shape[0]:
             return
@@ -104,7 +169,10 @@ class PyGrid(np.ndarray):
         else:
             raise Exception("shape dimension not supported")
 
+    @deprecated
     def show_grid(self):
+        if not hasattr(self, '__grid'):
+            self.update_grid()
         self.__grid.show()
 
     def save_tiff(self, path):
@@ -129,7 +197,7 @@ class PyGrid(np.ndarray):
         return super(PyGrid,self).__str__()
 
     def __getitem__(self, item):
-        return PyGrid.from_numpy(super(PyGrid,self).__getitem__(item))
+        return super(PyGrid,self).__getitem__(item)
 
     def save_vtk(self, file, title="pygrid"):
         from pyevtk.hl import imageToVTK
