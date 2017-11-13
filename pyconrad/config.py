@@ -97,6 +97,8 @@ def get_conf() -> AutoCompleteConrad.edu.stanford.rsl.conrad.utils.Configuration
     return conf
 
 def get_geometry() -> AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.trajectories.Trajectory:
+    # _.Configuration.loadConfiguration() #TODO load config on pyconrad startup
     conf = _.Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()
     return geo
+

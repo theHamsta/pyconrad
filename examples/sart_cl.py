@@ -8,8 +8,8 @@ import dsareco
 
 #, '/localhome/local/projects/CONRADRSL/'
 jvm = PyConrad()
-# jvm.setup()
-jvm.setup(dev_dirs =['/localhome/local/projects/CONRAD/' ])
+jvm.setup()
+# jvm.setup(dev_dirs =['/localhome/local/projects/CONRAD/' ])
 
 jvm.add_import('edu.stanford.rsl.conrad.data.numeric')
 jvm.add_import('edu.stanford.rsl.tutorial.phantoms')
