@@ -21,8 +21,12 @@ from ._deprecated import deprecated
 module_path = os.path.dirname(__file__)
 
 
-def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs = []):
-    PyConrad().setup(max_ram, min_ram, dev_dirs )
+class PyConradNotInitializedError(Exception):
+    pass
+
+
+def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs=[]):
+    PyConrad().setup(max_ram, min_ram, dev_dirs)
 
 
 def start_conrad():
@@ -37,12 +41,17 @@ def stop_gui():
     PyConrad().stop_gui()
 
 # @property
+
+
 def is_initialized():
     return PyConrad().is_initialized
 
 # @property
+
+
 def is_gui_started():
     return PyConrad().is_gui_started
+
 
 class PyConrad:
     # Namespaces
@@ -80,7 +89,8 @@ class PyConrad:
                 if not os.path.exists(self.__conrad_path):
                     download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
-                startJVM(getDefaultJVMPath(), conrad_source_and_libs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
+                startJVM(getDefaultJVMPath(), conrad_source_and_libs,
+                         "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
                 os.chdir(curr_directory)
 
                 self._check_jre_version()
@@ -96,7 +106,7 @@ class PyConrad:
 
     def start_conrad(self):
         if not self.is_java_initalized():
-            raise Exception('JVM not started! Use Pyconrad().setup()')
+            raise PyConradNotInitializedError()
         if self.__gui_thread is None:
             self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
             self.__gui_thread.start()
@@ -168,8 +178,10 @@ class PyConrad:
                 self.__conrad_path = str(dev_path)
                 self.__conrad_repo_set = True
                 dev_lib = dev_path.joinpath("lib")
-                dev_classes = dev_path.joinpath("classes", "production", "CONRAD")
-                extra_libs = list(dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
+                dev_classes = dev_path.joinpath(
+                    "classes", "production", "CONRAD")
+                extra_libs = list(dev_lib.joinpath(fn)
+                                  for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
                 extra_libs.insert(0, dev_classes)
                 extra_libs = ";".join(map(str, extra_libs))
 
@@ -204,8 +216,9 @@ class PyConrad:
     # Use ClassGetter
     @deprecated
     def __getitem__(self, classname):
+
         if not self.is_java_initalized():
-            raise Exception('JVM not started! Use Pyconrad().setup()')
+            raise PyConradNotInitializedError()
         success = None
 
         # Default namespace
@@ -225,7 +238,8 @@ class PyConrad:
                 pass
 
         if not success:
-            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (classname, self.__imported_namespaces))
+            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
+                classname, self.__imported_namespaces))
 
         return success
 
@@ -237,12 +251,14 @@ class PyConrad:
 
     @property
     def is_initialized(self):
-        return self.__is_gui_started
+        return self.is_java_initalized()
 
     def _check_jre_version(self):
         '''
         Check JRE version. We need >1.8
         '''
         jre_version = java.lang.System.getProperty("java.version").split('.')
-        assert int(jre_version[0]) == 1, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
-        assert int(jre_version[1]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+        assert int(
+            jre_version[0]) == 1, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+        assert int(
+            jre_version[1]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"

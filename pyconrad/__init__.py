@@ -1,5 +1,5 @@
 
-# Copyright (C) 2010-2017 - Andreas Maier 
+# Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
 # all non-underscored names are exported unless __all__ is defined
@@ -13,7 +13,7 @@ except:
 
 
 
-from jpype import JDouble,JArray,JInt,JString,JShort,JProxy,JByte,JBoolean,JChar,JLong,JFloat,JClass,JIterator,JavaException, java, JPackage
+from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage
 from ._pygrid import PyGrid, ndarray_to_grid, grid_to_ndarray
 from pyconrad._pyconrad import setup_pyconrad, start_conrad, start_reconstruction_pipeline, is_initialized, is_gui_started, stop_gui
 from pyconrad._classgetter import ClassGetter
@@ -25,10 +25,17 @@ from ._autocomplete import generate_autocomplete_file
 
 
 def edu():
+    if not _pyconrad.PyConrad().is_initialized:
+        raise _pyconrad.PyConradNotInitializedError()
+
     return JPackage('edu')
 
 
 def ij():
+
+    if not _pyconrad.PyConrad().is_initialized:
+        raise _pyconrad.PyConradNotInitializedError()
+
     return JPackage('edu')
 
 # class pyconrad:
