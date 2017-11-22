@@ -29,7 +29,7 @@ def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs=[]):
     PyConrad().setup(max_ram, min_ram, dev_dirs)
 
 
-def start_conrad():
+def start_imagej():
     PyConrad().start_conrad()
 
 

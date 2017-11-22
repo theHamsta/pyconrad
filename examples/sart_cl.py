@@ -22,7 +22,6 @@ jvm.add_import('edu.stanford.rsl.conrad.geometry')
 jvm.add_import('edu.stanford.rsl.tutorial.cone')
 jvm.add_import('edu.stanford.rsl.conrad.data.numeric.opencl')
 
-
 jvm.start_conrad()
 
 helix = False
@@ -95,7 +94,6 @@ try:
     java.lang.System.out.println("L1: %f" % foo.getGridOperator().normL1(foo))
     java.lang.System.out.println(
         "RMSE: " + str(foo.getGridOperator().rmse(foo, grid)))
-    foo.show()
 except JavaException as e:
     e.printStackTrace()
 

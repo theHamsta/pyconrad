@@ -132,6 +132,7 @@ class PyGrid(np.ndarray):
                     f_buffer.put(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer())  # TODO: stride == 0?
         else:
             raise Exception("shape dimension not supported")
+        del self.__dbuffer
 
     def update_grid(self):
         if not hasattr(self, '__dbuffer'):
@@ -168,6 +169,8 @@ class PyGrid(np.ndarray):
                     f_buffer.get(self.__grid.getSubGrid(f).getSubGrid(z).getBuffer())  # TODO: stride == 0?
         else:
             raise Exception("shape dimension not supported")
+
+        del self.__dbuffer
 
     @deprecated
     def show_grid(self):
