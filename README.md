@@ -11,8 +11,12 @@ CONRAD is a state-of-the-art software platform with extensive documentation. It 
 Install via pip:
 
 ```bash
-pip install git+https://git5.cs.fau.de/PyConrad/pyconrad_java.git
 pip install pyconrad
+```
+
+or if you downloaded this repository using:
+```bash
+python setup.py install
 ```
 
 This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
@@ -21,15 +25,23 @@ import pyconrad_java
 print(pyconrad_java.conrad_jar_dir)
 ```
 
+# Tests
+
+If you want to test whether pyconrad is working correctly on your computer you may execute all tests included in this repo via:
+
+```bash
+python setup.py test
+```
+
 # Usage
 
 You can start CONRAD like this:
 ```python
-from pyconrad import PyConrad
+import pyconrad
 
-pyconrad = PyConrad()  # PyConrad is a singleton class
-pyconrad.setup()  # Setup PyConrad
-pyconrad.start_conrad()  # Or pyconrad.start_reconstruction_filter_pipeline() to start CONRAD
+pyconrad.setup_pyconrad()
+pyconrad.start_conrad()  # start ImageJ
+pyconrad.start_reconstruction_pipeline() # if you want to start CONRAD's reconstruction filter pipeline
 ```
 
 The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface:
