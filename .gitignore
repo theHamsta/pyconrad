@@ -8,3 +8,4 @@ pyconrad/CONRAD*
 *.log
 *egg-info
 .cache/*
+*.class
