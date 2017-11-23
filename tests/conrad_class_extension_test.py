@@ -1,22 +1,22 @@
-from pyconrad import *
-from jpype import JClass
+# from pyconrad import *
+# from jpype import JClass
 
-jvm = PyConrad()
-jvm.setup()
-jvm.add_import('edu.stanford.rsl.conrad.geometry.shapes.simple')
+# jvm = PyConrad()
+# jvm.setup()
+# jvm.add_import('edu.stanford.rsl.conrad.geometry.shapes.simple')
 
 
-# point = jvm['PointND'](JArray(JDouble)([3.2,1.]))
-point = JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')(JArray(JDouble)([3.2,1.]))
-print(type(point.numpy()))
-print(point.numpy())
+# # point = jvm['PointND'](JArray(JDouble)([3.2,1.]))
+# point = JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')(JArray(JDouble)([3.2,1.]))
+# print(type(point.numpy()))
+# print(point.numpy())
 
-otherpoint = point.clone()
-print(otherpoint.numpy())
+# otherpoint = point.clone()
+# print(otherpoint.numpy())
 
-fancy_point = jvm['PointND'].from_numpy([2, 2])
-# fancy_point = jvm['PointND']([2, 2])
-print(fancy_point)
+# fancy_point = jvm['PointND'].from_numpy([2, 2])
+# # fancy_point = jvm['PointND']([2, 2])
+# print(fancy_point)
 
 # print(type(aclass))
 #
