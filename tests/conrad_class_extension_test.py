@@ -1,44 +1,78 @@
-# from pyconrad import *
-# from jpype import JClass
+import pyconrad.autoinit
+import numpy as np
 
-# jvm = PyConrad()
-# jvm.setup()
-# jvm.add_import('edu.stanford.rsl.conrad.geometry.shapes.simple')
+_ = pyconrad.ClassGetter()  # type: pyconrad.AutoCompleteConrad
 
 
-# # point = jvm['PointND'](JArray(JDouble)([3.2,1.]))
-# point = JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')(JArray(JDouble)([3.2,1.]))
-# print(type(point.numpy()))
-# print(point.numpy())
+def test_create_pointnd():
 
-# otherpoint = point.clone()
-# print(otherpoint.numpy())
+    _.PointND([2., 3.])
+    _.PointND(np.array([2., 3.]))
+    _.PointND(pyconrad.JArray(pyconrad.JDouble)([2., 3.]))
+    _.PointND.from_list([2, 3])
+    _.PointND.from_numpy(np.array([2, 3]))
+    # _.PointND(np.array([2., 3.]).astype(np.float32))
+    # _.PointND([2, 3])
 
-# fancy_point = jvm['PointND'].from_numpy([2, 2])
-# # fancy_point = jvm['PointND']([2, 2])
-# print(fancy_point)
 
-# print(type(aclass))
-#
-# def say_hello(self):
-#     print("hallo")
-# aclass.numpy = say_hello
-#
-# print(type(aclass))
-#
-# grid = aclass(JArray(JDouble)([3,3]))
-# grid.numpy()
+def test_create_gridnd():
 
-# def add_to_numpy_method(magic):
-#     class subclass(magic):
-#         def __init__(self, *args):
-#             super().__init__(self, *args)
-#         def numpy(self):
-#             return np.array(self.getCoordinates())
-#     return subclass
-#
-# subclass = add_to_numpy_method(aclass)
-# foo= subclass(3,3)
-# print(subclass.numpy())
-#
+    _.Grid1D(10)
+    _.Grid2D(10, 20)
+    _.Grid3D(10, 20, 30)
+    _.Grid4D(10, 20, 30, 50)
 
+
+def test_numpy_to_grid1d():
+    random_matrix = np.random.randn([10]).astype(pyconrad.java_float_dtype)
+
+    grid = _.Grid1D.from_numpy(random_matrix)
+
+    converted = grid.as_numpy()
+
+    assert np.allclose(converted, random_matrix)
+
+
+def test_numpy_to_gridnd():
+
+    for dim in range(2, 5):
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)]).astype(pyconrad.java_float_dtype)
+
+        if dim == 1:
+            grid = _.Grid1D.from_numpy(random_matrix)
+        elif dim == 2:
+            grid = _.Grid2D.from_numpy(random_matrix)
+        elif dim == 3:
+            grid = _.Grid3D.from_numpy(random_matrix)
+        elif dim == 4:
+            grid = _.Grid3D.from_numpy(random_matrix)
+
+        converted = grid.as_numpy()
+
+        assert np.allclose(converted, random_matrix)
+
+    for dim in range(2, 5):
+
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)])
+
+        if dim == 1:
+            grid = _.Grid1D.from_numpy(random_matrix)
+        elif dim == 2:
+            grid = _.Grid2D.from_numpy(random_matrix)
+        elif dim == 3:
+            grid = _.Grid3D.from_numpy(random_matrix)
+        elif dim == 4:
+            grid = _.Grid3D.from_numpy(random_matrix)
+
+        converted = grid.as_numpy()
+
+        assert np.allclose(converted, random_matrix)
+
+
+if __name__ == "__main__":
+    test_create_pointnd()
+    test_create_gridnd()
+    test_numpy_to_gridnd()
+    test_numpy_to_grid1d()
