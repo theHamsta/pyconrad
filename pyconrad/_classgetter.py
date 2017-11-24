@@ -8,8 +8,8 @@ class ClassGetter:
     i.e. you can have multiple sets of namespaces (e.g. per file)
     """
 
-    def __init__(self, *namespaces ):
-        self._imported_namespaces = [ n for n in namespaces ]
+    def __init__(self, *namespaces):
+        self._imported_namespaces = [n for n in namespaces]
         self.edu = JPackage('edu')
         self.ij = JPackage('ij')
 
@@ -43,13 +43,15 @@ class ClassGetter:
     def Grid3D(self):
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid3D')
 
+    @property
+    def Grid4D(self):
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid4D')
 
     def enumval_from_int(self, enum_name: str, value_int):
         return self.__getattr__(enum_name).values()[int(value_int)]
 
     def enumval_from_string(self, enum_name: str, value_string: str):
         return self.__getattr__(enum_name).enum_name.valueOf(value_string)
-
 
     def __getattr__(self, classname):
         if not pyconrad.PyConrad.is_java_initalized():
@@ -73,7 +75,7 @@ class ClassGetter:
                 pass
 
         if not success:
-            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (classname, self._imported_namespaces))
+            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
+                classname, self._imported_namespaces))
 
         return success
-

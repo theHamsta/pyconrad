@@ -3,74 +3,106 @@ import pyconrad.autoinit
 import numpy as np
 
 
-# PyConrad.get_instance().setup(min_ram='400M')
+def test_conversion_1d():
 
-# phantom_package = PyConrad.get_instance().classes.stanford.rsl.tutorial.phantoms
-# shape = [230, 330]
+    dim = 1
+    random_matrix = np.random.randn(
+        *[(10 * (i + 1)) for i in range(dim)])
 
-# pygrid = PyGrid(shape)
-# print(pygrid)
+    grid = pyconrad.PyGrid.from_numpy(random_matrix).grid
+    converted = pyconrad.PyGrid.from_grid(grid)
 
-# try:
-#     numpyIn = np.random.rand(shape[0],shape[1]).astype(PyGrid.java_float_dtype())
-#     pygrid2 = PyGrid.from_numpy(numpyIn)
-
-#     numpyOut = _oldwrapmethods.wrapGrid2D(pygrid2.grid())
-#     print(pygrid2)
-#     print(numpyOut)
-#     assert np.allclose(numpyIn,numpyOut)
-
-#     pygrid2.grid().setAtIndex(3,3, 0.4)
-#     pygrid2.update_numpy()
-#     numpyOut = _oldwrapmethods.wrapGrid2D(pygrid2.grid())
-#     assert np.allclose(pygrid2,numpyOut)
-#     print("Test from_numpy passed")
-# except Exception as ex:
-#     print(ex)
-#     print("Test from_numpy failed")
-
-# try:
-#     gridIn = phantom_package.MickeyMouseGrid2D(shape[1], shape[0])
-#     # gridIn = PyConrad.numeric_package().Grid2D(shape[1], shape[0])
-
-#     pygrid = PyGrid.from_grid(gridIn)
-#     pygrid[3:8,10:20] = 1.
-#     pygrid.update_grid()
-#     pygrid.show_grid()
-#     # numpyOut = pygrid.numpy()
+    assert np.allclose(converted, random_matrix)
 
 
-#     from scipy.misc import imshow
-#     imshow(pygrid)
+def test_conversion():
 
-#     print(pygrid[1:4,5:8])
-#     print("Test from_grid passed")
-# except Exception as ex:
-#     print(ex)
-#     print("Test from_grid failed")
+    for dim in range(2, 5):
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)])
 
-# shape3D = [ 830, 335,542]
+        grid = pyconrad.PyGrid.from_numpy(random_matrix).grid
+        converted = pyconrad.PyGrid.from_grid(grid)
 
-# # try:
-# gridIn = phantom_package.Sphere3D(shape3D[2],shape3D[1], shape3D[0])
-# # gridIn = PyConrad.numeric_package().Grid2D(shape[1], shape[0])
-
-# pygrid = PyGrid.from_grid(gridIn)
-# # pygrid[3:8,10:20,...] = 1.
-# pygrid.update_grid()
-# pygrid.show_grid()
-
-# import matplotlib.pyplot as plt
-
-# numpyOut = pygrid
-
-# plt.imshow( pygrid[100])
+        assert np.allclose(converted, random_matrix)
 
 
+# def test_manipulate_grid():
 
-# print(pygrid[1:4,5:8])
-# # except Exception as ex:
-# #     print(ex)
-# #     print("Test from_grid failed")
+#     for dim in range(2, 5):
+#         random_matrix = np.random.randn(
+#             *[(10 * (i + 1)) for i in range(dim)])
 
-# PyConrad.get_instance().terminate()
+#         grid = pyconrad.PyGrid.from_numpy(random_matrix).grid
+#         converted = pyconrad.PyGrid.from_grid(grid)
+
+#         assert np.allclose(converted, random_matrix)
+
+    # PyConrad.get_instance().setup(min_ram='400M')
+
+    # phantom_package = PyConrad.get_instance().classes.stanford.rsl.tutorial.phantoms
+    # shape = [230, 330]
+
+    # pygrid = PyGrid(shape)
+    # print(pygrid)
+
+    # try:
+    #     numpyIn = np.random.rand(shape[0],shape[1]).astype(PyGrid.java_float_dtype())
+    #     pygrid2 = PyGrid.from_numpy(numpyIn)
+
+    #     numpyOut = _oldwrapmethods.wrapGrid2D(pygrid2.grid())
+    #     print(pygrid2)
+    #     print(numpyOut)
+    #     assert np.allclose(numpyIn,numpyOut)
+
+    #     pygrid2.grid().setAtIndex(3,3, 0.4)
+    #     pygrid2.update_numpy()
+    #     numpyOut = _oldwrapmethods.wrapGrid2D(pygrid2.grid())
+    #     assert np.allclose(pygrid2,numpyOut)
+    #     print("Test from_numpy passed")
+    # except Exception as ex:
+    #     print(ex)
+    #     print("Test from_numpy failed")
+
+    # try:
+    #     gridIn = phantom_package.MickeyMouseGrid2D(shape[1], shape[0])
+    #     # gridIn = PyConrad.numeric_package().Grid2D(shape[1], shape[0])
+
+    #     pygrid = PyGrid.from_grid(gridIn)
+    #     pygrid[3:8,10:20] = 1.
+    #     pygrid.update_grid()
+    #     pygrid.show_grid()
+    #     # numpyOut = pygrid.numpy()
+
+    #     from scipy.misc import imshow
+    #     imshow(pygrid)
+
+    #     print(pygrid[1:4,5:8])
+    #     print("Test from_grid passed")
+    # except Exception as ex:
+    #     print(ex)
+    #     print("Test from_grid failed")
+
+    # shape3D = [ 830, 335,542]
+
+    # # try:
+    # gridIn = phantom_package.Sphere3D(shape3D[2],shape3D[1], shape3D[0])
+    # # gridIn = PyConrad.numeric_package().Grid2D(shape[1], shape[0])
+
+    # pygrid = PyGrid.from_grid(gridIn)
+    # # pygrid[3:8,10:20,...] = 1.
+    # pygrid.update_grid()
+    # pygrid.show_grid()
+
+    # import matplotlib.pyplot as plt
+
+    # numpyOut = pygrid
+
+    # plt.imshow( pygrid[100])
+
+    # print(pygrid[1:4,5:8])
+    # # except Exception as ex:
+    # #     print(ex)
+    # #     print("Test from_grid failed")
+
+    # PyConrad.get_instance().terminate()

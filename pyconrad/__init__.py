@@ -12,13 +12,12 @@ except:
     __version__ = 'unknown'
 
 
-from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage
+from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage, attachThreadToJVM, detachThreadFromJVM
 from ._pygrid import PyGrid, ndarray_to_grid, grid_to_ndarray
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, stop_gui
 from pyconrad._classgetter import ClassGetter
 from .constants import java_float_dtype
-from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_path
-from ._imageutils import ImageUtil
+from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_file
 from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from ._autocomplete import generate_autocomplete_file
 
