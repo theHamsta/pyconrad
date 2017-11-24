@@ -12,12 +12,11 @@ except:
     __version__ = 'unknown'
 
 
-from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage, attachThreadToJVM, detachThreadFromJVM
-from ._pygrid import PyGrid, ndarray_to_grid, grid_to_ndarray
-from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, stop_gui
+import jpype
+from ._pygrid import PyGrid
+from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
 from pyconrad._classgetter import ClassGetter
 from .constants import java_float_dtype
-from .download_conrad import download_conrad, conrad_jar_dir, conrad_jar_file
 from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from ._autocomplete import generate_autocomplete_file
 
@@ -26,7 +25,7 @@ def edu():
     if not _pyconrad.PyConrad().is_initialized:
         raise _pyconrad.PyConradNotInitializedError()
 
-    return JPackage('edu')
+    return JPackage('edu')  # type: .AutoCompleteConrad.edu
 
 
 def ij():
@@ -34,7 +33,7 @@ def ij():
     if not _pyconrad.PyConrad().is_initialized:
         raise _pyconrad.PyConradNotInitializedError()
 
-    return JPackage('edu')
+    return JPackage('ij')
 
 # class pyconrad:
 #
