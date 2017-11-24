@@ -141,6 +141,7 @@ def _extend_numeric_grid():
     grid_class.__setitem__ = _numeric_grid_setitem
     grid_class.shape = _numeric_grid_shape
     grid_class.pygrid = _pygrid
+    grid_class.__array__ = _numpy_grid
 
 
 def extend_all_classes():

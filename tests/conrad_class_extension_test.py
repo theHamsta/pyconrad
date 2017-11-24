@@ -11,6 +11,8 @@ def test_create_pointnd():
     _.PointND(pyconrad.JArray(pyconrad.JDouble)([2., 3.]))
     _.PointND.from_list([2, 3])
     _.PointND.from_numpy(np.array([2, 3]))
+
+    # These don't work:
     # _.PointND(np.array([2., 3.]).astype(np.float32))
     # _.PointND([2, 3])
 
@@ -21,6 +23,14 @@ def test_create_gridnd():
     _.Grid2D(10, 20)
     _.Grid3D(10, 20, 30)
     _.Grid4D(10, 20, 30, 50)
+
+
+def test_gridnd__array__():
+
+    np.array(_.Grid1D(10))
+    np.array(_.Grid2D(10, 20))
+    np.array(_.Grid3D(10, 20, 30))
+    np.array(_.Grid4D(10, 20, 30, 50))
 
 
 def test_numpy_to_grid1d():
@@ -110,7 +120,8 @@ def test_numpy_to_gridnd():
 
 
 if __name__ == "__main__":
-    test_create_pointnd()
-    test_create_gridnd()
-    test_numpy_to_gridnd()
-    test_numpy_to_grid1d()
+    test_gridnd__array__()
+    # test_create_pointnd()
+    # test_create_gridnd()
+    # test_numpy_to_gridnd()
+    # test_numpy_to_grid1d()
