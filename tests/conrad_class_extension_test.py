@@ -71,6 +71,44 @@ def test_numpy_to_gridnd():
         assert np.allclose(converted, random_matrix)
 
 
+def test_numpy_to_gridnd():
+
+    for dim in range(2, 5):
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)]).astype(pyconrad.java_float_dtype)
+
+        if dim == 1:
+            grid = _.Grid1D.from_numpy(random_matrix)
+        elif dim == 2:
+            grid = _.Grid2D.from_numpy(random_matrix)
+        elif dim == 3:
+            grid = _.Grid3D.from_numpy(random_matrix)
+        elif dim == 4:
+            grid = _.Grid3D.from_numpy(random_matrix)
+
+        converted = grid.as_numpy()
+
+        assert np.allclose(converted, random_matrix)
+
+    for dim in range(2, 5):
+
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)])
+
+        if dim == 1:
+            grid = _.Grid1D.from_numpy(random_matrix)
+        elif dim == 2:
+            grid = _.Grid2D.from_numpy(random_matrix)
+        elif dim == 3:
+            grid = _.Grid3D.from_numpy(random_matrix)
+        elif dim == 4:
+            grid = _.Grid3D.from_numpy(random_matrix)
+
+        converted = grid.as_numpy()
+
+        assert np.allclose(converted, random_matrix)
+
+
 if __name__ == "__main__":
     test_create_pointnd()
     test_create_gridnd()

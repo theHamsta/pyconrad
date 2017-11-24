@@ -29,11 +29,11 @@ def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs=[]):
     PyConrad().setup(max_ram, min_ram, dev_dirs)
 
 
-def start_imagej():
+def start_gui():
     PyConrad().start_conrad()
 
 
-def start_reconstruction_pipeline():
+def start_reconstruction_pipeline_gui():
     PyConrad().start_reconstruction_filter_pipeline()
 
 
@@ -190,7 +190,7 @@ class PyConrad:
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
         else:
             self.__conrad_path = download_conrad.conrad_jar_dir()
-            dev_src.append(download_conrad.conrad_jar_path())
+            dev_src.append(download_conrad.conrad_jar_file())
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
 
