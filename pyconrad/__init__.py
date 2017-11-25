@@ -12,6 +12,7 @@ except:
     __version__ = 'unknown'
 
 
+from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage, attachThreadToJVM, detachThreadFromJVM
 import jpype
 from ._pygrid import PyGrid
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
@@ -34,16 +35,6 @@ def ij():
         raise _pyconrad.PyConradNotInitializedError()
 
     return JPackage('ij')
-
-# class pyconrad:
-#
-#     @property
-#     def edu(self):
-#         return JPackage('edu')
-#
-#     @property
-#     def ij(self):
-#         return JPackage('edu')
 
 
 class PyConrad(_pyconrad.PyConrad):
