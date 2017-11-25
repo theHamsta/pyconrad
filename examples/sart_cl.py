@@ -1,7 +1,5 @@
 from pyconrad import *
 import numpy as np
-from matplotlib import pyplot as plt
-from jpype import *
 
 # Compare to Java-Version: CONRAD/src/edu/stanford/rsl/tutorial/iterative/SartCL.java
 
