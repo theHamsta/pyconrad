@@ -1,5 +1,5 @@
 
-# Copyright (C) 2010-2017 - Andreas Maier 
+# Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
 import jpype.awt.event.WindowAdapter as wa
@@ -32,4 +32,4 @@ class WindowListener(wa):
         pass
 
     def windowClosing(self, e):
-        pyconrad.PyConrad.get_instance().stop_gui()
+        pyconrad.PyConrad.get_instance().terminate_pyconrad()

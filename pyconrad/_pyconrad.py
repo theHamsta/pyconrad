@@ -202,7 +202,7 @@ class PyConrad:
 
     def terminate(self):
         if self.is_gui_started():
-            self.__stop_gui()
+            self.__terminate_pyconrad()
         shutdownJVM()
 
     @property
