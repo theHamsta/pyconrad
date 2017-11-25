@@ -37,8 +37,8 @@ def start_reconstruction_pipeline_gui():
     PyConrad().start_reconstruction_filter_pipeline()
 
 
-def stop_gui():
-    PyConrad().stop_gui()
+def terminate_pyconrad():
+    PyConrad().terminate_pyconrad()
 
 # @property
 
@@ -98,6 +98,7 @@ class PyConrad:
                 self.ij = JPackage("ij")
                 self.java = java
                 _extend_conrad_classes.extend_all_classes()
+                self.classes.stanford.rsl.conrad.utils.Configuration.loadConfiguration()
 
             except JavaException as ex:
                 print(ex)
@@ -128,7 +129,7 @@ class PyConrad:
     def is_java_initalized():
         return isJVMStarted()
 
-    def stop_gui(self):
+    def terminate_pyconrad(self):
         java.lang.System.exit(0)
         self.__is_gui_started = False
 
