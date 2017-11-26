@@ -21,6 +21,12 @@ from ._deprecated import deprecated
 module_path = os.path.dirname(__file__)
 
 
+def assert_pyconrad_initialization():
+    if not PyConrad().is_java_initalized():
+        raise PyConradNotInitializedError(
+            'pyconrad was not initialized! Use pyconrad.setup_pyconrad()!')
+
+
 class PyConradNotInitializedError(Exception):
     pass
 
@@ -219,8 +225,7 @@ class PyConrad:
     @deprecated
     def __getitem__(self, classname):
 
-        if not self.is_java_initalized():
-            raise PyConradNotInitializedError()
+        assert_pyconrad_initialization()
         success = None
 
         # Default namespace
