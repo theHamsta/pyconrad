@@ -173,6 +173,7 @@ class PyConrad:
         for dev in dev_dirs:
             dev_path = Path(dev)
             subdirs = [x for x in dev_path.iterdir() if x.is_dir()]
+            dev_src.append(str(dev_path))
             for d in subdirs:
                 dev_src.append(dev_path.joinpath(d))
             if dev_path.match("CONRAD"):
