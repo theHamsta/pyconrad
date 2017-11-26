@@ -5,4 +5,4 @@
 import pyconrad
 
 print("CONRAD installation directory is:")
-print(pyconrad.conrad_jar_dir())
+print(pyconrad.download_conrad.conrad_jar_dir())
