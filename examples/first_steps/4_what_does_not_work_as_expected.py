@@ -1,19 +1,11 @@
-from pyconrad import *
+# from pyconrad import *
+import pyconrad.autoinit
+from pyconrad import JArray, JDouble
 
-jvm = PyConrad()
-jvm.setup()
-
-jvm.add_import('edu.stanford.rsl.conrad.data.numeric')
-jvm.add_import('edu.stanford.rsl.tutorial.phantoms')
-jvm.add_import('edu.stanford.rsl.conrad.phantom')
-jvm.add_import('edu.stanford.rsl.conrad.utils')
-jvm.add_import('edu.stanford.rsl.tutorial.iterative')
-jvm.add_import('edu.stanford.rsl.conrad.geometry.shapes.simple')
-jvm.add_import('edu.stanford.rsl.conrad.geometry.trajectories')
-jvm.add_import('edu.stanford.rsl.conrad.numerics')
-jvm.add_import('edu.stanford.rsl.conrad.geometry')
-jvm.add_import('edu.stanford.rsl.tutorial.cone')
-jvm.add_import('edu.stanford.rsl.conrad.data.numeric.opencl')
+_ = pyconrad.ClassGetter(
+    'edu.stanford.rsl.conrad.geometry.trajectories',
+    'edu.stanford.rsl.conrad.geometry'
+)
 
 
 # Common error: "no matching overload"
@@ -21,26 +13,31 @@ jvm.add_import('edu.stanford.rsl.conrad.data.numeric.opencl')
 # Use JPype boxed types: http://jpype.readthedocs.io/en/latest/userguide.html#boxed-types
 
 # Creating a PointND
-jvm['PointND'](3, 3)  # does not work
-jvm['PointND']([3, 3])  # neither does this
-jvm['PointND'](JArray(JDouble)([3, 2]))  # works
-jvm['PointND'].from_list([3, 2])  # works
+# _.PointND(3, 3)  # does not work
+# _.PointND([3, 3])  # neither does this
+_.PointND([3., 3.])
+# works since this can be unambiguosly understood as float[]
+_.PointND(JArray(JDouble)([3, 2]))  # works
+_.PointND.from_list([3, 2])  # works
 
-# the same applies for SimpleVector
-jvm['SimpleVector'](JArray(JDouble)([3, 2]))  # works
-jvm['SimpleVector'].from_list([3, 3])  # works
+# The same applies for SimpleVector
+_.SimpleVector(JArray(JDouble)([3, 2]))  # works
+# Does not work! SimpleVector has a float[] and a double[] constructor:
+# _.SimpleVector([2., 3., 5.])
+_.SimpleVector.from_list([3, 3])  # works
 
 # Grid.setOrigin(...), setSpacing
-jvm['Grid2D'](3, 2).setOrigin(JArray(JDouble)([2, 3]))
-PyGrid.from_grid(jvm['Grid2D'](3, 2)).set_origin([2, 3])
-PyGrid.from_grid(jvm['Grid2D'](3, 2)).set_spacing([2, 3])
+# Does not work ambiguity setOrigin(float[]) and setOrigin(double[])
+# _.Grid2D(3, 2).setOrigin([2, 3])
+_.Grid2D(3, 2).setOrigin(JArray(JDouble)([2, 3]))
 
-# Creating nested enums
-traj = jvm['HelicalTrajectory']()
+#
+# # Creating nested enums
+traj = _.HelicalTrajectory()
 print(traj.getDetectorOffsetU())  # returns a float
-enumval = jvm['Projection$CameraAxisDirection'].values(
+enumval = _['Projection$CameraAxisDirection'].values(
 )[int(traj.getDetectorOffsetU())]  # Convert back to enum
-enumval = jvm.enumval_from_int(
+enumval = _.enumval_from_int(
     'Projection$CameraAxisDirection', traj.getDetectorOffsetU())  # or like that
-enumval = jvm.enumval_from_int(
+enumval = _.enumval_from_int(
     'Projection$CameraAxisDirection', traj.getDetectorOffsetU())  # or like that
