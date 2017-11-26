@@ -121,7 +121,7 @@ def test_numpy_to_gridnd():
 
 if __name__ == "__main__":
     test_gridnd__array__()
-    # test_create_pointnd()
+    test_create_pointnd()
     # test_create_gridnd()
     # test_numpy_to_gridnd()
     # test_numpy_to_grid1d()

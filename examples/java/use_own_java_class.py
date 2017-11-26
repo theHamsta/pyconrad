@@ -9,7 +9,7 @@ pyconrad.setup_pyconrad(dev_dirs=[cur_dir])
 
 _ = pyconrad.ClassGetter()
 
-# assuming javac is in path
+# assuming javac is in $PATH
 subprocess.call(['javac', os.path.join(cur_dir, 'SampleClass.java')])
 
 # we can access the class directly since it is in the default package
