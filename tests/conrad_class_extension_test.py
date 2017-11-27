@@ -34,7 +34,7 @@ def test_gridnd__array__():
 
 
 def test_numpy_to_grid1d():
-    random_matrix = np.random.randn([10]).astype(pyconrad.java_float_dtype)
+    random_matrix = np.random.randn(10).astype(pyconrad.java_float_dtype)
 
     grid = _.Grid1D.from_numpy(random_matrix)
 
