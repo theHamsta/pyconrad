@@ -19,11 +19,7 @@ or if you downloaded this repository using:
 python setup.py install
 ```
 
-This will automatically install CONRAD and all python dependencies. You can use the following python code to get the installation directory of CONRAD:
-```python
-import pyconrad_java
-print(pyconrad_java.conrad_jar_dir)
-```
+This will automatically install CONRAD and all python dependencies. 
 
 # Tests
 
@@ -40,45 +36,44 @@ You can start CONRAD like this:
 import pyconrad
 
 pyconrad.setup_pyconrad()
-pyconrad.start_conrad()  # start ImageJ
-pyconrad.start_reconstruction_pipeline() # if you want to start CONRAD's reconstruction filter pipeline
+pyconrad.start_gui()  # start ImageJ
+pyconrad.start_reconstruction_pipeline_gui() # if you want to start CONRAD's reconstruction filter pipeline
 ```
 
-The central class of the pyconrad package is PyConrad. You can use it to access all Java classes of CONRAD and start the graphical user interface:
-``` python
-from pyconrad import PyConrad
+You can access CONRAD's Java via pyconrad.edu() or using the convinience class ClassGetter.
 
-pyconrad = PyConrad()
-pyconrad.setup()
-# Optional parameters for Java Virtual Machine RAM and own Java projects
-# pyconrad.setup(max_ram='8G', min_ram='500M', dev_dirs=['path/to/project/with/own/java/classes'])
-pyconrad.start_conrad()
+``` python
+import pyconrad
+
+# setup PyConrad
+pyconrad.setup_pyconrad(min_ram='500M', max_ram='8G')
+# Optional parameters for Java Virtual Machine RAM
+
+pyconrad.start_gui()
 
 # Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
-phantom = pyconrad.classes.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
-# Access more easily using imports
-pyconrad.add_import('edu.stanford.rsl.tutorial.phantoms')
-phantom2 = pyconrad['MickeyMouseGrid2D'](200, 200)
+phantom = pyconrad.edu().stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
+
+
+# Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
+_ = pyconrad.ClassGetter(
+    'edu.stanford.rsl.tutorial.phantoms',
+    'edu.stanford.rsl.conrad.phantom'
+)  # type: pyconrad.AutoCompleteConrad
+
+# You can add more namespaces also later
+_.add_namespaces('edu.stanford.rsl.tutorial.dmip')
+
+phantom2d = _.MickeyMouseGrid2D(200, 200)
+phantom3d = _.NumericalSheppLogan3D(
+    200, 200, 200).getNumericalSheppLoganPhantom()
 
 # Use Java method of class MickeyMouseGrid2D
 phantom.show()
+phantom3d.show()
 ```
-To transfer data from NumPy to CONRAD use the class PyGrid:
-```python
-from pyconrad import PyConrad, PyGrid, java_float_dtype
-import numpy as np
 
-pyconrad = PyConrad()
-pyconrad.setup()
-
-phantom = pyconrad.get_phantom_package().MickeyMouseGrid2D(200, 200)
-
-pygrid1 = PyGrid.from_grid(phantom)  # Create PyGrid from Grid2D
-pygrid1.grid().show()  # Use Java method
-
-from scipy.misc import imshow
-imshow(pygrid1.numpy()) # or imshow(pygrid1) to use a Python method
-```
+Also memory transfer to numpy.ndarray is possibl.
 Data changes have to be synchronized:
 ``` python
 ...
