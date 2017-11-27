@@ -8,8 +8,8 @@ def test_import():
 def test_installation():
     import pyconrad
 
-    assert os.path.exists(pyconrad.download_conrad.conrad_jar_dir())
-    assert os.path.exists(pyconrad.download_conrad.conrad_jar_file())
+    assert os.path.exists(pyconrad._download_conrad.conrad_jar_dir())
+    assert os.path.exists(pyconrad._download_conrad.conrad_jar_file())
 
 
 def test_java():

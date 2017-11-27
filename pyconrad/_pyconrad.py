@@ -12,7 +12,7 @@ from jpype import attachThreadToJVM, detachThreadFromJVM, JavaException, JProxy,
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
 
 from . import _windowlistener as wl
-from . import download_conrad
+from . import _download_conrad
 
 from . import _extend_conrad_classes
 from ._deprecated import deprecated
@@ -93,7 +93,7 @@ class PyConrad:
                 conrad_source_and_libs = self.__import__libs(dev_dirs)
 
                 if not os.path.exists(self.__conrad_path):
-                    download_conrad.download_conrad()
+                    _download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
                 startJVM(getDefaultJVMPath(), conrad_source_and_libs,
                          "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
@@ -197,8 +197,8 @@ class PyConrad:
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
         else:
-            self.__conrad_path = download_conrad.conrad_jar_dir()
-            dev_src.append(download_conrad.conrad_jar_file())
+            self.__conrad_path = _download_conrad.conrad_jar_dir()
+            dev_src.append(_download_conrad.conrad_jar_file())
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
 

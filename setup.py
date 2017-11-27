@@ -21,9 +21,10 @@ def _post_install(dir):
     cwd = os.path.join(dir, 'pyconrad')
     #os.path.append(os.path.join( os.path.dirname(__file__), 'pyconrad'))
     sys.path.append(cwd)
-    import download_conrad
-    download_conrad.download_conrad(cwd)
-    print("CONRAD has been installed to %s" % download_conrad.conrad_jar_dir())
+    import _download_conrad
+    _download_conrad.download_conrad(cwd)
+    print("CONRAD has been installed to %s" %
+          _download_conrad.conrad_jar_dir())
 
 
 class install(_install):
