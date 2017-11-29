@@ -43,7 +43,8 @@ def setup_package():
     sphinx = ['sphinx'] if needs_sphinx else []
     setup(name='pyconrad',
           version='0.0.6',
-          packages=['pyconrad'],
+          packages=['pyconrad', 'pyconrad._autocomplete_files',
+                    'pyconrad.utils'],
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
