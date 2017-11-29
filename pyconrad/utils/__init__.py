@@ -18,3 +18,23 @@ def get_geometry() -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.geomet
     #  #TODO load config on pyconrad startup
     geo = _.Configuration.getGlobalConfiguration().getGeometry()
     return geo
+
+
+def get_sino_shape() -> tuple:
+    conf = _.Configuration.getGlobalConfiguration()
+    geo = conf.getGeometry()
+    return (geo.getProjectionStackSize(), geo.getDetectorHeight(), geo.getDetectorWidth())
+
+
+def get_sino_size() -> list:
+    return (reversed(get_sino_shape()))
+
+
+def get_reco_shape() -> tuple:
+    conf = _.Configuration.getGlobalConfiguration()
+    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    return (geo.getReconDimensionZ(), geo.getReconDimensionY(), geo.getReconDimensionX())
+
+
+def get_reco_size() -> list:
+    return (reversed(get_reco_shape()))

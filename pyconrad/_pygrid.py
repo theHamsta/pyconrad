@@ -105,6 +105,8 @@ class PyGrid(np.ndarray):
 
     @property
     def grid(self):
+        if not hasattr(self, '__grid'):
+            self.update_grid()
         return self.__grid
 
     def show(self, title=""):
