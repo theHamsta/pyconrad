@@ -56,11 +56,12 @@ def setup_package():
           description='Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography',
           long_description=read('README.md'),
           entry_points={
-              'console_scripts': [
-                  'pyconrad = pyconrad.__main__:main',
+              'gui_scripts': [
+                  'conrad = pyconrad._scripts:start_pyconrad',
+                  'conrad_imagej = pyconrad._scripts:start_conrad_imagej',
               ]
           },
-          setup_requires=['pytest-runner'],
+          setup_requires=['pytest-runner', 'install_freedesktop'],
           tests_require=['pytest']
           )
     #setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
