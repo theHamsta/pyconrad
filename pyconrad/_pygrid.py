@@ -144,7 +144,7 @@ class PyGrid(np.ndarray):
             #     self[i] = self.__gr
             self.__grid.notifyBeforeRead()
             f_buffer.put(self.__grid.buffer)
-            
+
         elif len(shape) == 2:
             f_buffer.put(self.__grid.getBuffer())
         elif len(shape) is 3:
@@ -190,7 +190,8 @@ class PyGrid(np.ndarray):
         f_buffer = self.__dbuffer.asFloatBuffer()
         if len(shape) == 1:
             # Grid1D.getBuffer() would generate as copy of the original buffer
-            self.__grid = self.__numericpackage.Grid1D( jpype.JArray(jpype.JFloat)(list(self[:])))
+            self.__grid = self.__numericpackage.Grid1D(
+                jpype.JArray(jpype.JFloat)(list(self[:])))
         elif len(shape) == 2:
             f_buffer.get(self.__grid.getBuffer())
         elif len(shape) is 3:

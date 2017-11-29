@@ -136,7 +136,9 @@ class PyConrad:
         return isJVMStarted()
 
     def terminate_pyconrad(self):
-        java.lang.System.exit(0)
+        if self.is_initialized:
+            java.lang.System.exit(0)
+            shutdownJVM()
         self.__is_gui_started = False
 
     def __start_rfp_gui(self):
