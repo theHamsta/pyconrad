@@ -16,7 +16,7 @@ pip install pyconrad
 
 or if you downloaded this repository using:
 ```bash
-python setup.py install
+pip install -e .
 ```
 
 This will automatically install CONRAD and all python dependencies. 
@@ -40,7 +40,7 @@ pyconrad.start_gui()  # start ImageJ
 pyconrad.start_reconstruction_pipeline_gui() # if you want to start CONRAD's reconstruction filter pipeline
 ```
 
-You can access CONRAD's Java via pyconrad.edu() or using the convinience class ClassGetter.
+You can access CONRAD's Java classes via pyconrad.edu() or using the convinience class ClassGetter.
 
 ``` python
 import pyconrad
@@ -73,7 +73,7 @@ phantom.show()
 phantom3d.show()
 ```
 
-Also memory transfer to numpy.ndarray is possibl.
+Also memory transfers to numpy.ndarray are possible.
 Data changes have to be synchronized:
 ``` python
 ...
@@ -83,7 +83,7 @@ array = np.random.rand(4,2,3).astype(java_float_dtype)
 pygrid2 = PyGrid.from_numpy(array)
 
 # Manipulate data in using CONRAD at Position (x,y,z) = (1,2,4)
-pygrid2.grid().setValue(5.0, [0,1,3])
+pygrid2.grid.setValue(5.0, [0,1,3])
 
 # Print this pixel using Python indexes [z,y,x]
 print("Before update: %f" % pygrid2[3,1,0])
