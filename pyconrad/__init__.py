@@ -20,6 +20,7 @@ from pyconrad._classgetter import ClassGetter
 from .constants import java_float_dtype
 from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from ._autocomplete import generate_autocomplete_file
+import pyconrad.utils
 
 
 def edu():
