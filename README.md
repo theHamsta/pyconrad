@@ -2,6 +2,13 @@
 
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
+- [pyConrad](#pyconrad)
+- [CONRAD](#conrad)
+- [Installation](#installation)
+- [Tests](#tests)
+- [Usage](#usage)
+    - [Extension methods for java classes](#extension-methods-for-java-classes)
+    - [Frequently encountered problems](#frequently-encountered-problems)
 # CONRAD
 
 CONRAD is a state-of-the-art software platform with extensive documentation. It is based on platform-independent technologies. Special libraries offer access to hardware acceleration such as CUDA and OpenCL. There is an easy interface for parallel processing. The software package includes different simulation tools that are able to generate 4-D projection and volume data and respective vector motion fields. Well known reconstruction algorithms such as FBP, DBP, and ART are included. All algorithms in the package are referenced to a scientific source. Please visit http://conrad.stanford.edu for more information.
@@ -118,39 +125,39 @@ with the methods:
 ## Frequently encountered problems
 ```python
 # Creating a PointND
-jvm['PointND'](3,3)  # does not work
-jvm['PointND']([3,3])  # neither does this
-jvm['PointND'](JArray(JDouble)([3,2]))  # works
-jvm['PointND'].from_numpy(np.array([2.1,3.1])) #works, uses extension method
-jvm['PointND'].from_list([2.1,3.1]) #works, uses extension method
+_.PointND(3,3)  # does not work
+_.PointND([3,3])  # neither does this
+_.PointND(JArray(JDouble)([3,2]))  # works
+_.PointND.from_numpy(np.array([2.1,3.1])) #works, uses extension method
+_.PointND.from_list([2.1,3.1]) #works, uses extension method
 
 # Getting PointND as numpy array
 numpy_point = java_point.as_numpy()
 
 # the same applies for SimpleVector
-jvm['SimpleVector'](JArray(JDouble)([3,2]))  # works
-jvm['SimpleVector'].from_numpy(np.array([2.1,3.1])) #works, uses extension method
-jvm['SimpleVector'].from_list([2.1,3.1]) #works, uses extension method
+_.SimpleVector(JArray(JDouble)([3,2]))  # works
+_.SimpleVector.from_numpy(np.array([2.1,3.1])) #works, uses extension method
+_.SimpleVector.from_list([2.1,3.1]) #works, uses extension method
 
 #Getting SimpleVector as numpy array
 numpy_vector = java_vector.as_numpy()
 
 #the same applies for SimpleMatrix
-jvm['SimpleMatrix'](JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
-jvm['SimpleMatrix'].from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
-jvm['SimpleMatrix'].from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
+SimpleMatrix(JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
+SimpleMatrix.from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
+SimpleMatrix.from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
 
 #Getting SimpleMatrix as numpy matrix
 numpy_matrix = java_matrix.as_numpy()
 
 # Grid.setOrigin(...), setSpacing
-jvm['Grid2D'](3,2).setOrigin(JArray(JDouble)([2,3]))
-PyGrid.from_grid(jvm['Grid2D'](3,2)).set_origin([2,3])
-PyGrid.from_grid(jvm['Grid2D'](3,2)).set_spacing([2,3])
+_.Grid2D(3,2).setOrigin(JArray(JDouble)([2,3]))
+PyGrid.from_grid(_.Grid2D(3,2)).set_origin([2,3])
+PyGrid.from_grid(_.Grid2D(3,2)).set_spacing([2,3])
 
 # Creating nested enums
-traj = jvm['HelicalTrajectory']()
+traj = _.HelicalTrajectory()
 print(traj.getDetectorOffsetU())  # returns a float
-enumval = jvm['Projection$CameraAxisDirection'].values()[int(traj.getDetectorOffsetU())] # Convert back to enum
+enumval = _.['Projection$CameraAxisDirection'].values()[int(traj.getDetectorOffsetU())] # Convert back to enum
 enumval = jvm.enumval_from_int('Projection$CameraAxisDirection', traj.getDetectorOffsetU())  # or like that
 ```
