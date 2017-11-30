@@ -14,7 +14,6 @@ def back_project(sino):
     back_projector = _.ConeBeamBackprojector()
     return back_projector.backprojectPixelDrivenCL(sino)
 
-def cosine_filtering(sino):
 
 pyconrad.setup_pyconrad(max_ram='8G', dev_dirs=[
                         '/localhome/local/projects/CONRAD/'])
