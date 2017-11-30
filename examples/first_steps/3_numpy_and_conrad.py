@@ -26,25 +26,25 @@ numpy_vector2 = np.array(java_vector2)
 numpy_vector3 = java_vector3.as_numpy()
 
 # Test extention methods to create from numpy and to convert to numpy: SimpleMatrix
-java_matrix = pyconrad['SimpleMatrix'](
+java_matrix = _.SimpleMatrix(
     JArray(JDouble, 2)([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]]))
-java_matrix2 = pyconrad['SimpleMatrix'].from_numpy(
+java_matrix2 = _.SimpleMatrix.from_numpy(
     np.matrix([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]]))
-java_matrix3 = pyconrad['SimpleMatrix'].from_list(
+java_matrix3 = _.SimpleMatrix.from_list(
     [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]])
 numpy_matrix = java_matrix.as_numpy()
 numpy_matrix2 = java_matrix2.as_numpy()
 numpy_matrix3 = java_matrix3.as_numpy()
 
-pyconrad.add_import('edu.stanford.rsl.tutorial.phantoms')
-phantom = pyconrad['MickeyMouseGrid2D'](200, 200)
+_.add_namespaces('edu.stanford.rsl.tutorial.phantoms')
+phantom = _.MickeyMouseGrid2D(200, 200)
 
 # extension methods are added tu numeric grid, which is the parent class of Grid1D, Grid2D, Grid3D,...
-pyconrad.add_import("edu.stanford.rsl.conrad.data.numeric")
-java_grid3D = pyconrad["Grid3D"](100, 100, 100)
-java_grid3D2 = pyconrad["Grid3D"].from_numpy(
+_.add_namespaces("edu.stanford.rsl.conrad.data.numeric")
+java_grid3D = _.Grid3D(100, 100, 100)
+java_grid3D2 = _.Grid3D.from_numpy(
     np.array([[[2.1, 3.1], [2.2, 3.2], [2.3, 3.3]]]))
-java_grid3D3 = pyconrad["Grid3D"].from_list(
+java_grid3D3 = _.Grid3D.from_list(
     [[[2.1, 3.1], [2.2, 3.2], [2.3, 3.3]]])
 
 np_grid3D = java_grid3D.as_numpy()
