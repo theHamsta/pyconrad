@@ -84,6 +84,10 @@ class ClassGetter:
             except Exception:
                 pass
 
+        # Class not found? Create new ClassGetter to search in sub-namespaces
+        if not success:
+            return ClassGetter(*[ns + '.' + classname for ns in self._imported_namespaces])
+
         if not success:
             raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
                 classname, self._imported_namespaces))
