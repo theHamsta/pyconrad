@@ -84,9 +84,10 @@ class ClassGetter:
             except Exception:
                 pass
 
-        # Class not found? Create new ClassGetter to search in sub-namespaces
-        if not success:
-            return ClassGetter(*[ns + '.' + classname for ns in self._imported_namespaces])
+        # # Class not found? Create new ClassGetter to search in sub-namespaces
+        # if not success:
+        #     if self._imported_namespaces:
+        #         return ClassGetter(*([ns + '.' + classname for ns in self._imported_namespaces] + [classname]))
 
         if not success:
             raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
@@ -98,3 +99,11 @@ class ClassGetter:
         if not pyconrad.PyConrad.is_java_initalized():
             raise Exception('JVM not started! Use Pyconrad().setup()')
         return self.__getattr__(classname)
+
+    # def __call__(self):
+    #     if self._imported_namespaces and self._imported_namespaces[0].contains('.'):
+    #         raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
+    #             str.split(self._imported_namespaces[0], '.')[-1], ['.'.join(str.split(ns, '.')[:-1]) for ns in self._imported_namespaces]))
+    #     else:
+    #         raise Exception("Class not found in the following namespaces:\n %s" % (
+    #             '[]'))
