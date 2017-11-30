@@ -38,6 +38,14 @@ def ij():
     return JPackage('ij')
 
 
+def stanfordrsl():
+    if not _pyconrad.PyConrad().is_initialized:
+        raise _pyconrad.PyConradNotInitializedError()
+
+    # type: .AutoCompleteConrad.edu.stanford.rsl
+    return JPackage('edu.stanford.rsl')
+
+
 class PyConrad(_pyconrad.PyConrad):
 
     def __init__(self):

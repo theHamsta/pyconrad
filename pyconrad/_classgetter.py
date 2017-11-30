@@ -13,6 +13,7 @@ class ClassGetter:
         self._imported_namespaces = [n for n in namespaces]
         self.edu = JPackage('edu')
         self.ij = JPackage('ij')
+        self.stanfordrsl = JPackage('edu.stanford.rsl')
 
     def add_namespaces(self, namespaces):
         if isinstance(namespaces, list):
