@@ -13,6 +13,12 @@ def test_installation():
 
 
 def test_java():
-    import pyconrad
+    import pyconrad.autoinit
 
     pyconrad._pyconrad.PyConrad()._check_jre_version()
+
+
+if __name__ == "__main__":
+    test_import()
+    test_installation()
+    test_java()
