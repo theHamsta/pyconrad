@@ -268,7 +268,7 @@ class PyConrad:
         '''
         jre_version = java.lang.System.getProperty("java.version").split('.')
 
-        if int(jre_version[0]) >= 1:
+        if int(jre_version[0]) > 1:
             # format 9.0.1
             assert int(
                 jre_version[0]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
