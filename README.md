@@ -7,6 +7,8 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 - [Installation](#installation)
 - [Tests](#tests)
 - [Usage](#usage)
+    - [Basic example](#basic-example)
+    - [More Examples](#more-examples)
     - [Autocomplete](#autocomplete)
     - [Extension methods for java classes](#extension-methods-for-java-classes)
     - [Frequently encountered problems](#frequently-encountered-problems)
@@ -48,6 +50,8 @@ pyconrad.setup_pyconrad()
 pyconrad.start_gui()  # start ImageJ
 pyconrad.start_reconstruction_pipeline_gui() # if you want to start CONRAD's reconstruction filter pipeline
 ```
+
+## Basic example
 
 You can access CONRAD's Java classes via pyconrad.edu() or using the convinience class ClassGetter.
 
@@ -108,7 +112,7 @@ pygrid2.update_grid()
 # Print
 print(pygrid2)
 ```
-## Examples
+## More Examples
 
 More examples can be found [here](examples)
 
