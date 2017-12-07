@@ -7,6 +7,7 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 - [Installation](#installation)
 - [Tests](#tests)
 - [Usage](#usage)
+    - [Autocomplete](#autocomplete)
     - [Extension methods for java classes](#extension-methods-for-java-classes)
     - [Frequently encountered problems](#frequently-encountered-problems)
 # CONRAD
@@ -108,6 +109,14 @@ print(pygrid2)
 ```
 
 More examples can be found [here](examples)
+
+## Autocomplete
+
+As it might be difficult to remember the exact names of Java functions and classes, pyconrad provides basic autocomplete feature for CONRAD classes.
+Just give your IDE a type hint that a object represents a certain Java namespace or class (`# type: pyconrad.AutoCompleteConrad.edu.standford...`).
+Works with pycharm:
+
+![autocomplet_video](README.md_file/autocomplete.mp4)
 
 ## Extension methods for java classes
 For easy transition between java and python we extent the java classes in python to convert easiliy between the respective java class and the respective numpy structure.
