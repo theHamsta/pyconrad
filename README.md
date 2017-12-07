@@ -117,7 +117,7 @@ As it might be difficult to remember the exact names of Java functions and class
 Just give your IDE a type hint that a object represents a certain Java namespace or class (`# type: pyconrad.AutoCompleteConrad.edu.standford...`).
 Works with pycharm:
 
-![autocomplete_video](README.md_files/autocomplete.mp4)
+![autocomplete_video](README.md_files/autocomplete.webm)
 
 ## Extension methods for java classes
 For easy transition between java and python we extent the java classes in python to convert easiliy between the respective java class and the respective numpy structure.
