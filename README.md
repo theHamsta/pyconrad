@@ -108,6 +108,7 @@ pygrid2.update_grid()
 # Print
 print(pygrid2)
 ```
+## Examples
 
 More examples can be found [here](examples)
 
@@ -115,6 +116,7 @@ More examples can be found [here](examples)
 
 As it might be difficult to remember the exact names of Java functions and classes, pyconrad provides basic autocomplete feature for CONRAD classes.
 Just give your IDE a type hint that a object represents a certain Java namespace or class (`# type: pyconrad.AutoCompleteConrad.edu.standford...`).
+
 Works with pycharm:
 
 ![autocomplete_video](README.md_files/autocomplete.webm)
