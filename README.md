@@ -10,6 +10,7 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
     - [Autocomplete](#autocomplete)
     - [Extension methods for java classes](#extension-methods-for-java-classes)
     - [Frequently encountered problems](#frequently-encountered-problems)
+
 # CONRAD
 
 CONRAD is a state-of-the-art software platform with extensive documentation. It is based on platform-independent technologies. Special libraries offer access to hardware acceleration such as CUDA and OpenCL. There is an easy interface for parallel processing. The software package includes different simulation tools that are able to generate 4-D projection and volume data and respective vector motion fields. Well known reconstruction algorithms such as FBP, DBP, and ART are included. All algorithms in the package are referenced to a scientific source. Please visit http://conrad.stanford.edu for more information.
@@ -116,7 +117,7 @@ As it might be difficult to remember the exact names of Java functions and class
 Just give your IDE a type hint that a object represents a certain Java namespace or class (`# type: pyconrad.AutoCompleteConrad.edu.standford...`).
 Works with pycharm:
 
-![autocomplet_video](README.md_file/autocomplete.mp4)
+![autocomplet_video](README.md_files/autocomplete.mp4)
 
 ## Extension methods for java classes
 For easy transition between java and python we extent the java classes in python to convert easiliy between the respective java class and the respective numpy structure.
