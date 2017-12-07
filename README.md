@@ -25,7 +25,7 @@ Install via pip:
 pip install pyconrad
 ```
 
-or if you downloaded this repository using:
+or if you downloaded this repository (https://git5.cs.fau.de/PyConrad/pyCONRAD) using:
 ```bash
 pip install -e .
 ```
