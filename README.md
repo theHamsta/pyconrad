@@ -32,6 +32,8 @@ pip install -e .
 
 This will automatically install CONRAD and all python dependencies. 
 
+If you encounter a problem during the installation have a look at our wiki: https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home
+
 # Tests
 
 If you want to test whether pyconrad is working correctly on your computer you may execute all tests included in this repo via:
