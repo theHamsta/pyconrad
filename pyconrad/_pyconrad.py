@@ -86,7 +86,7 @@ class PyConrad:
             PyConrad.___instance = PyConrad()
         return PyConrad.___instance
 
-    def setup(self, max_ram="8G", min_ram="7G", dev_dirs=[]):
+    def setup(self, max_ram="18G", min_ram="7G", dev_dirs=[]):
         if not self.is_java_initalized():
             try:
                 curr_directory = os.getcwd()
