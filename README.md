@@ -128,7 +128,7 @@ Works with pycharm:
 ![autocomplete_video](README.md_files/autocomplete.webm)
 
 ## Extension methods for java classes
-For easy transition between java and python we extent the java classes in python to convert easiliy between the respective java class and the respective numpy structure.
+For easy transition between Java and Python we extented some important Java classes in Python to convert between the respective Java class and the respective numpy structure.
 The following java classes are extended:
 - PointND
 - SimpleVector
