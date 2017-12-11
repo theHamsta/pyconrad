@@ -1,5 +1,4 @@
 # import pyconrad.autoinit
-import pyconrad
 from pyconrad.opencl import *
 import numpy as np
 
@@ -39,6 +38,11 @@ def test_clgrid_classgetter():
     _.OpenCLGrid2D(_.Grid2D(20, 20))
     _.OpenCLGrid3D(_.Grid3D(20, 20, 40))
 
+def test_clgrid_form_size():
+
+    _.OpenCLGrid1D.from_size(20)
+    _.OpenCLGrid2D.from_size(20,30)
+    _.OpenCLGrid3D.from_size(20,30,40)
 
 def test_clgrid_fromnumpy():
 
@@ -76,6 +80,32 @@ def test_clgrid_as_clarray():
 
     # on device
     array *= 2
+
+    # on host
+    random *= 2
+
+    assert np.allclose(cl_grid.download(), random)
+
+
+def test_pyopencl_kernel_on_openclgrid():
+
+    ctx = pyconrad.opencl.get_conrad_context()
+    queue = pyconrad.opencl.get_conrad_command_queue()
+    prg = cl.Program(ctx, """
+    __kernel void doubleIt(
+        __global float *array)
+    {
+    int gid = get_global_id(0);
+    array[gid] *= 2.f;
+    }
+    """).build()
+
+    random = np.random.randn(10,20)
+    cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
+    array = cl_grid.as_clarray()
+
+    # on device
+    prg.doubleIt(queue, [array.size], None, array.data)
 
     # on host
     random *= 2

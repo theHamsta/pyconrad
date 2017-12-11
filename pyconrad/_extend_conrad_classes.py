@@ -214,8 +214,8 @@ def _extend_numeric_grid():
 
     @staticmethod
     def _oclgrid_from_size(*size):
-        grid = _numeric_grid_from_size(size)
-        return getattr(_, 'OpenCLGrid%iD' % grid.ndim)(grid)
+        grid = PyGrid(list(size)).grid
+        return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
 
     def _oclgrid_as_clbuffer(self):
         clbuffer = cl.MemoryObject.from_int_ptr(
