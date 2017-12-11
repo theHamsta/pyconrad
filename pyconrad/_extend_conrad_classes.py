@@ -2,13 +2,20 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
-from jpype import JPackage, JArray, JDouble
+from jpype import JPackage, JArray, JDouble, JClass
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
+import pyconrad
 
 import numpy as np
 import warnings
+
+import pyopencl as cl
+
+
+def _not_implemented_function(self):
+    raise NotImplementedError('Not implemented yet')
 
 
 def _extend_pointnd():
@@ -120,11 +127,18 @@ def _extend_numeric_grid():
         return list(reversed(self.getSize()[:]))
 
     @property
+    def _numeric_grid_ndim(self):
+        return len(self.getSize()[:])
+
+    @property
     def _pygrid(self):
         return PyGrid.from_grid(self)
 
     def _save_as_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self, path)
+
+    def _as_device_array(self):
+        return cl.MemoryObject.from_cl_mem_as_int(self.getDelegate().ID)
 
     @staticmethod
     def _from_tiff(path):
@@ -140,8 +154,78 @@ def _extend_numeric_grid():
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
     grid_class.shape = _numeric_grid_shape
+    grid_class.ndim = _numeric_grid_ndim
     grid_class.pygrid = _pygrid
     grid_class.__array__ = _numpy_grid
+
+    @staticmethod
+    def _oclgrid_from_numpy(numpy):
+        grid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
+                       'Grid%iD' % numpy.ndim)(*reversed(numpy.shape))
+        oclgrid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
+                          'OpenCLGrid%iD' % numpy.ndim)(grid)
+        oclgrid.getDelegate().hostChanged = False
+        oclgrid.getDelegate().deviceChanged = True
+
+        numpy = numpy.astype(np.float32)
+
+        queue = pyconrad.opencl.get_conrad_command_queue()
+        cl_buffer = cl.MemoryObject.from_int_ptr(
+            oclgrid.getDelegate().getCLBuffer().ID)
+        cl.enqueue_copy(queue, cl_buffer, numpy)
+        return oclgrid
+
+    def _oclgrid_upload_numpy(self, numpy):
+
+        numpy = numpy.astype(np.float32)
+
+        queue = pyconrad.opencl.get_conrad_command_queue()
+        cl_buffer = cl.MemoryObject.from_int_ptr(
+            self.getDelegate().getCLBuffer().ID)
+        self.getDelegate().hostChanged = False
+        self.getDelegate().deviceChanged = True
+        cl.enqueue_copy(queue, cl_buffer, numpy)
+
+    def _oclgrid_download_numpy(self, numpy=None):
+
+        if numpy is None:
+            if not numpy.dtype == np.float32:
+                raise TypeError('ndarray must be of dtype float32')
+            if not numpy.shape == self.shape:
+                raise TypeError(
+                    'ndarray must have the same shape as the OCL grid')
+        else:
+            numpy = np.ndarray(self.shape, np.float32)
+
+        queue = pyconrad.opencl.get_conrad_command_queue()
+        cl_buffer = cl.MemoryObject.from_int_ptr(
+            self.getDelegate().getCLBuffer().ID)
+        cl.enqueue_copy(queue, numpy, cl_buffer)
+
+        return numpy
+
+    @staticmethod
+    def _oclgrid_from_tiff(path):
+        grid = ImageUtil.grid_from_tiff(path)
+        clgrid_class = JClass(
+            'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % grid.ndim)
+        clgrid = clgrid_class(grid)
+        return clgrid
+
+    @staticmethod
+    def _oclgrid_from_size(*size):
+        grid = _numeric_grid_from_size(size)
+        return getattr(_, 'OpenCLGrid%iD' % grid.ndim)(grid)
+
+    for i in range(1, 4):
+        clgrid_class = JClass(
+            'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % i)
+        clgrid_class.from_numpy = _oclgrid_from_numpy
+        clgrid_class.from_tiff = _oclgrid_from_tiff
+        clgrid_class.download = _oclgrid_download_numpy
+        clgrid_class.upload = _oclgrid_upload_numpy
+        clgrid_class.from_list = _not_implemented_function
+        clgrid_class.from_size = _oclgrid_from_size
 
 
 def extend_all_classes():

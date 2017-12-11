@@ -21,6 +21,7 @@ from .constants import java_float_dtype
 from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from ._autocomplete import generate_autocomplete_file
 import pyconrad.utils
+import pyconrad.opencl
 
 
 def edu():

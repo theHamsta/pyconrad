@@ -56,6 +56,23 @@ class ClassGetter:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid4D')
 
+    @property
+    def OpenCLGrid1D(self):
+        assert_pyconrad_initialization()
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid1D')
+
+    @property
+    def OpenCLGrid2D(self):
+        assert_pyconrad_initialization()
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid2D')
+
+    @property
+    def OpenCLGrid3D(self):
+        assert_pyconrad_initialization()
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid3D')
+
+    # OpenCLGrid4D does not exist!
+
     def enumval_from_int(self, enum_name: str, value_int):
         assert_pyconrad_initialization()
         return self.__getattr__(enum_name).values()[int(value_int)]
