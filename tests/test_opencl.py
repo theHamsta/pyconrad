@@ -24,13 +24,13 @@ def test_get_conrad_cl():
     print(pyconrad.opencl.get_conrad_device())
 
 
-def test_pyopenclgrid():
-    ocl_grid = PyOpenClGrid(np.ndarray([10, 10], np.float32))
-
-    print(ocl_grid)
-
-    ctx = ocl_grid.context
-    queue = cl.CommandQueue(ctx)
+# def test_pyopenclgrid():
+#     ocl_grid = PyOpenClGrid(np.ndarray([10, 10], np.float32))
+#
+#     print(ocl_grid)
+#
+#     ctx = ocl_grid.context
+#     queue = cl.CommandQueue(ctx)
 
 
 def test_clgrid_classgetter():
@@ -45,7 +45,7 @@ def test_clgrid_fromnumpy():
     random = np.random.randn(10, 20)
     cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
     print(cl_grid[2, 4])
-    assert np.allclose(cl_grid[2, 4],random[4, 2])
+    assert np.allclose(cl_grid[2, 4], random[4, 2])
 
 
 def test_clgrid_upload():
@@ -55,7 +55,7 @@ def test_clgrid_upload():
     oclgrid.upload(random)
 
     print(oclgrid[2, 4])
-    assert np.allclose(oclgrid[2, 4],random[4, 2])
+    assert np.allclose(oclgrid[2, 4], random[4, 2])
 
     downloaded = oclgrid.download()
     assert np.allclose(downloaded, random)
@@ -66,6 +66,28 @@ def test_clgrid_upload():
     random = np.random.randn(10, 20)
     cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
     print(cl_grid[2, 4])
+
+
+def test_clgrid_as_clarray():
+
+    random = np.random.randn(10, 20)
+    cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
+    array = cl_grid.as_clarray()
+
+    # on device
+    array *= 2
+
+    # on host
+    random *= 2
+
+    assert np.allclose(cl_grid.download(), random)
+
+
+def test_clgrid_as_clbuffer():
+
+    random = np.random.randn(10, 20)
+    cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
+    buffer = cl_grid.as_clbuffer
 
 
 if __name__ == "__main__":

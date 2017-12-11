@@ -189,13 +189,13 @@ def _extend_numeric_grid():
     def _oclgrid_download_numpy(self, numpy=None):
 
         if numpy is None:
+            numpy = np.ndarray(self.shape, np.float32)
+        else:
             if not numpy.dtype == np.float32:
                 raise TypeError('ndarray must be of dtype float32')
             if not numpy.shape == self.shape:
                 raise TypeError(
                     'ndarray must have the same shape as the OCL grid')
-        else:
-            numpy = np.ndarray(self.shape, np.float32)
 
         queue = pyconrad.opencl.get_conrad_command_queue()
         cl_buffer = cl.MemoryObject.from_int_ptr(
@@ -217,6 +217,16 @@ def _extend_numeric_grid():
         grid = _numeric_grid_from_size(size)
         return getattr(_, 'OpenCLGrid%iD' % grid.ndim)(grid)
 
+    def _oclgrid_as_clbuffer(self):
+        clbuffer = cl.MemoryObject.from_int_ptr(
+            self.getDelegate().getCLBuffer().ID)
+        return clbuffer
+
+    def _oclgrid_as_clarray(self):
+        clbuffer = cl.MemoryObject.from_int_ptr(
+            self.getDelegate().getCLBuffer().ID)
+        return cl.array.Array(pyconrad.opencl.get_conrad_command_queue(), self.shape, np.float32, data=clbuffer)
+
     for i in range(1, 4):
         clgrid_class = JClass(
             'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % i)
@@ -226,6 +236,10 @@ def _extend_numeric_grid():
         clgrid_class.upload = _oclgrid_upload_numpy
         clgrid_class.from_list = _not_implemented_function
         clgrid_class.from_size = _oclgrid_from_size
+        clgrid_class.as_clbuffer = _oclgrid_as_clbuffer
+        clgrid_class.as_clarray = _oclgrid_as_clarray
+        clgrid_class.from_clbuffer = _not_implemented_function
+        clgrid_class.from_clarray = _not_implemented_function
 
 
 def extend_all_classes():
