@@ -20,7 +20,7 @@ def test_init_cone_beam_backprojector():
 def test_get_conrad_cl():
     print(pyconrad.opencl.get_conrad_context())
     print(pyconrad.opencl.get_conrad_command_queue())
-    print(pyconrad.opencl.get_conrad_device())
+    # print(pyconrad.opencl.get_conrad_device())
 
 
 # def test_pyopenclgrid():
@@ -38,11 +38,13 @@ def test_clgrid_classgetter():
     _.OpenCLGrid2D(_.Grid2D(20, 20))
     _.OpenCLGrid3D(_.Grid3D(20, 20, 40))
 
+
 def test_clgrid_form_size():
 
     _.OpenCLGrid1D.from_size(20)
-    _.OpenCLGrid2D.from_size(20,30)
-    _.OpenCLGrid3D.from_size(20,30,40)
+    _.OpenCLGrid2D.from_size(20, 30)
+    _.OpenCLGrid3D.from_size(20, 30, 40)
+
 
 def test_clgrid_fromnumpy():
 
@@ -100,7 +102,7 @@ def test_pyopencl_kernel_on_openclgrid():
     }
     """).build()
 
-    random = np.random.randn(10,20)
+    random = np.random.randn(10, 20)
     cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
     array = cl_grid.as_clarray()
 
