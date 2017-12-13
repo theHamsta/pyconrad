@@ -49,7 +49,7 @@ def setup_package():
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
           install_requires=[
-               'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools'
+               'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'pyopencl'
           ],
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',

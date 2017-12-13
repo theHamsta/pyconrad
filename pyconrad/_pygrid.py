@@ -75,7 +75,7 @@ class PyGrid(np.ndarray):
 
         if array.dtype != java_float_dtype:
             warnings.warn(
-                "Warning: Numpy array is not of type pyconrad.java_float_dtype! Additional copy necessary!")
+                "Warning: Numpy array is not of type pyconrad.java_float_dtype! Additional conversion necessary!")
         # must work on copy if not c-order contiguous (e.g. after swapped axes)
 
         # instance = np.ascontiguousarray(array, java_float_dtype).view(cls)
