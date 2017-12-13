@@ -158,6 +158,8 @@ def _extend_numeric_grid():
     grid_class.pygrid = _pygrid
     grid_class.__array__ = _numpy_grid
 
+
+def _extend_ocl_grids():
     @staticmethod
     def _oclgrid_from_numpy(numpy):
         grid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
@@ -247,3 +249,4 @@ def extend_all_classes():
     _extend_simple_vector()
     _extend_simple_matrix()
     _extend_numeric_grid()
+    _extend_ocl_grids()

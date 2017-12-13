@@ -3,7 +3,8 @@ from pyconrad.opencl import *
 import numpy as np
 
 if not pyconrad.is_initialized():
-    pyconrad.setup_pyconrad(dev_dirs=['/localhome/local/projects/CONRAD'])
+    # pyconrad.setup_pyconrad(dev_dirs=['/localhome/local/projects/CONRAD'])
+    pyconrad.setup_pyconrad()
 
 _ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
 
