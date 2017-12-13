@@ -10,7 +10,6 @@ import pyconrad.autoinit
 def test_standfordrsl_classgetter():
     _ = pyconrad.ClassGetter()
     _.stanfordrsl.conrad.filtering.rampfilters.SheppLoganRampFilter()
-    _.stanfordrsl.conrad.Foo()
 
 
 def test_standfordrsl():
