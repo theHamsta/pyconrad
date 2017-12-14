@@ -42,9 +42,9 @@ def test_clgrid_classgetter():
 
 def test_clgrid_form_size():
 
-    _.OpenCLGrid1D.from_size(20)
-    _.OpenCLGrid2D.from_size(20, 30)
-    _.OpenCLGrid3D.from_size(20, 30, 40)
+    _.OpenCLGrid1D.from_size([20])
+    _.OpenCLGrid2D.from_size([20, 30])
+    _.OpenCLGrid3D.from_size([20, 30, 40])
 
 
 def test_clgrid_fromnumpy():
