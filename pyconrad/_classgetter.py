@@ -14,6 +14,7 @@ class ClassGetter:
         self.edu = JPackage('edu')
         self.ij = JPackage('ij')
         self.stanfordrsl = JPackage('edu.stanford.rsl')
+        self.enable_subnamespaces = False
 
     def add_namespaces(self, namespaces):
         if isinstance(namespaces, list):
@@ -101,10 +102,10 @@ class ClassGetter:
             except Exception:
                 pass
 
-        # # Class not found? Create new ClassGetter to search in sub-namespaces
-        # if not success:
-        #     if self._imported_namespaces:
-        #         return ClassGetter(*([ns + '.' + classname for ns in self._imported_namespaces] + [classname]))
+        # Class not found? Create new ClassGetter to search in sub-namespaces
+        if not success and self.enable_subnamespaces:
+            if self._imported_namespaces:
+                return ClassGetter(*([ns + '.' + classname for ns in self._imported_namespaces] + [classname]))
 
         if not success:
             raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
