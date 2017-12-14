@@ -218,40 +218,6 @@ class PyConrad:
     def is_gui_started(self):
         return self.__is_gui_started
 
-    # Use ClassGetter
-    @deprecated
-    def add_import(self, package_name):
-        self.__imported_namespaces.append(package_name)
-
-    # Use ClassGetter
-    @deprecated
-    def __getitem__(self, classname):
-
-        assert_pyconrad_initialization()
-        success = None
-
-        # Default namespace
-        try:
-            rtn = JClass(classname)
-            success = rtn
-        except Exception:
-            pass
-
-        # Imported namespaces
-        for package in self.__imported_namespaces:
-            try:
-                rtn = JClass(package + "." + classname)
-                success = rtn
-                break
-            except Exception:
-                pass
-
-        if not success:
-            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
-                classname, self.__imported_namespaces))
-
-        return success
-
     def enumval_from_int(self, enum_name, value_int):
         return self[enum_name].values()[int(value_int)]
 

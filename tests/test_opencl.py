@@ -105,8 +105,8 @@ def test_pyopencl_kernel_on_openclgrid():
     __kernel void doubleIt(
         __global float *array)
     {
-    int gid = get_global_id(0);
-    array[gid] *= 2.f;
+        int gid = get_global_id(0);
+        array[gid] *= 2.f;
     }
     """).build()
 

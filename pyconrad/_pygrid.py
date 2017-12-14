@@ -210,12 +210,6 @@ class PyGrid(np.ndarray):
 
         # del self.__dbuffer
 
-    @deprecated
-    def show_grid(self):
-        if not hasattr(self, '__grid'):
-            self.update_grid()
-        self.__grid.show()
-
     def save_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self.__grid, path)
 

@@ -45,9 +45,3 @@ def stanfordrsl():
 
     # type: .AutoCompleteConrad.edu.stanford.rsl
     return JPackage('edu.stanford.rsl')
-
-
-class PyConrad(_pyconrad.PyConrad):
-
-    def __init__(self):
-        print("Use of class PyConrad deprecated")
