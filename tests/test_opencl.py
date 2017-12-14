@@ -66,12 +66,12 @@ def test_clgrid_upload():
 
     random = np.random.randn(10, 20, 30)
     oclgrid = _.OpenCLGrid1D.form_size(*reversed(random.shape))
-    oclgrid.upload(random)
+    oclgrid.upload_numpy(random)
 
     print(oclgrid[2, 4])
     assert np.allclose(oclgrid[2, 4], random[4, 2])
 
-    downloaded = oclgrid.download()
+    downloaded = oclgrid.download_numpy()
     assert np.allclose(downloaded, random)
 
 
@@ -94,7 +94,7 @@ def test_clgrid_as_clarray():
     # on host
     random *= 2
 
-    assert np.allclose(cl_grid.download(), random)
+    assert np.allclose(cl_grid.download_numpy(), random)
 
 
 def test_pyopencl_kernel_on_openclgrid():
@@ -120,7 +120,7 @@ def test_pyopencl_kernel_on_openclgrid():
     # on host
     random *= 2
 
-    assert np.allclose(cl_grid.download(), random)
+    assert np.allclose(cl_grid.download_numpy(), random)
 
 
 def test_clgrid_as_clbuffer():

@@ -239,8 +239,8 @@ def _extend_ocl_grids():
             'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % i)
         clgrid_class.from_numpy = _oclgrid_from_numpy
         clgrid_class.from_tiff = _oclgrid_from_tiff
-        clgrid_class.download = _oclgrid_download_numpy
-        clgrid_class.upload = _oclgrid_upload_numpy
+        clgrid_class.download_numpy = _oclgrid_download_numpy
+        clgrid_class.upload_numpy = _oclgrid_upload_numpy
         clgrid_class.from_list = _not_implemented_function
         clgrid_class.from_size = _oclgrid_from_size
         clgrid_class.from_shape = _oclgrid_from_shape
