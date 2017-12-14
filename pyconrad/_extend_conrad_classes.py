@@ -215,8 +215,13 @@ def _extend_ocl_grids():
         return clgrid
 
     @staticmethod
-    def _oclgrid_from_size(*size):
-        grid = PyGrid(list(size)).grid
+    def _oclgrid_from_size(size):
+        grid = PyGrid(list(reversed(size))).grid
+        return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
+
+    @staticmethod
+    def _oclgrid_from_shape(shape):
+        grid = PyGrid(list(shape)).grid
         return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
 
     def _oclgrid_as_clbuffer(self):
@@ -238,6 +243,7 @@ def _extend_ocl_grids():
         clgrid_class.upload = _oclgrid_upload_numpy
         clgrid_class.from_list = _not_implemented_function
         clgrid_class.from_size = _oclgrid_from_size
+        clgrid_class.from_shape = _oclgrid_from_shape
         clgrid_class.as_clbuffer = _oclgrid_as_clbuffer
         clgrid_class.as_clarray = _oclgrid_as_clarray
         clgrid_class.from_clbuffer = _not_implemented_function
