@@ -47,6 +47,13 @@ def test_clgrid_form_size():
     _.OpenCLGrid3D.from_size([20, 30, 40])
 
 
+def test_clgrid_form_shape():
+
+    _.OpenCLGrid1D.from_shape([20])
+    _.OpenCLGrid2D.from_shape([20, 30])
+    _.OpenCLGrid3D.from_shape([20, 30, 40])
+
+
 def test_clgrid_fromnumpy():
 
     random = np.random.randn(10, 20)
