@@ -90,7 +90,7 @@ class PyGrid(np.ndarray):
         instance.__grid = getattr(instance.__numericpackage, "Grid{}D".format(
             array.ndim))(*reversed(array.shape))
 
-        instance.update_grid()
+        # instance.update_grid()
         return instance
 
     @classmethod
