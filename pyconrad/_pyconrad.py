@@ -148,7 +148,7 @@ class PyConrad:
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
         self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
         self.__is_gui_started = True
-        print("Gui started", self.__gui_instance)
+
         detachThreadFromJVM()
         while self.__is_gui_started:
             time.sleep(1)
@@ -160,7 +160,7 @@ class PyConrad:
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
         self.__gui_instance.CONRAD.setup(proxy)
         self.__is_gui_started = True
-        print("Gui started", self.__gui_instance)
+
         detachThreadFromJVM()
         while self.__is_gui_started:
             time.sleep(1)
