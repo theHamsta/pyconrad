@@ -40,6 +40,18 @@ def get_reco_size() -> list:
     return (reversed(get_reco_shape()))
 
 
+def get_reco_origin() -> tuple:
+    conf = _.Configuration.getGlobalConfiguration()
+    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    return (geo.getOriginX(), geo.getOriginY(), geo.getOriginZ())
+
+
+def get_reco_spacing() -> tuple:
+    conf = _.Configuration.getGlobalConfiguration()
+    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    return (geo.getVoxelSpacingX(), geo.getVoxelSpacingY(), geo.getVoxelSpacingZ())
+
+
 def set_reco_spacing(spacing):
     conf = _.Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
@@ -52,9 +64,7 @@ def set_reco_origin(origin):
     conf = _.Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
 
-    geo.setOriginInPixelsX(origin[0] / geo.getVoxelSpacingX())
-    geo.setOriginInPixelsY(origin[1] / geo.getVoxelSpacingY())
-    geo.setOriginInPixelsZ(origin[2] / geo.getVoxelSpacingZ())
+    geo.setOriginInWorld(_.PointND([origin[0], origin[1], origin[2]]))
 
 
 def set_reco_shape(shape):
@@ -73,3 +83,12 @@ def set_reco_size(size):
     geo.setReconDimensionX(size[0])
     geo.setReconDimensionY(size[1])
     geo.setReconDimensionZ(size[2])
+
+
+def center_volume():
+
+    reco_size = get_reco_size()
+    spacing = get_reco_spacing()
+    origin_in_world = [-(reco_size[i] - 1.0) / 2. * spacing[i]
+                       for i in range(3)]
+    get_geometry().setOriginInWorld(_.PointND(origin_in_world))
