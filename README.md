@@ -44,7 +44,7 @@ python setup.py test
 
 # Usage
 
-You can start CONRAD like this:
+You can start CONRAD in Python like this:
 ```python
 import pyconrad
 
@@ -52,6 +52,14 @@ pyconrad.setup_pyconrad()
 pyconrad.start_gui()  # start ImageJ
 pyconrad.start_reconstruction_pipeline_gui() # if you want to start CONRAD's reconstruction filter pipeline
 ```
+
+Or you can run CONRAD Reconstrucion Pipeline from command line:
+```bash
+conrad
+# or: conrad_imagej 
+```
+
+
 
 ## Basic example
 
