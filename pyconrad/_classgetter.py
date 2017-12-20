@@ -35,7 +35,7 @@ class ClassGetter:
     @property
     def SimpleMatrix(self):
         assert_pyconrad_initialization()
-        return pyconrad.PyConrad().classes.stanford.rsl.conrad.numerics.SimpleMatrix
+        return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleMatrix')
 
     @property
     def Grid1D(self):
@@ -114,7 +114,7 @@ class ClassGetter:
         return rtn
 
     def __getitem__(self, classname):
-        if not pyconrad.PyConrad.is_java_initalized():
+        if not pyconrad.is_initialized():
             raise Exception('JVM not started! Use Pyconrad().setup()')
         return self.__getattr__(classname)
 

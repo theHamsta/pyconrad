@@ -37,7 +37,7 @@ def get_reco_shape() -> tuple:
 
 
 def get_reco_size() -> list:
-    return (reversed(get_reco_shape()))
+    return [*reversed(get_reco_shape())]
 
 
 def get_reco_origin() -> tuple:
