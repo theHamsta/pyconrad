@@ -9,7 +9,6 @@ from ._pygrid import PyGrid
 import pyconrad
 
 import numpy as np
-import warnings
 
 try:
     import pyopencl as cl
@@ -82,12 +81,7 @@ def _extend_numeric_grid():
 
     @classmethod
     def _numeric_grid_from_numpy(cls, array):
-        if array.dtype != java_float_dtype:
-            warnings.warn(
-                'Array type is not java_float_dtype. Additional copy was needed for conversion')
-            return PyGrid.from_numpy(array).grid
-        else:
-            return PyGrid.from_numpy(np.array(array, java_float_dtype)).grid
+        return PyGrid.from_numpy(np.array(array, java_float_dtype)).grid
 
     @classmethod
     def _numeric_grid_from_list(cls, input_list):

@@ -6,7 +6,6 @@ CONRAD is developed as an Open Source project under the GNU General Public Licen
 
 import jpype
 import numpy as np
-import warnings
 from pyconrad._deprecated import deprecated
 
 from .constants import java_float_dtype
@@ -73,9 +72,9 @@ class PyGrid(np.ndarray):
     @classmethod
     def from_numpy(cls, array: np.ndarray):
 
-        if array.dtype != java_float_dtype:
-            warnings.warn(
-                "Warning: Numpy array is not of type pyconrad.java_float_dtype! Additional conversion necessary!")
+        # if array.dtype != java_float_dtype:
+        #     warnings.warn(
+        #         "Warning: Numpy array is not of type pyconrad.java_float_dtype! Additional conversion necessary!")
         # must work on copy if not c-order contiguous (e.g. after swapped axes)
 
         # instance = np.ascontiguousarray(array, java_float_dtype).view(cls)
