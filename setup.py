@@ -59,6 +59,7 @@ def setup_package():
               'gui_scripts': [
                   'conrad = pyconrad._scripts:start_pyconrad',
                   'conrad_imagej = pyconrad._scripts:start_conrad_imagej',
+                  'conrad_compare = pyconrad._scripts:start_conrad_compare',
               ]
           },
           setup_requires=['pytest-runner', 'install_freedesktop'],

@@ -217,6 +217,11 @@ class PyGrid(np.ndarray):
         grid = ImageUtil.grid_from_tiff(path)
         return cls.from_grid(grid)
 
+    @classmethod
+    def from_image(cls, path):
+        grid = ImageUtil.grid_from_tiff(path)
+        return cls.from_grid(grid)
+
     def set_origin(self, vec):
         self.__grid.setOrigin(jpype.JArray(jpype.JDouble)(vec))
 
