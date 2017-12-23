@@ -11,7 +11,10 @@ import pyconrad
 import numpy as np
 import warnings
 
-import pyopencl as cl
+try:
+    import pyopencl as cl
+except ImportError as e:
+    warnings.warn('Failed to import pyopencl')
 
 
 def _not_implemented_function(self):
@@ -150,6 +153,7 @@ def _extend_numeric_grid():
     grid_class.from_list = _numeric_grid_from_list
     grid_class.from_size = _numeric_grid_from_size
     grid_class.from_tiff = _from_tiff
+    grid_class.from_image = _from_tiff
     grid_class.save_tiff = _save_as_tiff
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
@@ -239,6 +243,7 @@ def _extend_ocl_grids():
             'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % i)
         clgrid_class.from_numpy = _oclgrid_from_numpy
         clgrid_class.from_tiff = _oclgrid_from_tiff
+        clgrid_class.from_image = _oclgrid_from_tiff
         clgrid_class.download_numpy = _oclgrid_download_numpy
         clgrid_class.upload_numpy = _oclgrid_upload_numpy
         clgrid_class.from_list = _not_implemented_function
