@@ -38,6 +38,11 @@ class ClassGetter:
         return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleMatrix')
 
     @property
+    def NumericGrid(self):
+        assert_pyconrad_initialization()
+        return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.NumericGrid')
+
+    @property
     def Grid1D(self):
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D')

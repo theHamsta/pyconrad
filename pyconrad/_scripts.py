@@ -50,7 +50,7 @@ def start_conrad_compare(*args, **kwargs):
     pyconrad.setup_pyconrad()
     pyconrad.start_gui()
 
-    arrays = []
+  arrays = []
     for f in sys.argv[1:]:
         try:
             if os.path.isfile(f):
@@ -63,6 +63,28 @@ def start_conrad_compare(*args, **kwargs):
     if len(arrays) > 1:
         grid = _.Grid1D.from_numpy(np.stack(arrays))
         grid.show()
+    # try:
+        # big_grid = None
+
+        # num_files = len(sys.argv) - 1
+        # print(num_files)
+        # print(sys.argv)
+        # for i in range(num_files):
+        #     print(i)
+        #     grid = _.NumericGrid.from_image(sys.argv[i + 1])
+        #     print(type(grid))
+        #     grid.show()
+        #     if not big_grid:
+        #         big_grid = _.Grid4D(
+        #             *grid.getSize(), num_files)
+
+        #         print(big_grid.shape)
+        #     big_grid[i] = grid
+        # print('foo')
+        # big_grid.show()
+
+    # except Exception as e:
+    #     print(e)
 
 
 if __name__ == "__main__":

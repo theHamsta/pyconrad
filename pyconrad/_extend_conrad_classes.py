@@ -91,6 +91,10 @@ def _extend_numeric_grid():
     def _numeric_grid_from_size(cls, *size):
         return PyGrid(list(size)).grid
 
+    @classmethod
+    def _numeric_grid_from_shape(cls, *shape):
+        return PyGrid(list(reversed(shape))).grid
+
     def _numpy_grid(self):
         return np.array(PyGrid.from_grid(self))
 
@@ -146,6 +150,7 @@ def _extend_numeric_grid():
     grid_class.from_numpy = _numeric_grid_from_numpy
     grid_class.from_list = _numeric_grid_from_list
     grid_class.from_size = _numeric_grid_from_size
+    grid_class.from_shape = _numeric_grid_from_shape
     grid_class.from_tiff = _from_tiff
     grid_class.from_image = _from_tiff
     grid_class.save_tiff = _save_as_tiff

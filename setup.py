@@ -19,7 +19,7 @@ from setuptools.command.install import _install
 
 def _post_install(dir):
     cwd = os.path.join(dir, 'pyconrad')
-    #os.path.append(os.path.join( os.path.dirname(__file__), 'pyconrad'))
+    # os.path.append(os.path.join( os.path.dirname(__file__), 'pyconrad'))
     sys.path.append(cwd)
     import _download_conrad
     _download_conrad.download_conrad(cwd)
@@ -49,7 +49,7 @@ def setup_package():
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
           install_requires=[
-               'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'pyopencl', 'install_freedesktop'
+               'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'pyopencl'
           ],
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
@@ -62,10 +62,13 @@ def setup_package():
                   'conrad_compare = pyconrad._scripts:start_conrad_compare',
               ]
           },
-          setup_requires=['pytest-runner', 'install_freedesktop'],
-          tests_require=['pytest']
+          setup_requires=['pytest-runner'],
+          tests_require=['pytest'],
+          data_files=[
+              ('share/applications', ['data_files/5.cs.fau.conrad.desktop',
+                                      'data_files/5.cs.fau.conrad_imagej.desktop', 'data_files/cs.fau.conrad_compare.desktop'])]
           )
-    #setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
+    # setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
     # use_pyscaffold=True)
 
 
