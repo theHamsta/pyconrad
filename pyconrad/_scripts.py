@@ -50,7 +50,7 @@ def start_conrad_compare(*args, **kwargs):
     pyconrad.setup_pyconrad()
     pyconrad.start_gui()
 
-  arrays = []
+    arrays = []
     for f in sys.argv[1:]:
         try:
             if os.path.isfile(f):
