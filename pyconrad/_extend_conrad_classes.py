@@ -1,12 +1,14 @@
 
 # Copyright (C) 2010-2017 - Andreas Maier
-# CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
+# CONRAD is developed as an Open Source project under the GNU General
+# Public License (GPL-3.0)
 
 from jpype import JPackage, JArray, JDouble, JClass
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 import pyconrad
+import warnings
 
 import numpy as np
 
@@ -108,7 +110,9 @@ def _extend_numeric_grid():
 
             rtn = self.type(
                 reversed(*self.getSize()[:]), self.getsize()[1], end - start, False)
-            # rtn = pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D(self.getSize()[0],self.getSize()[1], end - start, False)
+            # rtn =
+            # pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid3D(self.getSize()[0],self.getSize()[1],
+            # end - start, False)
             rtn.setOrigin(self.getOrigin())
             rtn.setSpacing(self.getSpacing())
             for i in range(start, end):
@@ -167,7 +171,8 @@ def _extend_ocl_grids():
     def _oclgrid_from_numpy(numpy):
         grid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
                        'Grid%iD' % numpy.ndim)(*reversed(numpy.shape))
-        oclgrid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
+        oclgrid = getattr(
+            JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
                           'OpenCLGrid%iD' % numpy.ndim)(grid)
         oclgrid.getDelegate().hostChanged = False
         oclgrid.getDelegate().deviceChanged = True
