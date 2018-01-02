@@ -1,7 +1,7 @@
 
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
-from pyconrad import PyConrad, setup_pyconrad, PyGrid, java_float_dtype, JArray, JDouble, ClassGetter
+from pyconrad import setup_pyconrad, PyGrid, java_float_dtype, JArray, JDouble, ClassGetter
 import numpy as np
 
 setup_pyconrad()
@@ -56,8 +56,8 @@ pygrid1 = PyGrid.from_grid(phantom)
 # use Java method
 pygrid1.grid.show()
 # use Python method
-from scipy.misc import imshow
-imshow(pygrid1)
+# from scipy.misc import imshow
+# imshow(pygrid1)
 
 # Create PyGrid from numpy array (must be of type pyconrad.java_float_dtype)
 array = np.random.rand(4, 2, 3).astype(java_float_dtype)

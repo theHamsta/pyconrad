@@ -6,6 +6,7 @@ import os
 import threading
 import time
 import sys
+import warnings
 from pathlib import Path
 
 from jpype import attachThreadToJVM, detachThreadFromJVM, JavaException, JProxy, JClass, JDouble, JArray
@@ -109,7 +110,8 @@ class PyConrad:
             except JavaException as ex:
                 print(ex)
         else:
-            raise Exception("JVM already started")
+            # raise Exception("JVM already started")
+            warnings.warn("JVM already started")
 
     def start_conrad(self):
         if not self.is_java_initalized():
