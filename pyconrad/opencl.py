@@ -34,10 +34,10 @@ def get_conrad_command_queue() -> cl.CommandQueue:
 
 
 # TODO: does not work yet
-# def get_conrad_device():
-#     OpenCLUtil = pyconrad.edu().stanford.rsl.conrad.opencl.OpenCLUtil
-#     device_java = OpenCLUtil.getStaticCommandQueue().getDevice()
-#     cl.Device.from_int_ptr(device_java.ID)
+def get_conrad_device():
+    OpenCLUtil = pyconrad.edu().stanford.rsl.conrad.opencl.OpenCLUtil
+    device_java = OpenCLUtil.getStaticCommandQueue().getDevice()
+    cl.Device.from_int_ptr(device_java.ID)
 
 
 # class PyOpenClGrid:

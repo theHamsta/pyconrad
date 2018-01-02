@@ -40,6 +40,20 @@ def test_clgrid_classgetter():
     _.OpenCLGrid3D(_.Grid3D(20, 20, 40))
 
 
+def test_add_noise():
+
+    grid1d = _.OpenCLGrid1D(_.Grid1D(20))
+    grid2d = _.OpenCLGrid2D(_.Grid2D(20, 20))
+    grid3d = _.OpenCLGrid3D(_.Grid3D(20, 20, 40))
+
+    noisy_grid1d = grid1d + \
+        pyopencl.clrandom.fill_rand(
+            pyopencl.array.Array(grid1d.shape, np.float32))
+
+    print(grid1d)
+    print(noisy_grid1d)
+
+
 def test_clgrid_form_size():
 
     _.OpenCLGrid1D.from_size([20])
@@ -60,6 +74,12 @@ def test_clgrid_fromnumpy():
     cl_grid = opencl_namespaces.OpenCLGrid2D.from_numpy(random)
     print(cl_grid[2, 4])
     assert np.allclose(cl_grid[2, 4], random[4, 2])
+
+
+def test_device_info():
+
+    device = pyconrad.opencl.get_conrad_device()
+    print(device.version)
 
 
 def test_clgrid_upload():
@@ -131,7 +151,8 @@ def test_clgrid_as_clbuffer():
 
 
 if __name__ == "__main__":
-    pass
-    # test_init_cone_beam_backprojector()
-    # test_get_conrad_cl()
-    # test_pyopenclgrid()
+    test_device_info()
+    test_init_cone_beam_backprojector()
+    test_get_conrad_cl()
+    test_pyopenclgrid()
+    test_add_noise()
