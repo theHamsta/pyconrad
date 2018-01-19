@@ -12,7 +12,7 @@ pyconrad.setup_pyconrad(min_ram='500M', max_ram='8G')
 pyconrad.start_gui()
 
 # Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
-phantom = pyconrad.edu().stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
+phantom = pyconrad.edu().stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(150, 150)
 
 
 # Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
