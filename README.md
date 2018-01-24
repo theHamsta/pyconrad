@@ -6,8 +6,8 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 - [CONRAD](#conrad)
 - [Installation](#installation)
 - [Tests](#tests)
-- [Changelog](#changelog)
 - [Usage](#usage)
+- [Changelog](#changelog)
     - [Basic example](#basic-example)
     - [More Examples](#more-examples)
     - [Autocomplete](#autocomplete)
@@ -61,7 +61,7 @@ conrad
 ```
 
 # Changelog
- Can be found [here](feature plan).
+ Can be found [here](CHANGELOG.md).
 
 
 ## Basic example
