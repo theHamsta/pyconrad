@@ -142,9 +142,6 @@ def _extend_numeric_grid():
     def _save_as_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self, path)
 
-    def _as_device_array(self):
-        return cl.MemoryObject.from_cl_mem_as_int(self.getDelegate().ID)
-
     @staticmethod
     def _from_tiff(path):
         return ImageUtil.grid_from_tiff(path)
@@ -242,6 +239,27 @@ def _extend_ocl_grids():
             self.getDelegate().getCLBuffer().ID)
         return clbuffer
 
+    @staticmethod
+    def _oclgrid_from_clarray( clarray):
+
+        # TODO: still needs copy!
+
+        grid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
+                       'Grid%iD' % clarray.ndim)(*reversed(clarray.shape))
+        oclgrid = getattr(
+            JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
+            'OpenCLGrid%iD' % clarray.ndim)(grid)
+        oclgrid.getDelegate().hostChanged = False
+        oclgrid.getDelegate().deviceChanged = True
+
+        assert clarray.dtype == np.float32
+
+        queue = pyconrad.opencl.get_conrad_command_queue()
+        cl_buffer = cl.Buffer.from_int_ptr(
+            oclgrid.getDelegate().getCLBuffer().ID)
+        cl.enqueue_copy(queue, cl_buffer, clarray.data)
+        return oclgrid
+
     def _oclgrid_as_clarray(self):
         clbuffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
@@ -261,7 +279,7 @@ def _extend_ocl_grids():
         clgrid_class.as_clbuffer = _oclgrid_as_clbuffer
         clgrid_class.as_clarray = _oclgrid_as_clarray
         clgrid_class.from_clbuffer = _not_implemented_function
-        clgrid_class.from_clarray = _not_implemented_function
+        clgrid_class.from_clarray = _oclgrid_from_clarray
 
 
 def extend_all_classes():

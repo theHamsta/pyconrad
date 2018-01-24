@@ -1,6 +1,7 @@
 # import pyconrad.autoinit
 from pyconrad.opencl import *
 import numpy as np
+import jpype
 
 if not pyconrad.is_initialized():
     # pyconrad.setup_pyconrad(dev_dirs=['/localhome/local/projects/CONRAD'])
@@ -151,9 +152,36 @@ def test_clgrid_as_clbuffer():
     buffer = cl_grid.as_clbuffer
 
 
+# def test_creation_java_clbuffer():
+#     ctx = pyconrad.opencl.get_conrad_context()
+#     clarray = cl.array.Array(ctx, (10,), np.float32)
+#     val = jpype.JClass('com.jogamp.opencl.CLMemory$Mem').READ_WRITE.CONFIG
+#     # protected CLBuffer(final CLContext context, final long size, final long id, final int flags) {
+#     foo = _.OpenCLGrid1D(_.Grid1D(10))
+#     print(foo.ID)
+#     java_clarray = jpype.JPackage('com').jogamp.opencl.CLBuffer(pyconrad.opencl.opencl_namespaces.OpenCLUtil.getStaticContext(), clarray.size, clarray.data.int_ptr, val)
+#     # object = foo.getFoo()
+#     # print(type(object))
+#     print(java_clarray)
+
+def test_javacl_from_pycl():
+    random = np.random.randn(10, 20).astype(np.float32)
+
+    clarray = cl.array.to_device(
+        pyconrad.opencl.get_conrad_command_queue(), random)
+    java = _.OpenCLGrid2D.from_clarray(clarray)
+    out = java.download_numpy()
+
+    assert np.allclose(out, random)
+
+    out2 = java.as_numpy()
+    assert np.allclose(out2, random)
+
+
 if __name__ == "__main__":
     # test_device_info()
-    test_pyopencl_kernel_on_openclgrid()
+    # test_pyopencl_kernel_on_openclgrid()
+    test_javacl_from_pycl()
     # test_init_cone_beam_backprojector()
     # test_get_conrad_cl()
     # test_pyopenclgrid()
