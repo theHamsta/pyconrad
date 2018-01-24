@@ -129,7 +129,7 @@ def _extend_numeric_grid():
 
     @property
     def _numeric_grid_shape(self):
-        return list(reversed(self.getSize()[:]))
+        return tuple(reversed(self.getSize()[:]))
 
     @property
     def _numeric_grid_ndim(self):
@@ -173,14 +173,14 @@ def _extend_ocl_grids():
                        'Grid%iD' % numpy.ndim)(*reversed(numpy.shape))
         oclgrid = getattr(
             JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
-                          'OpenCLGrid%iD' % numpy.ndim)(grid)
+            'OpenCLGrid%iD' % numpy.ndim)(grid)
         oclgrid.getDelegate().hostChanged = False
         oclgrid.getDelegate().deviceChanged = True
 
         numpy = numpy.astype(np.float32)
 
         queue = pyconrad.opencl.get_conrad_command_queue()
-        cl_buffer = cl.MemoryObject.from_int_ptr(
+        cl_buffer = cl.Buffer.from_int_ptr(
             oclgrid.getDelegate().getCLBuffer().ID)
         cl.enqueue_copy(queue, cl_buffer, numpy)
         return oclgrid
@@ -208,7 +208,7 @@ def _extend_ocl_grids():
                     'ndarray must have the same shape as the OCL grid')
 
         queue = pyconrad.opencl.get_conrad_command_queue()
-        cl_buffer = cl.MemoryObject.from_int_ptr(
+        cl_buffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
         cl.enqueue_copy(queue, numpy, cl_buffer)
 
@@ -222,6 +222,11 @@ def _extend_ocl_grids():
         clgrid = clgrid_class(grid)
         return clgrid
 
+    # @staticmethod
+    # def _oclgrid_from_clarray(clarray):
+
+    #     return clgrid
+
     @staticmethod
     def _oclgrid_from_size(size):
         grid = PyGrid(list(reversed(size))).grid
@@ -233,14 +238,14 @@ def _extend_ocl_grids():
         return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
 
     def _oclgrid_as_clbuffer(self):
-        clbuffer = cl.MemoryObject.from_int_ptr(
+        clbuffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
         return clbuffer
 
     def _oclgrid_as_clarray(self):
-        clbuffer = cl.MemoryObject.from_int_ptr(
+        clbuffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
-        return cl.array.Array(pyconrad.opencl.get_conrad_command_queue(), self.shape, np.float32, data=clbuffer)
+        return cl.array.Array(pyconrad.opencl.get_conrad_command_queue(), tuple(self.shape), np.float32, data=clbuffer)
 
     for i in range(1, 4):
         clgrid_class = JClass(

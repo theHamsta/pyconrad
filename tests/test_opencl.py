@@ -152,7 +152,8 @@ def test_clgrid_as_clbuffer():
 
 
 if __name__ == "__main__":
-    test_device_info()
+    # test_device_info()
+    test_pyopencl_kernel_on_openclgrid()
     # test_init_cone_beam_backprojector()
     # test_get_conrad_cl()
     # test_pyopenclgrid()
