@@ -6,6 +6,7 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 - [CONRAD](#conrad)
 - [Installation](#installation)
 - [Tests](#tests)
+- [Changelog](#changelog)
 - [Usage](#usage)
     - [Basic example](#basic-example)
     - [More Examples](#more-examples)
@@ -59,6 +60,8 @@ conrad
 # or: conrad_imagej 
 ```
 
+# Changelog
+ Can be found [here](feature plan).
 
 
 ## Basic example
