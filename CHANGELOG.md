@@ -1,6 +1,5 @@
-
 ## 0.0.8 (unreleased)
-* [ ]  OpenCL:
+* [ ]  OpenCL support:
 	* [x]  Get CONRAD's OpenCL device, command queue, context
 	* [x]  Create OpenCLGrids from Numpy
  	* [x]  Upload/Download numpy
