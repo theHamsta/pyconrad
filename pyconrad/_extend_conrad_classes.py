@@ -187,7 +187,7 @@ def _extend_ocl_grids():
         numpy = numpy.astype(np.float32)
 
         queue = pyconrad.opencl.get_conrad_command_queue()
-        cl_buffer = cl.MemoryObject.from_int_ptr(
+        cl_buffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
         self.getDelegate().hostChanged = False
         self.getDelegate().deviceChanged = True
