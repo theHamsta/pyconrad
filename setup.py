@@ -66,7 +66,7 @@ def setup_package():
           tests_require=['pytest'],
           data_files=[
               ('share/applications', ['data_files/5.cs.fau.conrad.desktop',
-                                      'data_files/5.cs.fau.conrad_imagej.desktop', 'data_files/cs.fau.conrad_compare.desktop'])]
+                                      'data_files/5.cs.fau.conrad_imagej.desktop'])]
           )
     # setup_requires=['six', 'pyscaffold>=2.5a0,<2.6a0'] + sphinx,
     # use_pyscaffold=True)
