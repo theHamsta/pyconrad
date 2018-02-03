@@ -10,11 +10,13 @@ python:
   - "3.7-dev"  # 3.7 development branch
   - "nightly"
 # command to install dependencies
-before_install:
-  - sudo -H pip install --upgrade
+# before_install:
+#   - sudo -H pip install --upgrade
 
 
 install:
+  - pip install --upgrade pip
+  - pip install --reinstall setuptools
   - pip install .
 # command to run tests
 script:
