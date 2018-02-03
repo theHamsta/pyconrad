@@ -32,11 +32,11 @@ def start_conrad_imagej(*args, **kwargs):
 
                     array = True
                     counter = 0
-                    while array:
-                        array = data.GetPointData().getAbstractArray(counter)
-                        if array:
-                            pyconrad.ClassGetter().Grid1D.from_numpy(
-                                array).show()
+                    # while array:
+                    array = VN.vtk_to_numpy(data.GetPointData().GetAbstractArray(counter)).reshape(
+                        shape)
+                    pyconrad.ClassGetter().Grid1D.from_numpy(
+                        array).show()
 
                 elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
                     file_object = np.load(f)
