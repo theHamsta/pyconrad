@@ -35,3 +35,6 @@ addons:
     - python-pyopencl
     - python3-pyopencl
     - opencl-headers
+
+notifications:
+  email: false
