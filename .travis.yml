@@ -18,3 +18,9 @@ script:
   - python -c "import pyconrad"
 os:
   - linux
+
+addons:
+  apt:
+    packages:
+  - python-pyopencl
+  - python3-pyopencl
