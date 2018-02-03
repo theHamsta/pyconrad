@@ -22,5 +22,5 @@ os:
 addons:
   apt:
     packages:
-  - python-pyopencl
-  - python3-pyopencl
+    - python-pyopencl
+    - python3-pyopencl
