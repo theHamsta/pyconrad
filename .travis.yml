@@ -24,5 +24,4 @@ addons:
     packages:
     - python-pyopencl
     - python3-pyopencl
-    - opencl-clhpp-headers
-    - opencl-c-headers
+    - opencl-headers
