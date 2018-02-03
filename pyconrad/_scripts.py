@@ -38,6 +38,11 @@ def start_conrad_imagej(*args, **kwargs):
                             pyconrad.ClassGetter().Grid1D.from_numpy(
                                 array).show()
 
+                elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
+                    file_object = np.load(f)
+                    numpy_array = file_object[file_object.keys()[0]]
+                    _.NumericGrid.from_numpy(numpy_array).show()
+
                 else:
                     pyconrad.ij().IJ.openImage(
                         f).show(basename(f))
