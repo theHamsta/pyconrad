@@ -20,7 +20,8 @@ install:
   - pip install --ignore-installed wheel
   - pip install --ignore-installed pytest-cov
   - python -m pip install mako
-  - pip install -e .
+  - python setup.py sdist
+  - pip install build/pyconrad*.tar.gz
 # command to run tests
 script:
   - python -c "import pyconrad"
