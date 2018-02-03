@@ -23,8 +23,8 @@ install:
   - pip install -e .
 # command to run tests
 script:
-  - pytest # or py.test for Python versions 3.5 and below
   - python -c "import pyconrad"
+  - pytest # or py.test for Python versions 3.5 and below
 os:
   - linux
   - osx
