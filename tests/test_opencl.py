@@ -4,8 +4,8 @@ import numpy as np
 import jpype
 
 if not pyconrad.is_initialized():
-    # pyconrad.setup_pyconrad(dev_dirs=['/localhome/local/projects/CONRAD'])
-    pyconrad.setup_pyconrad()
+    pyconrad.setup_pyconrad(dev_dirs=['/home/stephan/projects/CONRAD'])
+    # pyconrad.setup_pyconrad()
 
 _ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
 
