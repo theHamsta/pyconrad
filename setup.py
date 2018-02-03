@@ -63,7 +63,7 @@ def setup_package():
               ]
           },
           setup_requires=['pytest-runner'],
-          tests_require=['pytest'],
+          tests_require=['pytest', 'pytest-cov'],
           data_files=[
               ('share/applications', ['data_files/5.cs.fau.conrad.desktop',
                                       'data_files/5.cs.fau.conrad_imagej.desktop'])]

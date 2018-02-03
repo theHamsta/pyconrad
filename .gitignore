@@ -10,3 +10,4 @@ pyconrad/CONRAD*
 .cache/*
 *.class
 */tempCodeRunnerFile.py
+.coverage
