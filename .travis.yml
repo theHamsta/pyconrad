@@ -19,6 +19,7 @@ install:
   - pip install --ignore-installed setuptools
   - pip install --ignore-installed wheel
   - pip install --ignore-installed pytest-cov
+  - python -m pip install mako
   - pip install -e .
 # command to run tests
 script:
@@ -26,7 +27,7 @@ script:
   - python -c "import pyconrad"
 os:
   - linux
-  # - osx
+  - osx
 
 addons:
   apt:
