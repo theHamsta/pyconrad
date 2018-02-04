@@ -22,6 +22,7 @@ install:
   - python -m pip install mako
   - python setup.py sdist
   - pip install -e .
+  - export DISPLAY=:0.0
 # command to run tests
 script:
   - python -c "import pyconrad"
