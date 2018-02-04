@@ -21,7 +21,7 @@ install:
   - pip install --ignore-installed pytest-cov
   - python -m pip install mako
   - python setup.py sdist
-  - pip install build/pyconrad*.tar.gz
+  - pip install -e .
 # command to run tests
 script:
   - python -c "import pyconrad"
@@ -39,8 +39,3 @@ addons:
 
 notifications:
   email: false
-
-jdk:
-  - oraclejdk8
-  - oraclejdk9
-  - openjdk7
