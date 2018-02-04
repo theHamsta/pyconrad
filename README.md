@@ -20,7 +20,7 @@ CONRAD is a state-of-the-art software platform with extensive documentation. It 
 
 # Installation
 
-Install via pip:
+Install via pip :
 
 ```bash
 pip install pyconrad
@@ -31,7 +31,7 @@ or if you downloaded this repository (https://git5.cs.fau.de/PyConrad/pyCONRAD) 
 pip install -e .
 ```
 
-This will automatically install CONRAD and all python dependencies. 
+This will automatically install CONRAD and all python dependencies. Requirements for proper functioning are at Python of version 3.5 or newer and Java 8.
 
 If you encounter a problem during the installation have a look at our wiki: https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home
 
