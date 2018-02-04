@@ -40,8 +40,10 @@ def start_conrad_imagej(*args, **kwargs):
 
                 elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
                     file_object = np.load(f)
-                    numpy_array = file_object[file_object.keys()[0]]
-                    _.NumericGrid.from_numpy(numpy_array).show()
+                    print(file_object.keys())
+                    for key in file_object.keys():
+                        numpy_array = file_object[key]
+                        _.NumericGrid.from_numpy(numpy_array).show(key)
 
                 else:
                     pyconrad.ij().IJ.openImage(

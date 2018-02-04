@@ -240,7 +240,7 @@ def _extend_ocl_grids():
         return clbuffer
 
     @staticmethod
-    def _oclgrid_from_clarray( clarray):
+    def _oclgrid_from_clarray(clarray):
 
         # TODO: still needs copy!
 
