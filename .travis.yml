@@ -22,7 +22,8 @@ install:
   - python -m pip install mako
   - python setup.py sdist
   - pip install -e .
-  - export DISPLAY=:0.0
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   # - python -c "import pyconrad.autoinit;pyconrad.edu().stanford.rsl.conrad.utils.Configuration.initConfig()"
 # command to run tests
 script:
