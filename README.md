@@ -9,8 +9,8 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 - [CONRAD](#conrad)
 - [Installation](#installation)
 - [Tests](#tests)
-- [Usage](#usage)
 - [Changelog](#changelog)
+- [Usage](#usage)
     - [Basic example](#basic-example)
     - [More Examples](#more-examples)
     - [Autocomplete](#autocomplete)
@@ -45,6 +45,10 @@ If you want to test whether pyconrad is working correctly on your computer you m
 ```bash
 python setup.py test
 ```
+# Changelog
+ Can be found [here](CHANGELOG.md).
+
+
 
 # Usage
 
@@ -62,10 +66,6 @@ Or you can run CONRAD Reconstrucion Pipeline from command line:
 conrad
 # or: conrad_imagej 
 ```
-
-# Changelog
- Can be found [here](CHANGELOG.md).
-
 
 ## Basic example
 
