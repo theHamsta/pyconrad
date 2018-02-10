@@ -1,4 +1,4 @@
-# pyConrad
+# pyconrad
 
 [![PyPI version](https://badge.fury.io/py/pyconrad.svg)](https://badge.fury.io/py/pyconrad)
 
