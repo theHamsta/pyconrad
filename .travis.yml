@@ -12,9 +12,10 @@ python:
 # command to install dependencies
 # before_install:
 #   - sudo -H pip install --upgrade
-allow_failures:
-- python: '3.7-dev'
-- python: 'nightly'
+matrix:
+  allow_failures:
+  - python: '3.7-dev'
+  - python: 'nightly'
 
 
 install:
