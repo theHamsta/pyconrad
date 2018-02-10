@@ -6,9 +6,9 @@ python:
   # - "3.4"
   - "3.5"
   - "3.6"
-  - "3.6-dev"  # 3.6 development branch
-  - "3.7-dev"  # 3.7 development branch
-  - "nightly"
+  # - "3.6-dev"  # 3.6 development branch
+  # - "3.7-dev"  # 3.7 development branch
+  # - "nightly"
 # command to install dependencies
 # before_install:
 #   - sudo -H pip install --upgrade
@@ -22,8 +22,7 @@ install:
   - python -m pip install mako
   - python setup.py sdist
   - pip install -e .
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - export DISPLAY=:0.0
   # - python -c "import pyconrad.autoinit;pyconrad.edu().stanford.rsl.conrad.utils.Configuration.initConfig()"
 # command to run tests
 script:
