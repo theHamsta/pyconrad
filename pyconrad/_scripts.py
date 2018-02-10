@@ -27,7 +27,7 @@ def start_conrad_imagej(*args, **kwargs):
                     reader.ReadAllVectorsOn()
                     reader.ReadAllScalarsOn()
                     reader.Update()
-                    data = reader.GetOutput()  # type: vtkStruturedPoints
+                    data = reader.GetOutput()  # type: vtkStructuredPoints
                     shape = [*reversed(data.GetDimensions())]
 
                     array = True
@@ -40,7 +40,6 @@ def start_conrad_imagej(*args, **kwargs):
 
                 elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
                     file_object = np.load(f)
-                    print(file_object.keys())
                     for key in file_object.keys():
                         numpy_array = file_object[key]
                         _.NumericGrid.from_numpy(numpy_array).show(key)
