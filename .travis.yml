@@ -23,7 +23,7 @@ install:
   - python setup.py sdist
   - pip install -e .
   - export DISPLAY=:0.0
-  - python -c "import pyconrad.autoinit;pyconrad.edu().stanford.rsl.conrad.utils.Configuration.initConfig()"
+  # - python -c "import pyconrad.autoinit;pyconrad.edu().stanford.rsl.conrad.utils.Configuration.initConfig()"
 # command to run tests
 script:
   - python -c "import pyconrad"
