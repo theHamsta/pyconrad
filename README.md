@@ -1,5 +1,7 @@
 # pyConrad
 
+[![PyPI version](https://badge.fury.io/py/pyconrad.svg)](https://badge.fury.io/py/pyconrad)
+
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
 - [pyConrad](#pyconrad)
