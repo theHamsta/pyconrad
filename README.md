@@ -154,7 +154,7 @@ with the methods:
 - save_tif
 - save_vtk
 
-## Frequently encountered problems
+# Frequently encountered problems
 ```python
 # Creating a PointND
 _.PointND(3,3)  # does not work
