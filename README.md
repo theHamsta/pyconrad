@@ -44,7 +44,6 @@ If you want to test whether pyconrad is working correctly on your computer you m
 
 ```bash
 python setup.py test
->>>>>>> develop
 ```
 # Changelog
  Can be found [here](CHANGELOG.md).
