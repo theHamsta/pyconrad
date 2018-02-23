@@ -17,6 +17,7 @@ import jpype
 
 opencl_namespaces = pyconrad.ClassGetter(
     'edu.stanford.rsl.conrad.data.numeric.opencl',
+    'edu.stanford.rsl.conrad.filtering.opencl',
     'edu.stanford.rsl.conrad.opencl'
 )
 
