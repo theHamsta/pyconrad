@@ -12,10 +12,26 @@ python:
 # command to install dependencies
 # before_install:
 #   - sudo -H pip install --upgrade
+env:
+  - WITH_OPENCL=1
+  - WITH_OPENCL=0
+
 matrix:
-  allow_failures:
-  - python: '3.7-dev'
-  - python: 'nightly'
+  config:
+    WITH_OPENCL=1:
+      apt:
+        packages:
+        - python-pyopencl
+        - python3-pyopencl
+        - opencl-headers
+
+      allow_failures:
+      - python: '3.7-dev'
+      - python: 'nightly'
+    WITH_OPENCL=0:
+      allow_failures:
+      - python: '3.7-dev'
+      - python: 'nightly'
 
 
 install:
@@ -36,9 +52,9 @@ os:
   - linux
   # - osx
 
-addons:
-  apt:
-    packages:
-    - python-pyopencl
-    - python3-pyopencl
-    - opencl-headers
+# addons:
+#   apt:
+#     packages:
+    # - python-pyopencl
+    # - python3-pyopencl
+    # - opencl-headers
