@@ -235,6 +235,7 @@ def _extend_ocl_grids():
         return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
 
     def _oclgrid_as_clbuffer(self):
+        self.getDelegate().prepareForDeviceOperation()
         clbuffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
         return clbuffer
@@ -261,6 +262,7 @@ def _extend_ocl_grids():
         return oclgrid
 
     def _oclgrid_as_clarray(self):
+        self.getDelegate().prepareForDeviceOperation()
         clbuffer = cl.Buffer.from_int_ptr(
             self.getDelegate().getCLBuffer().ID)
         return cl.array.Array(pyconrad.opencl.get_conrad_command_queue(), tuple(self.shape), np.float32, data=clbuffer)
