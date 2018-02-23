@@ -49,10 +49,9 @@ install:
   - pip install --ignore-installed wheel
   - pip install --ignore-installed pytest-cov
   - pip install --ignore-installed pytest
-  - pip install --ignore-installed pyopencl
-  - if [$WITH_OPENCL == 1 ]; then
+  - 'if [$WITH_OPENCL == 1 ]; then
     pip install --ignore-installed pyopencl;
-    fi
+    fi'
   - python setup.py sdist
   - pip install -e .
   - export DISPLAY=:0.0
