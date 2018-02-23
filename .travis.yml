@@ -17,6 +17,7 @@ env:
   - WITH_OPENCL=0
 
 matrix:
+  fast_finish: true
   config:
     WITH_OPENCL=1:
       apt:
