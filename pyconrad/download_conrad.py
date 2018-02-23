@@ -1,6 +1,6 @@
 import os.path
 
-__conrad_url = "https://www5.cs.fau.de/fileadmin/user_upload/CONRAD_1.0.7.zip"
+__conrad_url = "https://www5.cs.fau.de/fileadmin/user_upload/CONRAD_1.0.8.zip"
 __conrad_release = __conrad_url.split('/')[-1].rstrip(".zip")
 __conrad_jar = __conrad_release.lower() + ".jar"
 __conrad_download_dir = os.path.dirname(__file__)
