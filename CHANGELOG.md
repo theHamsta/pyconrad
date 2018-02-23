@@ -7,6 +7,8 @@
 	* [ ]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
 	* [ ]  Add more examples: 
 		e.g. use following projects gpyfft,gputools,DeepCL 
+## 0.0.8.1 
+* fix problem with MultiChannelGrid
 ## 0.0.8
 * [x]  OpenCL support:
 	* [x]  Get CONRAD's OpenCL device, command queue, context
