@@ -2,22 +2,23 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
-from ._pyconrad import PyConrad
-from ._pygrid import PyGrid
+import jpype
+import numpy as np
+import pyconrad
 
 class ImageUtil:
 
-    ###################
-    ## Image Wrapper ##
-    ###################
+    ########################
+    ## Convert Grid/numpy ##
+    ########################
 
     @staticmethod
-    def numpy_from_grid(grid):
-        return PyGrid.from_grid(grid).numpy()
+    def grid_from_numpy(grid):
+        return np.ndarray.view(pyconrad.PyGrid.from_numpy(grid))
 
     @staticmethod
-    def grid_from_numpy(array):
-        return PyGrid.from_numpy(array).grid()
+    def numpy_from_grid(ndarray):
+        return np.ndarray.view(pyconrad.PyGrid.from_grid(ndarray))
 
     #################
     ## Save Images ##
@@ -25,12 +26,12 @@ class ImageUtil:
 
     @staticmethod
     def save_grid_as_tiff(grid, path):
-        PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
+        jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
 
     @staticmethod
     def save_numpy_as_tiff(array, path):
         grid = ImageUtil.grid_from_numpy(array)
-        PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
+        jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
 
     #################
     ## Load Images ##
@@ -38,11 +39,17 @@ class ImageUtil:
 
     @staticmethod
     def grid_from_tiff(path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.openImage(path))
+        ij = jpype.JPackage('ij').IJ.openImage(path)
+        if not ij:
+            raise RuntimeError('Error opening file \'%s\'' % path)
+        grid = jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(ij)
         return grid
 
     @staticmethod
     def array_from_tiff(path):
-        grid = PyConrad.get_instance().classes.stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(PyConrad.get_instance().ij.openImage(path))
+        ij = jpype.JPackage('ij').IJ.openImage(path)
+        if not ij:
+            raise RuntimeError('Error opening file \'%s\'' % path)
+        grid = jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(ij)
         return ImageUtil.numpy_from_grid(grid)
 

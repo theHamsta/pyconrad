@@ -1,4 +1,7 @@
-# Add your requirements here like:
-numpy>=1.9
-jpype1>=0.6
-pathlib>=1.0
+jpype1
+numpy
+pathlib
+urllib3
+pyevtk
+setuptools
+pyopencl

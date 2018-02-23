@@ -5,15 +5,59 @@
 import os
 import threading
 import time
+import sys
+import warnings
 from pathlib import Path
 
-from jpype import attachThreadToJVM, detachThreadFromJVM, JException, JProxy, JClass, JDouble, JArray
+from jpype import attachThreadToJVM, detachThreadFromJVM, JavaException, JProxy, JClass, JDouble, JArray
 from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
 
 from . import _windowlistener as wl
-from . import download_conrad
+from . import _download_conrad
+
+from . import _extend_conrad_classes
+from ._deprecated import deprecated
+
 
 module_path = os.path.dirname(__file__)
+
+
+def assert_pyconrad_initialization():
+    if not PyConrad().is_java_initalized():
+        raise PyConradNotInitializedError(
+            'pyconrad was not initialized! Use pyconrad.setup_pyconrad()!')
+
+
+class PyConradNotInitializedError(Exception):
+    pass
+
+
+def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs=[]):
+    PyConrad().setup(max_ram, min_ram, dev_dirs)
+
+
+def start_gui():
+    PyConrad().start_conrad()
+
+
+def start_reconstruction_pipeline_gui():
+    PyConrad().start_reconstruction_filter_pipeline()
+
+
+def terminate_pyconrad():
+    PyConrad().terminate_pyconrad()
+
+# @property
+
+
+def is_initialized():
+    return PyConrad().is_initialized
+
+# @property
+
+
+def is_gui_started():
+    return PyConrad().is_gui_started
 
 
 class PyConrad:
@@ -43,28 +87,35 @@ class PyConrad:
             PyConrad.___instance = PyConrad()
         return PyConrad.___instance
 
-    def setup(self, max_ram="8G", min_ram="7G", dev_dirs=[]):
+    def setup(self, max_ram="18G", min_ram="7G", dev_dirs=[]):
         if not self.is_java_initalized():
             try:
                 curr_directory = os.getcwd()
                 conrad_source_and_libs = self.__import__libs(dev_dirs)
 
                 if not os.path.exists(self.__conrad_path):
-                    download_conrad.download_conrad()
+                    _download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
-                startJVM(getDefaultJVMPath(), conrad_source_and_libs, "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
+                startJVM(getDefaultJVMPath(), conrad_source_and_libs,
+                         "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
                 os.chdir(curr_directory)
+
+                self._check_jre_version()
                 self.classes = JPackage("edu")
                 self.ij = JPackage("ij")
                 self.java = java
-            except JException as ex:
+                _extend_conrad_classes.extend_all_classes()
+                self.classes.stanford.rsl.conrad.utils.Configuration.loadConfiguration()
+
+            except JavaException as ex:
                 print(ex)
         else:
-            print("JVM already started")
+            # raise Exception("JVM already started")
+            warnings.warn("JVM already started")
 
     def start_conrad(self):
         if not self.is_java_initalized():
-            raise Exception('JVM not started! Use Pyconrad().setup()')
+            raise PyConradNotInitializedError()
         if self.__gui_thread is None:
             self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
             self.__gui_thread.start()
@@ -86,8 +137,10 @@ class PyConrad:
     def is_java_initalized():
         return isJVMStarted()
 
-    def __stop_gui(self):
-        java.lang.System.exit(0)
+    def terminate_pyconrad(self):
+        if self.is_initialized:
+            java.lang.System.exit(0)
+            shutdownJVM()
         self.__is_gui_started = False
 
     def __start_rfp_gui(self):
@@ -97,7 +150,7 @@ class PyConrad:
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
         self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
         self.__is_gui_started = True
-        print("Gui started", self.__gui_instance)
+
         detachThreadFromJVM()
         while self.__is_gui_started:
             time.sleep(1)
@@ -109,7 +162,7 @@ class PyConrad:
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
         self.__gui_instance.CONRAD.setup(proxy)
         self.__is_gui_started = True
-        print("Gui started", self.__gui_instance)
+
         detachThreadFromJVM()
         while self.__is_gui_started:
             time.sleep(1)
@@ -129,22 +182,27 @@ class PyConrad:
         dev_src = []
         for dev in dev_dirs:
             dev_path = Path(dev)
-            dev_src.append(dev_path.joinpath("src"))
+            subdirs = [x for x in dev_path.iterdir() if x.is_dir()]
+            dev_src.append(str(dev_path))
+            for d in subdirs:
+                dev_src.append(dev_path.joinpath(d))
             if dev_path.match("CONRAD"):
                 self.__conrad_path = str(dev_path)
                 self.__conrad_repo_set = True
                 dev_lib = dev_path.joinpath("lib")
-                dev_classes = dev_path.joinpath("classes", "production", "CONRAD")
-                extra_libs = (dev_lib.joinpath(fn) for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
-                extra_libs = ";".join(map(str, [dev_classes, *extra_libs]))
-                # TODO: make above line Python2 compatible
+                dev_classes = dev_path.joinpath(
+                    "classes", "production", "CONRAD")
+                extra_libs = list(dev_lib.joinpath(fn)
+                                  for fn in dev_lib.iterdir() if ".jar" == fn.suffix)
+                extra_libs.insert(0, dev_classes)
+                extra_libs = ";".join(map(str, extra_libs))
 
         if self.__conrad_repo_set:
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
         else:
-            self.__conrad_path = download_conrad.conrad_jar_dir()
-            dev_src.append(download_conrad.conrad_jar_path())
+            self.__conrad_path = _download_conrad.conrad_jar_dir()
+            dev_src.append(_download_conrad.conrad_jar_file())
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
 
@@ -155,40 +213,12 @@ class PyConrad:
 
     def terminate(self):
         if self.is_gui_started():
-            self.__stop_gui()
+            self.__terminate_pyconrad()
         shutdownJVM()
 
+    @property
     def is_gui_started(self):
         return self.__is_gui_started
-
-    def add_import(self, package_name):
-        self.__imported_namespaces.append(package_name)
-
-    def __getitem__(self, classname):
-        if not self.is_java_initalized():
-            raise Exception('JVM not started! Use Pyconrad().setup()')
-        success = None
-
-        # Default namespace
-        try:
-            rtn = JClass(classname)
-            success = rtn
-        except Exception:
-            pass
-
-        # Imported namespaces
-        for package in self.__imported_namespaces:
-            try:
-                rtn = JClass(package + "." + classname)
-                success = rtn
-                break
-            except Exception:
-                pass
-
-        if not success:
-            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (classname, self.__imported_namespaces))
-
-        return success
 
     def enumval_from_int(self, enum_name, value_int):
         return self[enum_name].values()[int(value_int)]
@@ -198,4 +228,21 @@ class PyConrad:
 
     @property
     def is_initialized(self):
-        return self.__is_gui_started
+        return self.is_java_initalized()
+
+    def _check_jre_version(self):
+        '''
+        Check JRE version. We need >1.8
+        '''
+        jre_version = java.lang.System.getProperty("java.version").split('.')
+
+        if int(jre_version[0]) > 1:
+            # format 9.0.1
+            assert int(
+                jre_version[0]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+        else:
+            # format 1.8.0
+            assert int(
+                jre_version[0]) == 1, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+            assert int(
+                jre_version[1]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
