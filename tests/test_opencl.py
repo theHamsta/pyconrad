@@ -1,11 +1,13 @@
 
 import warnings
+import pytest
+import os
 
 # import pyconrad.autoinit
 try:
     from pyconrad.opencl import *
 except Exception as e:
-    warnings.warn(e)
+    warnings.warn(str(e))
 import numpy as np
 import jpype
 
@@ -16,7 +18,7 @@ if not pyconrad.is_initialized():
 _ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_init_cone_beam_backprojector():
     """
     CONRAD crashes on the creation of a OpenCL when using the CONRAD.jar version 1.0.7 on Linux
@@ -26,7 +28,7 @@ def test_init_cone_beam_backprojector():
     _.ConeBeamBackprojector()
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_get_conrad_cl():
     print(pyconrad.opencl.get_conrad_context())
     print(pyconrad.opencl.get_conrad_command_queue())
@@ -42,7 +44,7 @@ def test_get_conrad_cl():
 #     queue = cl.CommandQueue(ctx)
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_classgetter():
 
     _.OpenCLGrid1D(_.Grid1D(20))
@@ -50,7 +52,7 @@ def test_clgrid_classgetter():
     _.OpenCLGrid3D(_.Grid3D(20, 20, 40))
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_add_noise():
     import pyopencl.clrandom
 
@@ -65,7 +67,7 @@ def test_add_noise():
     print(noisy_grid1d)
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_form_size():
 
     _.OpenCLGrid1D.from_size([20])
@@ -73,7 +75,7 @@ def test_clgrid_form_size():
     _.OpenCLGrid3D.from_size([20, 30, 40])
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_form_shape():
 
     _.OpenCLGrid1D.from_shape([20])
@@ -81,7 +83,7 @@ def test_clgrid_form_shape():
     _.OpenCLGrid3D.from_shape([20, 30, 40])
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_fromnumpy():
 
     random = np.random.randn(10, 20)
@@ -90,7 +92,7 @@ def test_clgrid_fromnumpy():
     assert np.allclose(cl_grid[2, 4], random[4, 2])
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_device_info():
 
     device = pyconrad.opencl.get_conrad_device()
@@ -98,7 +100,7 @@ def test_device_info():
     print(device.version)
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_upload():
 
     random = np.random.randn(10, 20, 30)
@@ -112,7 +114,7 @@ def test_clgrid_upload():
     assert np.allclose(downloaded, random)
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_upload():
 
     random = np.random.randn(10, 20)
@@ -120,7 +122,7 @@ def test_clgrid_upload():
     print(cl_grid[2, 4])
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_as_clarray():
 
     random = np.random.randn(10, 20)
@@ -136,7 +138,7 @@ def test_clgrid_as_clarray():
     assert np.allclose(cl_grid.download_numpy(), random)
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_pyopencl_kernel_on_openclgrid():
 
     ctx = pyconrad.opencl.get_conrad_context()
@@ -163,7 +165,7 @@ def test_pyopencl_kernel_on_openclgrid():
     assert np.allclose(cl_grid.download_numpy(), random)
 
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_as_clbuffer():
 
     random = np.random.randn(10, 20)
@@ -183,7 +185,7 @@ def test_clgrid_as_clbuffer():
 #     # print(type(object))
 #     print(java_clarray)
 
-@pytest.mark.skipif("WITH_OPENCL" not in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_javacl_from_pycl():
     random = np.random.randn(10, 20).astype(np.float32)
 
