@@ -15,7 +15,6 @@ try:
     _ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
 except Exception as e:
     warnings.warn(str(e))
-    return
 import numpy as np
 import jpype
 
