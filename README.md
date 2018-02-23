@@ -132,7 +132,7 @@ print(pygrid2)
 ```
 ## More Examples
 
-More examples can be found [here](examples)
+More examples can be found [here](pyconrad_examples)
 
 ## Autocomplete
 
