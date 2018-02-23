@@ -25,6 +25,10 @@ matrix:
         - python-pyopencl
         - python3-pyopencl
         - opencl-headers
+    WITH_OPENCL=0:
+      apt:
+        packages:
+        - opencl-headers
 
   allow_failures:
       - python: '3.5'
