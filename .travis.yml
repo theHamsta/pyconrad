@@ -20,15 +20,17 @@ matrix:
   fast_finish: true
   config:
     WITH_OPENCL=1:
-      apt:
-        packages:
-        - python-pyopencl
-        - python3-pyopencl
-        - opencl-headers
+      addons:
+        apt:
+          packages:
+          - python-pyopencl
+          - python3-pyopencl
+          - opencl-headers
     WITH_OPENCL=0:
-      apt:
-        packages:
-        - opencl-headers
+      addons:
+        apt:
+          packages:
+          - opencl-headers
 
   allow_failures:
       - python: '3.5'
