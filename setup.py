@@ -61,7 +61,7 @@ def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
     sphinx = ['sphinx'] if needs_sphinx else []
     setup(name='pyconrad',
-          version='0.0.8.3',
+          version='0.0.9',
           packages=['pyconrad', 'pyconrad._autocomplete_files', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
@@ -77,8 +77,7 @@ def setup_package():
           entry_points={
               'gui_scripts': [
                   'conrad = pyconrad._scripts:start_pyconrad',
-                  'conrad_imagej = pyconrad._scripts:start_conrad_imagej',
-                  'conrad_compare = pyconrad._scripts:start_conrad_compare',
+                  'conrad_imagej = pyconrad._scripts:start_conrad_imagej'
               ]
           },
           setup_requires=['pytest-runner'],
