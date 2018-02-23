@@ -26,11 +26,6 @@ matrix:
           - python-pyopencl
           - python3-pyopencl
           - opencl-headers
-    WITH_OPENCL=0:
-      addons:
-        apt:
-          packages:
-          - opencl-headers
 
   allow_failures:
       - python: '3.5'
@@ -66,9 +61,9 @@ os:
   - linux
   # - osx
 
-# addons:
-#   apt:
-#     packages:
-    # - python-pyopencl
-    # - python3-pyopencl
-    # - opencl-headers
+addons:
+  apt:
+    packages:
+    - python-pyopencl
+    - python3-pyopencl
+    - opencl-headers
