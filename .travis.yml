@@ -49,6 +49,7 @@ install:
   - pip install --ignore-installed wheel
   - pip install --ignore-installed pytest-cov
   - pip install --ignore-installed pytest
+  - if $WITH_OPENCL; then pip install --ignore-installed pyopencl; fi;
   - python setup.py sdist
   - pip install -e .
   - export DISPLAY=:0.0
@@ -67,3 +68,6 @@ addons:
     - python-pyopencl
     - python3-pyopencl
     - opencl-headers
+
+notifications:
+  email: false
