@@ -114,7 +114,10 @@ class PyGrid(np.ndarray):
 
     @classmethod
     def from_grid(cls, grid):
+        numeric_package = JPackage('edu').stanford.rsl.conrad.data.numeric
         size = list(reversed(grid.getSize()[:]))
+        if isinstance(grid, numeric_package.Grid3D) and isinstance(grid.getSubGrid(0), numeric_package.MultiChannelGrid2D):
+            size = [grid.getSubGrid(0).getNumberOfChannels()] + list(reversed(grid.getSize()[:]))
         numpy = np.zeros(size, java_float_dtype)
         instance = numpy.view(cls)
         instance.__grid = grid
@@ -158,8 +161,15 @@ class PyGrid(np.ndarray):
             return
 
         f_buffer = self.__dbuffer.asFloatBuffer()
+        numeric_package = JPackage('edu').stanford.rsl.conrad.data.numeric
+        if isinstance(self.__grid, numeric_package.Grid3D) and isinstance(self.__grid.getSubGrid(0), numeric_package.MultiChannelGrid2D):
+            f_buffer = self.__dbuffer.asFloatBuffer()
+            for channel in range(shape[0]):
+                for z in range(shape[1]):
+                    f_buffer.put(self.__grid.getSubGrid(z).getChannel(
+                        channel).getBuffer())  # TODO: stride == 0?
 
-        if len(shape) == 1:
+        elif len(shape) == 1:
             # Grid1D.getBuffer() would generate as copy of the original buffer
             # for i in range(shape[0]):
             #     self[i] = self.__gr
@@ -169,12 +179,10 @@ class PyGrid(np.ndarray):
         elif len(shape) == 2:
             f_buffer.put(self.__grid.getBuffer())
         elif len(shape) is 3:
-            f_buffer = self.__dbuffer.asFloatBuffer()
             for z in range(0, shape[0]):
                 f_buffer.put(self.__grid.getSubGrid(
                     z).getBuffer())  # TODO: stride == 0?
         elif len(shape) is 4:
-            f_buffer = self.__dbuffer.asFloatBuffer()
             for f in range(shape[0]):
                 for z in range(shape[1]):
                     f_buffer.put(self.__grid.getSubGrid(f).getSubGrid(
