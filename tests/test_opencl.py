@@ -1,7 +1,11 @@
 
+import warnings
 
 # import pyconrad.autoinit
-from pyconrad.opencl import *
+try:
+    from pyconrad.opencl import *
+except Exception as e:
+    warnings.warn(e)
 import numpy as np
 import jpype
 
