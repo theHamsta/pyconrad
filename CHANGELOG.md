@@ -1,4 +1,5 @@
 ## 0.0.9 (unreleased)
+* [ ]  Conrad 1.0.8
 * [ ]  Fix memory leak issue/PyGrid
 * [ ]  Print automatically citations of used classes (feature for CONRAD?)
 * [ ]  Fork JPype to allow unified memory for numpy/Java?
