@@ -1,9 +1,9 @@
 language: python
 python:
   # - "2.6"
-  # - "2.7"
+  # - "2.7" #fails
   # - "3.3"
-  # - "3.4"
+  # - "3.4" #fails
   - "3.5"
   - "3.6"
   # - "3.6-dev"  # 3.6 development branch
@@ -25,15 +25,20 @@ matrix:
         - python3-pyopencl
         - opencl-headers
 
-      allow_failures:
-        - python: '3.5'
-        - python: '3.6'
-        - python: '3.7-dev'
-        - python: 'nightly'
-    WITH_OPENCL=0:
-      allow_failures:
+  allow_failures:
+      - python: '3.5'
+        env:  WITH_OPENCL=0
+      - python: '3.6'
+        env:  WITH_OPENCL=0
       - python: '3.7-dev'
+        env:  WITH_OPENCL=0
+      - python: '3.7-dev'
+        env:  WITH_OPENCL=1
       - python: 'nightly'
+        env:  WITH_OPENCL=0
+      - python: 'nightly'
+        env:  WITH_OPENCL=1
+
 
 
 install:
