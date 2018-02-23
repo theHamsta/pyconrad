@@ -27,9 +27,9 @@ matrix:
 
   allow_failures:
       - python: '3.5'
-        env:  WITH_OPENCL=0
+        env:  WITH_OPENCL=1
       - python: '3.6'
-        env:  WITH_OPENCL=0
+        env:  WITH_OPENCL=1
       - python: '3.7-dev'
         env:  WITH_OPENCL=0
       - python: '3.7-dev'
