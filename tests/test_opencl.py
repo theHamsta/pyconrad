@@ -6,17 +6,18 @@ import os
 
 # import pyconrad.autoinit
 try:
+    from pyconrad.opencl import *
     import pyconrad
     if not pyconrad.is_initialized():
         # pyconrad.setup_pyconrad(dev_dirs=['/home/stephan/projects/CONRAD'])
         pyconrad.setup_pyconrad()
-    from pyconrad.opencl import *
 
-    _ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
 except Exception as e:
     warnings.warn(str(e))
 import numpy as np
 import jpype
+
+_ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
 
 
 @pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
