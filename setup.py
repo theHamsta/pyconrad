@@ -70,6 +70,7 @@ def setup_package():
           install_requires=[
                'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools'
           ],
+          extras_require={'opencl':['pyopencl']},
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
           description='Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography',
