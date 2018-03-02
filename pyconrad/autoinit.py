@@ -28,4 +28,4 @@ import pyconrad._pyconrad
 
 if not pyconrad._pyconrad.PyConrad().is_initialized:
     pyconrad.setup_pyconrad()
-    # pyconrad.setup_pyconrad(dev_dirs=['/home/stephan/projects/CONRAD'])
+    # pyconrad.setup_pyconrad(dev_dirs=['/localhome/local/projects/CONRAD'])
