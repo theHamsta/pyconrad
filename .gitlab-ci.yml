@@ -2,4 +2,4 @@ test:
   script: "setup.py test"
 
 install:
-  script: "pip3 -u install ."
+  script: "python3 -m pip -u install ."
