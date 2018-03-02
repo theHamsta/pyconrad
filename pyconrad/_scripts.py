@@ -19,14 +19,19 @@ def start_conrad_imagej(*args, **kwargs):
     for f in sys.argv[1:]:
         try:
             if os.path.isfile(f):
-                if str.lower(f).endswith('.vtk'):
+                if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
                     import vtk
                     from vtk.util import numpy_support as VN
-                    reader = vtk.vtkStructuredPointsReader()
-                    reader.SetFileName(f)
-                    reader.ReadAllVectorsOn()
-                    reader.ReadAllScalarsOn()
+                    if str.lower(f).endswith('.vtk'):
+                        reader = vtk.vtkStructuredPointsReader()
+                        reader.SetFileName(f)
+                        reader.ReadAllVectorsOn()
+                        reader.ReadAllScalarsOn()
+                    else:
+                        reader = vtk.vtkXMLImageDataReader()
+                        reader.SetFileName(f)
                     reader.Update()
+
                     data = reader.GetOutput()  # type: vtkStructuredPoints
                     shape = [*reversed(data.GetDimensions())]
 
