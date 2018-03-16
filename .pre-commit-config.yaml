@@ -12,9 +12,3 @@
     -   id: requirements-txt-fixer
     -   id: flake8
         args: ["--exclude=docs/conf.py"]
-
--   repo: git://github.com/FalconSocial/pre-commit-python-sorter
-    sha: 1.0.4
-    hooks:
-    -   id: python-import-sorter
-        args: ['--silent-overwrite']
