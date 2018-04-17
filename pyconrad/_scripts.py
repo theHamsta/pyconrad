@@ -1,7 +1,7 @@
 import pyconrad
 import sys
 import os
-from os.path import basename
+from os.path import basename, isfile, abspath
 import numpy as np
 
 _ = pyconrad.ClassGetter()
@@ -18,7 +18,8 @@ def start_conrad_imagej(*args, **kwargs):
 
     for f in sys.argv[1:]:
         try:
-            if os.path.isfile(f):
+            if isfile(f):
+                f = abspath(f)
                 if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
                     import vtk
                     from vtk.util import numpy_support as VN
