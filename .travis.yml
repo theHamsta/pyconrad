@@ -70,4 +70,4 @@ addons:
     - opencl-headers
 
 notifications:
-  email: false
+  email: true
