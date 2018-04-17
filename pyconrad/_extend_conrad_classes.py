@@ -15,7 +15,10 @@ import numpy as np
 try:
     import pyopencl as cl
 except ImportError as e:
-    warnings.warn('Failed to import pyopencl')
+    warnings.warn(
+        'Failed to import pyopencl.' +
+        'Pyconrad offers additional functionality ' +
+        'if this package is available.')
 
 
 def _not_implemented_function(self):
@@ -103,7 +106,9 @@ def _extend_numeric_grid():
     def _numeric_grid_getitem(self, idxs):
         if isinstance(idxs, int) and not isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid1D):
             return self.getSubGrid(idxs)
-        elif isinstance(idxs, slice) and (isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid3D) or (isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid4D))):
+        elif isinstance(idxs, slice) and \
+            (isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid3D) or
+             (isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid4D))):
             start = idxs.start or 0
             end = idxs.stop or self.getSize()[2]
             assert idxs.step == 1 or not idxs.step, "Only step==1 is supported"
