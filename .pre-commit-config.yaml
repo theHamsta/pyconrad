@@ -10,5 +10,5 @@
     -   id: debug-statements
     -   id: end-of-file-fixer
     -   id: requirements-txt-fixer
-    -   id: flake8
-        args: ["--exclude=docs/conf.py"]
+    # -   id: flake8
+        # args: ["--exclude=docs/conf.py"]
