@@ -9,6 +9,6 @@
     -   id: check-xml
     -   id: debug-statements
     -   id: end-of-file-fixer
-    -   id: requirements-txt-fixer
+    # -   id: requirements-txt-fixer
     # -   id: flake8
         # args: ["--exclude=docs/conf.py"]
