@@ -2,7 +2,7 @@
 
 ## 0.1.0 (unreleased)
 
-* [ ]  Print automatically citations of used classes (feature for CONRAD?)
+* [ ]  Full support of VTK files (also reading)
 * [ ]  Fork JPype to allow unified memory for numpy/Java?
 * [ ]  OpenCL support:
   * [ ]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
