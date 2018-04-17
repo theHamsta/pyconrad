@@ -7,7 +7,7 @@
 * [ ]  OpenCL support:
   * [ ]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
   * [ ]  Add more examples:
-           e.g. use following projects gpyfft,gputools,DeepCL 
+           e.g. use following projects gpyfft,gputools,DeepCL
 
 ## 0.0.9
 
@@ -25,7 +25,7 @@
   * [x]  Create OpenCLGrids from Numpy
   * [x]  Upload/Download numpy
   * [x]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
-  * [x]  Add example 
+  * [x]  Add example
 * [x]  More convenience functions in pyopencl.config
 * [x]  Better desktop integration for conrad_imagej:
     * [x]  Add .desktop files

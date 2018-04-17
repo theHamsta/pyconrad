@@ -52,4 +52,3 @@ class ImageUtil:
             raise RuntimeError('Error opening file \'%s\'' % path)
         grid = jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(ij)
         return ImageUtil.numpy_from_grid(grid)
-

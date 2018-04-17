@@ -23,7 +23,7 @@ def generate_autocomplete_file(file, conrad_dir:str, classname:str, alsoMembers 
                     writer.writelines("""
     def __init__(self):
         warnings.warn('This class should never be initialized! Use it as type hint: #type: pyconrad.AutoCompleteConrad')
- 
+
 """)
                 else:
                     if os.path.basename(f) != 'coneBeam':

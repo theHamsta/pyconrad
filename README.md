@@ -66,7 +66,7 @@ pyconrad.start_reconstruction_pipeline_gui() # if you want to start CONRAD's rec
 Or you can run CONRAD Reconstrucion Pipeline from command line:
 ```bash
 conrad
-# or: conrad_imagej 
+# or: conrad_imagej
 ```
 
 ## Basic example

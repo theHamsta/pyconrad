@@ -13,5 +13,3 @@ def test_swapaxes():
     grid = pyconrad.PyGrid.from_numpy(swapped_axes).grid
     rtn = pyconrad.PyGrid.from_grid(grid)
     assert np.allclose(swapped_axes,rtn)
-
-
