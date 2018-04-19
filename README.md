@@ -63,7 +63,7 @@ pyconrad.start_gui()  # start ImageJ
 pyconrad.start_reconstruction_pipeline_gui() # if you want to start CONRAD's reconstruction filter pipeline
 ```
 
-Or you can run CONRAD Reconstrucion Pipeline from command line:
+Or you can run CONRAD Reconstruction Pipeline from command line:
 ```bash
 conrad
 # or: conrad_imagej
@@ -144,7 +144,7 @@ Works with pycharm:
 ![autocomplete_video](README.md_files/autocomplete.webm)
 
 ## Extension methods for java classes
-For easy transition between Java and Python we extented some important Java classes in Python to convert between the respective Java class and the respective numpy structure.
+For easy transition between Java and Python we extended some important Java classes in Python to convert between the respective Java class and the respective numpy structure.
 The following java classes are extended:
 - PointND
 - SimpleVector
