@@ -2,6 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/pyconrad.svg)](https://badge.fury.io/py/pyconrad)
 [![Build Status](https://travis-ci.org/theHamsta/pyconrad.svg?branch=develop)](https://travis-ci.org/theHamsta/pyconrad)
+[![PyPI License](https://img.shields.io/pypi/l/pyconrad.svg)](https://badge.fury.io/py/pyconrad)
 
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
