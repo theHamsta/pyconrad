@@ -22,7 +22,7 @@ opencl_namespaces = pyconrad.ClassGetter(
 )
 
 
-def get_conrad_context():
+def get_conrad_context() -> cl.Context:
     OpenCLUtil = pyconrad.edu().stanford.rsl.conrad.opencl.OpenCLUtil
     context_java = OpenCLUtil.getStaticContext()
     return cl.Context.from_int_ptr(context_java.ID)
@@ -34,7 +34,7 @@ def get_conrad_command_queue() -> cl.CommandQueue:
     return cl.CommandQueue.from_int_ptr(command_queue_java.ID)
 
 
-def get_conrad_device():
+def get_conrad_device() -> cl.Device:
     OpenCLUtil = pyconrad.edu().stanford.rsl.conrad.opencl.OpenCLUtil
     device_java = OpenCLUtil.getStaticCommandQueue().getDevice()
     return cl.Device.from_int_ptr(device_java.ID)
