@@ -1,5 +1,6 @@
 # pyconrad
 
+[![PyPI License](https://img.shields.io/pypi/l/pyconrad.svg)](https://badge.fury.io/py/pyconrad)
 [![PyPI version](https://badge.fury.io/py/pyconrad.svg)](https://badge.fury.io/py/pyconrad)
 [![Build Status](https://travis-ci.org/theHamsta/pyconrad.svg?branch=develop)](https://travis-ci.org/theHamsta/pyconrad)
 
