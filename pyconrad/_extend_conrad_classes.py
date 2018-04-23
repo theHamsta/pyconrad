@@ -20,6 +20,8 @@ except ImportError as e:
         'Pyconrad offers additional functionality ' +
         'if this package is available.')
 
+import pyconrad._vtk
+
 
 def _not_implemented_function(self):
     raise NotImplementedError('Not implemented yet')
@@ -151,6 +153,15 @@ def _extend_numeric_grid():
     def _from_tiff(path):
         return ImageUtil.grid_from_tiff(path)
 
+    @staticmethod
+    def _from_vtk(path, array_idx=0):
+        array, origin, spacing = pyconrad._vtk.read_vtk(path, array_idx)
+        grid = JPackage(
+            'edu').stanford.rsl.conrad.data.numeric.NumericGrid.from_numpy(array)
+        grid.setOrigin(origin)
+        grid.setSpacing(spacing)
+        return grid
+
     grid_class = JPackage('edu').stanford.rsl.conrad.data.numeric.NumericGrid
     grid_class.as_numpy = _numpy_grid
     grid_class.from_numpy = _numeric_grid_from_numpy
@@ -158,6 +169,7 @@ def _extend_numeric_grid():
     grid_class.from_size = _numeric_grid_from_size
     grid_class.from_shape = _numeric_grid_from_shape
     grid_class.from_tiff = _from_tiff
+    grid_class.from_vtk = _from_vtk
     grid_class.from_image = _from_tiff
     grid_class.save_tiff = _save_as_tiff
     grid_class.__getitem__ = _numeric_grid_getitem

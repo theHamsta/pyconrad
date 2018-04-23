@@ -21,29 +21,7 @@ def start_conrad_imagej(*args, **kwargs):
             if isfile(f):
                 f = abspath(f)
                 if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
-                    import vtk
-                    from vtk.util import numpy_support as VN
-                    if str.lower(f).endswith('.vtk'):
-                        reader = vtk.vtkStructuredPointsReader()
-                        reader.SetFileName(f)
-                        reader.ReadAllVectorsOn()
-                        reader.ReadAllScalarsOn()
-                    else:
-                        reader = vtk.vtkXMLImageDataReader()
-                        reader.SetFileName(f)
-                    reader.Update()
-
-                    data = reader.GetOutput()  # type: vtkStructuredPoints
-                    shape = [*reversed(data.GetDimensions())]
-
-                    array = True
-                    counter = 0
-                    # while array:
-                    array = VN.vtk_to_numpy(data.GetPointData().GetAbstractArray(counter)).reshape(
-                        shape)
-                    pyconrad.ClassGetter().Grid1D.from_numpy(
-                        array).show()
-
+                    _.NumericGrid.from_vtk(f).show()
                 elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
                     file_object = np.load(f)
                     for key in file_object.keys():
