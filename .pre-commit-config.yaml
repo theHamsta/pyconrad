@@ -3,7 +3,7 @@
     hooks:
     -   id: trailing-whitespace
     -   id: check-ast
-    -   id: check-added-large-files
+    #-   id: check-added-large-files
     -   id: check-json
     -   id: check-yaml
     -   id: check-xml
