@@ -16,7 +16,7 @@ try:
     import pyopencl as cl
 except ImportError as e:
     warnings.warn(
-        'Failed to import pyopencl.' +
+        'Failed to import pyopencl.\n' +
         'Pyconrad offers additional functionality ' +
         'if this package is available.')
 
