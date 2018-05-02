@@ -104,32 +104,6 @@ phantom.show()
 phantom3d.show()
 ```
 
-Also memory transfers to numpy.ndarray are possible.
-Data changes have to be synchronized:
-``` python
-...
-
-# Create PyGrid from numpy array (must be of type pyconrad.java_float_dtype)
-array = np.random.rand(4,2,3).astype(java_float_dtype)
-pygrid2 = PyGrid.from_numpy(array)
-
-# Manipulate data in using CONRAD at Position (x,y,z) = (1,2,4)
-pygrid2.grid.setValue(5.0, [0,1,3])
-
-# Print this pixel using Python indexes [z,y,x]
-print("Before update: %f" % pygrid2[3,1,0])
-# Python data must be synchronized with CONRAD
-pygrid2.update_numpy()
-print("After update: %f" % pygrid2[3,1,0])
-
-# Manipulate pixel using python
-pygrid2[1,1,1] = 3.0
-# Update CONRAD data
-pygrid2.update_grid()
-
-# Print
-print(pygrid2)
-```
 ## More Examples
 
 More examples can be found [here](pyconrad_examples)
