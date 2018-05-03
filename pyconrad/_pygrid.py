@@ -273,4 +273,4 @@ class PyGrid(np.ndarray):
         else:
             spacing = tuple(self.grid.getSpacing()[:])
         imageToVTK(file, tuple(self.grid.getOrigin()[
-                   :]), spacing, cellData={title: np.array(self)})
+                   :]), spacing, pointData={title: np.swapaxes(p.array(self))})

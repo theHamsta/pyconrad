@@ -150,7 +150,7 @@ def _extend_numeric_grid():
     def _save_as_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self, path)
 
-    def _save_as_vtk(self, path, title=''):
+    def _save_as_vtk(self, path, title='vol'):
         _, ext = splitext(path)
         if ext.lower() == '.vti':
             path = path[:-4]
@@ -161,7 +161,7 @@ def _extend_numeric_grid():
         else:
             spacing = tuple(self.getSpacing()[:])
         imageToVTK(path, tuple(self.getOrigin()[
-                   :]), spacing, cellData={title: np.array(self)})
+                   :]), spacing, pointData={title: np.swapaxes(np.array(self),0,2)})
 
     @staticmethod
     def _from_tiff(path):

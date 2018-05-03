@@ -50,15 +50,17 @@ def test_read_vti():
 
 
 def test_write_read_vti():
-    random_array = np.random.rand(23, 12, 4)
+    random_array = np.random.rand(23, 12, 5)
     random_origin = np.random.rand(3)
     random_spacing = np.random.rand(3)
-    temp_vti = tempfile.NamedTemporaryFile(suffix=".vti").name
+    temp_vti =  tempfile.NamedTemporaryFile(suffix=".vti").name
+    print('Temporal file: ' + temp_vti)
 
     grid = _.NumericGrid.from_numpy(random_array)
     grid.setOrigin(random_origin)
     grid.setSpacing(random_spacing)
     grid.save_vtk(temp_vti)
+
 
     new_grid = _.NumericGrid.from_vtk(temp_vti)
 
@@ -88,7 +90,7 @@ def test_write_read_vti():
 
 if __name__ == "__main__":
     test_distance_between_points()
-    test_read_vti()
-    test_write_vtk()
+    # test_read_vti()
+    # test_write_vtk()
     test_write_read_vti()
-    test_write_read_vtk()
+    # test_write_read_vtk()

@@ -63,8 +63,13 @@ def read_vtk(file, array_name=0):
     data = reader.GetOutput()  # type: vtkStruturedPoints
     shape = [*reversed(data.GetDimensions())]
 
-    rtn = VN.vtk_to_numpy(data.GetPointData().GetArray(array_name)).reshape(
+    try: 
+        rtn = VN.vtk_to_numpy(data.GetPointData().GetArray(array_name)).reshape(
         shape), data.GetOrigin(), data.GetSpacing()
+    except:
+        rtn = VN.vtk_to_numpy(data.GetCellData().GetArray(array_name)).reshape(
+        shape), data.GetOrigin(), data.GetSpacing()
+
     return rtn
 
 
