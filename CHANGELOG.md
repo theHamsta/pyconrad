@@ -3,7 +3,7 @@
 ## 0.1.0 (unreleased)
 
 * [x]  Full support of VTK files (also reading)
-* [ ]  Support for relative path for conrad_imagej
+* [x]  Improvements for conrad_imagej (support of relative paths, support for .npy-files)
 * [ ]  Fork JPype to allow unified memory for numpy/Java?
 * [ ]  OpenCL support:
   * [ ]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
