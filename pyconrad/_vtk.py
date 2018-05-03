@@ -1,5 +1,5 @@
 import vtk
-from os.path import splitext
+from os.path import splitext, isfile
 
 
 # def read_vti(file, array_name=0):
@@ -43,6 +43,9 @@ def read_vtk(file, array_name=0):
     from vtk import vtkStructuredPointsReader, vtkXMLImageDataReader
     from vtk.util import numpy_support as VN
 
+    if not isfile(file):
+        raise FileNotFoundError('File %s does not exit' % file)
+
     _, ext = splitext(file)
 
     if ext.lower() == '.vtk':
@@ -63,3 +66,25 @@ def read_vtk(file, array_name=0):
     rtn = VN.vtk_to_numpy(data.GetPointData().GetArray(array_name)).reshape(
         shape), data.GetOrigin(), data.GetSpacing()
     return rtn
+
+
+# def write_vkt(file, array, spacing=[1, 1, 1], origin=[0, 0, 0], zlibCompression=True):
+#     print('Writing file %s' % file)
+#     from vtk import vtkXMLImageDataWriter
+#     from vtk import vtkImageData
+#     from vtk.util import numpy_support as VN
+
+#     if array.ndim <= 2:
+#         vtk_array = VN.numpy_to_vtk(array))
+#     else:
+#         raise ValueError(
+#             'Only dimension <= 2 supported for now.\n' +
+#             'Use .vti for 3-dimensional arrays!')
+
+#     writer=vtkXMLImageDataWriter()
+#     writer.SetFileName(file)
+#     writer.SetSpacing(spacing)
+#     writer.SetOrigin(origin)
+#     if zlibCompression:
+#         writer.SetCompressorTypeToZLib()
+#     writer.Execute(vtk_array)
