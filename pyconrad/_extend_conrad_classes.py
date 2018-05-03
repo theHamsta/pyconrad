@@ -9,6 +9,7 @@ from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 import pyconrad
 import warnings
+from os.path import splitext
 
 import numpy as np
 
@@ -149,6 +150,19 @@ def _extend_numeric_grid():
     def _save_as_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self, path)
 
+    def _save_as_vtk(self, path, title=''):
+        _, ext = splitext(path)
+        if ext.lower() == '.vti':
+            path = path[:-4]
+
+        from pyevtk.hl import imageToVTK
+        if np.abs(self.getSpacing()[0]) < 1e-5:
+            spacing = [1.] * len(self.shape)
+        else:
+            spacing = tuple(self.getSpacing()[:])
+        imageToVTK(path, tuple(self.getOrigin()[
+                   :]), spacing, cellData={title: np.array(self)})
+
     @staticmethod
     def _from_tiff(path):
         return ImageUtil.grid_from_tiff(path)
@@ -172,6 +186,7 @@ def _extend_numeric_grid():
     grid_class.from_vtk = _from_vtk
     grid_class.from_image = _from_tiff
     grid_class.save_tiff = _save_as_tiff
+    grid_class.save_vtk = _save_as_vtk
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
     grid_class.shape = _numeric_grid_shape
