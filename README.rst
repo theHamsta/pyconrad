@@ -16,19 +16,6 @@ pyconrad
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
 
-* `pyConrad <#pyconrad>`_
-* `CONRAD <#conrad>`_
-* `Installation <#installation>`_
-* `Tests <#tests>`_
-* `Changelog <#changelog>`_
-* `Usage <#usage>`_
-
-  * `Basic example <#basic-example>`_
-  * `More Examples <#more-examples>`_
-  * `Autocomplete <#autocomplete>`_
-  * `Extension methods for java classes <#extension-methods-for-java-classes>`_
-  * `Frequently encountered problems <#frequently-encountered-problems>`_
-
 CONRAD
 ======
 
@@ -155,13 +142,6 @@ Autocomplete
 
 As it might be difficult to remember the exact names of Java functions and classes, pyconrad provides basic autocomplete feature for CONRAD classes.
 Just give your IDE a type hint that a object represents a certain Java namespace or class (\ ``# type: pyconrad.AutoCompleteConrad.edu.standford...``\ ).
-
-Works with pycharm:
-
-
-.. image:: README.md_files/autocomplete.webm
-   :target: README.md_files/autocomplete.webm
-   :alt: autocomplete_video
 
 
 Extension methods for java classes
