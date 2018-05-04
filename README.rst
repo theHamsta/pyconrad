@@ -52,7 +52,7 @@ If you want to test whether pyconrad is working correctly on your computer you m
 Changelog
 =========
 
- Can be found `CHANGELOG.md <https://git5.cs.fau.de/PyConrad/pyCONRAD/blob/master/CHANGELOG.md>`_.
+Can be found `CHANGELOG.md <https://git5.cs.fau.de/PyConrad/pyCONRAD/blob/master/CHANGELOG.md>`_.
 
 If you encounter any problems during installtion please have a look at our `wiki <https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home>`_\ !
 
@@ -142,7 +142,6 @@ Autocomplete
 
 As it might be difficult to remember the exact names of Java functions and classes, pyconrad provides basic autocomplete feature for CONRAD classes.
 Just give your IDE a type hint that a object represents a certain Java namespace or class (\ ``# type: pyconrad.AutoCompleteConrad.edu.standford...``\ ).
-
 
 Extension methods for java classes
 ----------------------------------
