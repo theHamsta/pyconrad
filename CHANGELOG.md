@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 0.2.0 (unreleased)
+* [x]  Deprecate usage of class PyGrid outside of pyconrad (until memory sharing is efficiently implemented)
 * [ ]  Fork JPype to allow unified memory for numpy/Java?
 * [ ]  OpenCL support:
   * [ ]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
@@ -11,7 +12,6 @@
 
 * [x]  Full support of VTK files (also reading)
 * [x]  Improvements for conrad_imagej (support of relative paths, support for .npy-files)
-* [x]  Deprecate usage of class PyGrid outside of pyconrad (until memory sharing is efficiently implemented)
 
 ## 0.0.9
 
