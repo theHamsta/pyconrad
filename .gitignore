@@ -9,5 +9,6 @@ pyconrad/CONRAD*
 *egg-info
 .cache/*
 *.class
+.vscode/launch.json
 */tempCodeRunnerFile.py
 .coverage
