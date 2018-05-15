@@ -104,8 +104,8 @@ def test_device_info():
 @pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_clgrid_upload():
 
-    random = np.random.randn([10, 20, 30])
-    oclgrid = _.OpenCLGrid1D.form_size(*reversed(random.shape))
+    random = np.random.randn(10, 20, 30)
+    oclgrid = _.OpenCLGrid1D.from_size([*reversed(random.shape)])
     oclgrid.upload_numpy(random)
 
     print(oclgrid[2, 4])
