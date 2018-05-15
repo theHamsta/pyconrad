@@ -67,7 +67,7 @@ Changelog
 
 Can be found `CHANGELOG.md <https://git5.cs.fau.de/PyConrad/pyCONRAD/blob/master/CHANGELOG.md>`_.
 
-If you encounter any problems during installtion please have a look at our `wiki <https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home>`_\ !
+If you encounter any problems during installation please have a look at our `wiki <https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home>`_\ !
 
 Usage
 =====
