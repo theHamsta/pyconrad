@@ -108,9 +108,6 @@ def test_clgrid_upload():
     oclgrid = _.OpenCLGrid1D.from_size([*reversed(random.shape)])
     oclgrid.upload_numpy(random)
 
-    print(oclgrid[2, 4])
-    assert np.allclose(oclgrid[2, 4], random[4, 2])
-
     downloaded = oclgrid.download_numpy()
     assert np.allclose(downloaded, random)
 
