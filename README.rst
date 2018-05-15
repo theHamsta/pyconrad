@@ -187,9 +187,9 @@ Frequently encountered problems
    numpy_vector = java_vector.as_numpy()
 
    #the same applies for SimpleMatrix
-   SimpleMatrix(JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
-   SimpleMatrix.from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
-   SimpleMatrix.from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
+   _.SimpleMatrix(JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
+   _.SimpleMatrix.from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
+   _.SimpleMatrix.from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
 
    #Getting SimpleMatrix as numpy matrix
    numpy_matrix = java_matrix.as_numpy()
