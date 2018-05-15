@@ -61,14 +61,14 @@ def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
     sphinx = ['sphinx'] if needs_sphinx else []
     setup(name='pyconrad',
-          version='1.0.4',
+          version='0.1.2',
           packages=['pyconrad', 'pyconrad._autocomplete_files', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
           install_requires=[
-               'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk'
+                       'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk'
           ],
           extras_require={'opencl': ['pyopencl']},
           cmdclass={'install': install},
