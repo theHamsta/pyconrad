@@ -16,15 +16,15 @@ A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
 
 * `pyConrad <#pyconrad>`_
-* `CONRAD <#conrad>`_
-* `Installation <#installation>`_
-* `Tests <#tests>`_
-* `Changelog <#changelog>`_
-* `Usage <#usage>`_
+* `CONRAD <#CONRAD>`_
+* `Installation <#Installation>`_
+* `Tests <#Tests>`_
+* `Changelog <#Changelog>`_
+* `Usage <#Usage>`_
 
-  * `Basic example <#basic-example>`_
-  * `More Examples <#more-examples>`_
-  * `Autocomplete <#autocomplete>`_
+  * `Basic example <#Basic example>`_
+  * `More Examples <#More examples>`_
+  * `Autocomplete <#Autocomplete>`_
   * `Extension methods for java classes <#extension-methods-for-java-classes>`_
   * `Frequently encountered problems <#frequently-encountered-problems>`_
 
