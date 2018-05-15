@@ -59,7 +59,6 @@ Tests
 If you want to test whether pyconrad is working correctly on your computer you may execute all tests included in this repo via:
 
 .. code-block:: bash
-
    python setup.py test
 
 Changelog
@@ -67,15 +66,12 @@ Changelog
 
 Can be found `CHANGELOG.md <https://git5.cs.fau.de/PyConrad/pyCONRAD/blob/master/CHANGELOG.md>`_.
 
-If you encounter any problems during installation please have a look at our `wiki <https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home>`_\ !
-
 Usage
 =====
 
 You can start CONRAD in Python like this:
 
 .. code-block:: python
-
    import pyconrad
 
    pyconrad.setup_pyconrad()
@@ -85,7 +81,6 @@ You can start CONRAD in Python like this:
 Or you can run CONRAD Reconstruction Pipeline from command line:
 
 .. code-block:: bash
-
    conrad
    # or: conrad_imagej
 
@@ -95,7 +90,6 @@ Basic example
 You can access CONRAD's Java classes via pyconrad.edu() or using the convinience class ClassGetter.
 
 .. code-block:: python
-
    import pyconrad
 
    # setup PyConrad
@@ -128,7 +122,6 @@ You can access CONRAD's Java classes via pyconrad.edu() or using the convinience
 Also memory transfers to numpy.ndarray are possible. Numeric grids have the additional methods `from_numpy` and `as_numpy`:
 
 .. code-block:: python
-
     _ = pyconrad.ClassGetter()
 
     # Create PyGrid from numpy array (more efficient if using Java float type pyconrad.java_float_dtype)
@@ -190,7 +183,6 @@ Frequently encountered problems
 -------------------------------
 
 .. code-block:: python
-
    # Creating a PointND
    _.PointND(3,3)  # does not work
    _.PointND([3,3])  # neither does this
