@@ -161,7 +161,7 @@ def _extend_numeric_grid():
         else:
             spacing = tuple(self.getSpacing()[:])
         imageToVTK(path, tuple(self.getOrigin()[
-                   :]), spacing, pointData={title: np.swapaxes(np.array(self),0,2)})
+                   :]), spacing, pointData={title: np.swapaxes(np.array(self), 0, 2)})
 
     @staticmethod
     def _from_tiff(path):
@@ -277,8 +277,10 @@ def _extend_ocl_grids():
 
         # TODO: still needs copy!
 
-        grid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
-                       'Grid%iD' % clarray.ndim)(*reversed(clarray.shape))
+        grid_class = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
+                             'Grid%iD' % clarray.ndim)
+        int_size = reversed([int(i) for i in clarray.shape])
+        grid = grid_class(*int_size)
         oclgrid = getattr(
             JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
             'OpenCLGrid%iD' % clarray.ndim)(grid)

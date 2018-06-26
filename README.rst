@@ -1,4 +1,3 @@
-
 pyconrad
 ========
 
@@ -14,20 +13,6 @@ pyconrad
 
 
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
-
-
-* `pyConrad <#pyconrad>`_
-* `CONRAD <#conrad>`_
-* `Installation <#installation>`_
-* `Tests <#tests>`_
-* `Changelog <#changelog>`_
-* `Usage <#usage>`_
-
-  * `Basic example <#basic-example>`_
-  * `More Examples <#more-examples>`_
-  * `Autocomplete <#autocomplete>`_
-  * `Extension methods for java classes <#extension-methods-for-java-classes>`_
-  * `Frequently encountered problems <#frequently-encountered-problems>`_
 
 CONRAD
 ======
@@ -65,9 +50,7 @@ If you want to test whether pyconrad is working correctly on your computer you m
 Changelog
 =========
 
- Can be found `CHANGELOG.md <https://git5.cs.fau.de/PyConrad/pyCONRAD/blob/master/CHANGELOG.md>`_.
-
-If you encounter any problems during installtion please have a look at our `wiki <https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home>`_\ !
+Can be found `CHANGELOG.md <https://git5.cs.fau.de/PyConrad/pyCONRAD/blob/master/CHANGELOG.md>`_.
 
 Usage
 =====
@@ -210,9 +193,9 @@ Frequently encountered problems
    numpy_vector = java_vector.as_numpy()
 
    #the same applies for SimpleMatrix
-   SimpleMatrix(JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
-   SimpleMatrix.from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
-   SimpleMatrix.from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
+   _.SimpleMatrix(JArray(JDouble,2)([[1.1,2.2,3.3],[4.4,5.5,6.6]]))  # works
+   _.SimpleMatrix.from_numpy(np.matrix([[1.1,2.2,3.3],[4.4,5.5,6.6]])) #works, uses extension method
+   _.SimpleMatrix.from_list([[1.1,2.2,3.3],[4.4,5.5,6.6]]) #works, uses extension method
 
    #Getting SimpleMatrix as numpy matrix
    numpy_matrix = java_matrix.as_numpy()

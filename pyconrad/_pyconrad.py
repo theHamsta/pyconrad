@@ -157,10 +157,13 @@ class PyConrad:
 
     def __start_ij_gui(self):
         attachThreadToJVM()
-        self.__gui_instance = JPackage("edu").stanford.rsl.conrad.utils
+        self.__gui_instance = JPackage("edu").stanford.rsl.apps.gui
         listener = wl.WindowListener()
         proxy = JProxy("java.awt.event.WindowListener", inst=listener)
-        self.__gui_instance.CONRAD.setup(proxy)
+
+        ij = JPackage("ij").ImageJ()
+        ij.addWindowListener(proxy)
+        JPackage("edu").stanford.rsl.conrad.utils.Configuration.loadConfiguration()
         self.__is_gui_started = True
 
         detachThreadFromJVM()
