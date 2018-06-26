@@ -3,6 +3,8 @@ import sys
 import os
 from os.path import basename, isfile, abspath
 import numpy as np
+import argparse
+
 
 _ = pyconrad.ClassGetter()
 
@@ -13,10 +15,18 @@ def start_pyconrad(*args, **kwargs):
 
 
 def start_conrad_imagej(*args, **kwargs):
-    pyconrad.setup_pyconrad()
+
+    parser = argparse.ArgumentParser(
+        'Starts an instance of ImageJ with CONRAD\'s extensions')
+    parser.add_argument('filenames', nargs='*', help='Files to open')
+    parser.add_argument('--max_memory', type=int, default=8,
+                        help='Maximum memory for Java heap space in gigabytes')
+    args = parser.parse_args()
+
+    pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
     pyconrad.start_gui()
 
-    for f in sys.argv[1:]:
+    for f in args.filenames:
         try:
             filename = basename(f)
             if isfile(f):
