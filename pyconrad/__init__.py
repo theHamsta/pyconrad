@@ -49,3 +49,7 @@ def stanfordrsl():
 
     # type: .AutoCompleteConrad.edu.stanford.rsl
     return JPackage('edu.stanford.rsl')
+
+
+def close_all_windows():
+    pyconrad.ij().WindowManager.closeAllWindows()
