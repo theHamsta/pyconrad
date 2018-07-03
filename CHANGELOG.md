@@ -8,6 +8,12 @@
   * [ ]  Add more examples:
            e.g. use following projects gpyfft,gputools,DeepCL
 
+## 0.1.3
+* [x]  Add convinience methods:
+        - pyconrad.close_all_windows,
+        - pyconrad.imshow
+        - pyconrad.to_conrad_grid
+
 ## 0.1.2
 * [x]  Fix issue #12: Getting rid of the raw data opener
 * [x]  Fix issue with cl.array.shape that changed to be of type list[np.int32] instead of list[int]
