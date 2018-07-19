@@ -8,6 +8,9 @@
   * [ ]  Add more examples:
            e.g. use following projects gpyfft,gputools,DeepCL
 
+## 0.1.4
+* [x]  Fix pyconrad.imsho
+
 ## 0.1.3
 * [x]  Add convinience methods:
         - pyconrad.close_all_windows,
