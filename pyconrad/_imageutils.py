@@ -6,6 +6,7 @@ import jpype
 import numpy as np
 import pyconrad
 import sys
+import time
 
 try:
     import pycuda.gpuarray as gpuarray
@@ -73,36 +74,62 @@ def to_conrad_grid(img):
         grid = img.grid
     elif isinstance(img, np.ndarray):
         grid = pyconrad.PyGrid.from_numpy(img.astype(
-            pyconrad.java_float_dtype))
+            pyconrad.java_float_dtype)).grid
     elif 'pycuda' in sys.modules and isinstance(img, gpuarray.GPUArray):
         grid = pyconrad.PyGrid.from_numpy(img.get().astype(
-            pyconrad.java_float_dtype))
+            pyconrad.java_float_dtype)).grid
     elif isinstance(img, list):
         imgs = np.stack(img)
         grid = pyconrad.PyGrid.from_numpy(imgs.astype(
-            pyconrad.java_float_dtype))
+            pyconrad.java_float_dtype)).grid
     else:
         raise TypeError('Unsupported Type')
 
     return grid
 
 
-def imshow(img, title="", wait_key_press=False):
+def imshow(img, title="", wait_key_press=False, wait_window_close=False):
+    class ImageListener:
+        def __init__(self, image_plus=None):
+
+            # for i, j in kw.items():
+            #     setattr(self, i, j)
+
+            self.is_open = True
+            self.image_plus = image_plus
+
+        def imageOpened(self, imagePlus):
+            pass
+
+        def imageClosed(self, imagePlus):
+            if imagePlus == self.image_plus or not self.image_plus:
+                self.is_open = False
+
+        def imageUpdated(self, imagePlus):
+            pass
 
     if not pyconrad.is_gui_started():
         pyconrad.start_gui()
 
     grid = to_conrad_grid(img)
 
+    listener = ImageListener()
+    proxy = jpype.JProxy("ij.ImageListener", inst=listener)
+    pyconrad.ij().ImagePlus.addImageListener(proxy)
+
     window = pyconrad.ij().WindowManager.getImage(title) if title else None
 
     if window:
-        grid = pyconrad.PyGrid.from_numpy(img.astype(
-            pyconrad.java_float_dtype)).grid
         imageplus = pyconrad.stanfordrsl().conrad.utils.ImageUtil.wrapGrid(grid, title)
         window.setImage(imageplus)
     else:
         grid.show(title)
+        window = pyconrad.ij().WindowManager.getImage(title) if title else None
+
+    if listener and wait_window_close:
+        while listener.is_open:
+            time.sleep(0.1)
+        pyconrad.ij().WindowManager.closeAllWindows()
 
     if wait_key_press:
         input("press key")
