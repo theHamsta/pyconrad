@@ -32,7 +32,7 @@ def start_conrad_imagej(*args, **kwargs):
         args.filenames = [os.path.abspath(f) for f in args.filenames]
 
         client.request('open', {'filenames': args.filenames})
-        print('exit')
+        print('conrad_imagej already running. Delegating opening of files')
         exit(0)
     except Exception as e:
         print('exept')
