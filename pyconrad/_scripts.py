@@ -34,8 +34,10 @@ def start_conrad_imagej(*args, **kwargs):
         client.request('open', {'filenames': args.filenames})
         print('conrad_imagej already running. Delegating opening of files')
         exit(0)
+    except ConnectionRefusedError:
+        # conrad_imagej not started yet
+        pass
     except Exception as e:
-        print('exept')
         print(e)
 
     pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
