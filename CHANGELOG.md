@@ -8,6 +8,10 @@
   * [ ]  Add more examples:
            e.g. use following projects gpyfft,gputools,DeepCL
 
+## 0.1.5
+* [x]  Single instance mode for conrad_imagej
+* [x]  More dynamic defaults for launched JVM
+
 ## 0.1.4
 * [x]  Fix pyconrad.imsho
 
