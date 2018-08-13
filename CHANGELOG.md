@@ -10,6 +10,7 @@
 
 ## 0.1.6
 * [x]  Revert single instance mode as it is casusing problems on some computers
+* [x]  Add origin and spacing parameter to pyconrad.imshow
 
 ## 0.1.5
 * [x]  Single instance mode for conrad_imagej
