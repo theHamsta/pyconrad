@@ -68,7 +68,7 @@ def setup_package():
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
           install_requires=[
-                       'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk','tendo'
+                       'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk', 'procbridge'
           ],
           extras_require={'opencl': ['pyopencl']},
           cmdclass={'install': install},
