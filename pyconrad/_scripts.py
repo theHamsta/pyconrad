@@ -20,74 +20,92 @@ def start_conrad_imagej(*args, **kwargs):
     parser = argparse.ArgumentParser(
         'Starts an instance of ImageJ with CONRAD\'s extensions')
     parser.add_argument('filenames', nargs='*', help='Files to open')
+    parser.add_argument('--single-instance-mode', action='store_true',
+                        help='Experimental single instance mode. Causes JVM to crash on some machines')
     parser.add_argument('--max_memory', type=int, default=8,
                         help='Maximum memory for Java heap space in gigabytes')
     args = parser.parse_args()
 
-    # host = '127.0.0.1'
-    # port = 8077
+    if not args.single_instance_mode:
 
-    # try:
-    #     client = procbridge.procbridge.ProcBridge(host, port)
-    #     args.filenames = [os.path.abspath(f) for f in args.filenames]
+        pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
+        pyconrad.start_gui()
 
-    #     client.request('open', {'filenames': args.filenames})
-    #     print('conrad_imagej already running. Delegating opening of files')
-    #     exit(0)
-    # except ConnectionRefusedError:
-    #     # conrad_imagej not started yet
-    #     pass
-    # except Exception as e:
-    #     print(e)
+        # def request_handler(api, args):
+        # for f in args['filenames']:
+        for f in args.filenames:
+            try:
+                filename = basename(f)
+                if isfile(f):
+                    f = abspath(f)
+                    if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
+                        _.NumericGrid.from_vtk(f).show(filename)
+                    elif str.lower(f).endswith('.npy'):
+                        numpy_array = np.load(f)
+                        _.NumericGrid.from_numpy(numpy_array).show(filename)
+                    elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
+                        file_object = np.load(f)
+                        for key in file_object.keys():
+                            numpy_array = file_object[key]
+                            _.NumericGrid.from_numpy(numpy_array).show(key)
 
-    pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
-    pyconrad.start_gui()
+                    else:
+                        pyconrad.ij().IJ.openImage(
+                            f).show(basename(f))
 
-    # def request_handler(api, args):
-    # for f in args['filenames']:
-    for f in args.filenames:
+            except Exception as e:
+                print(e)
+    else:
+
+        host = '127.0.0.1'
+        port = 8077
+
         try:
-            filename = basename(f)
-            if isfile(f):
-                f = abspath(f)
-                if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
-                    _.NumericGrid.from_vtk(f).show(filename)
-                elif str.lower(f).endswith('.npy'):
-                    numpy_array = np.load(f)
-                    _.NumericGrid.from_numpy(numpy_array).show(filename)
-                elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
-                    file_object = np.load(f)
-                    for key in file_object.keys():
-                        numpy_array = file_object[key]
-                        _.NumericGrid.from_numpy(numpy_array).show(key)
+            client = procbridge.procbridge.ProcBridge(host, port)
+            args.filenames = [os.path.abspath(f) for f in args.filenames]
 
-                else:
-                    pyconrad.ij().IJ.openImage(
-                        f).show(basename(f))
-
+            client.request('open', {'filenames': args.filenames})
+            print('conrad_imagej already running. Delegating opening of files')
+            exit(0)
+        except ConnectionRefusedError:
+            # conrad_imagej not started yet
+            pass
         except Exception as e:
             print(e)
 
-    # host = '127.0.0.1'
-    # port = 8077
+        pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
+        pyconrad.start_gui()
 
-    # try:
-    #     client = procbridge.procbridge.ProcBridge(host, port)
-    #     args.filenames = [os.path.abspath(f) for f in args.filenames]
+        def request_handler(api, args):
+            for f in args['filenames']:
+                try:
+                    filename = basename(f)
+                    if isfile(f):
+                        f = abspath(f)
+                        if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
+                            _.NumericGrid.from_vtk(f).show(filename)
+                        elif str.lower(f).endswith('.npy'):
+                            numpy_array = np.load(f)
+                            _.NumericGrid.from_numpy(
+                                numpy_array).show(filename)
+                        elif str.lower(f).endswith('.np') or str.lower(f).endswith('.npz'):
+                            file_object = np.load(f)
+                            for key in file_object.keys():
+                                numpy_array = file_object[key]
+                                _.NumericGrid.from_numpy(numpy_array).show(key)
 
-    #     client.request('open', {'filenames': args.filenames})
-    #     print('conrad_imagej already running. Delegating opening of files')
-    #     exit(0)
-    # except ConnectionRefusedError:
-    #     # conrad_imagej not started yet
-    #     pass
-    # except Exception as e:
-    #     print(e)
-    # request_handler('open', {'filenames': args.filenames})
+                        else:
+                            pyconrad.ij().IJ.openImage(
+                                f).show(basename(f))
 
-    # server = procbridge.procbridge.ProcBridgeServer(
-    #     host, port, request_handler)
-    # server.start()
+                except Exception as e:
+                    print(e)
+
+        request_handler('open', {'filenames': args.filenames})
+
+        server = procbridge.procbridge.ProcBridgeServer(
+            host, port, request_handler)
+        server.start()
 
 
 if __name__ == "__main__":
