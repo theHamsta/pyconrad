@@ -29,11 +29,11 @@ except Exception as e:
     print(e)
 
 
-def edu():
+def edu() -> AutoCompleteConrad.edu:
     if not _pyconrad.PyConrad().is_initialized:
         raise _pyconrad.PyConradNotInitializedError()
 
-    return JPackage('edu')  # type: .AutoCompleteConrad.edu
+    return JPackage('edu')
 
 
 def ij():
@@ -44,11 +44,10 @@ def ij():
     return JPackage('ij')
 
 
-def stanfordrsl():
+def stanfordrsl() -> AutoCompleteConrad.edu.stanford.rsl:
     if not _pyconrad.PyConrad().is_initialized:
         raise _pyconrad.PyConradNotInitializedError()
 
-    # type: .AutoCompleteConrad.edu.stanford.rsl
     return JPackage('edu.stanford.rsl')
 
 
