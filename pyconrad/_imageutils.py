@@ -88,7 +88,7 @@ def to_conrad_grid(img):
     return grid
 
 
-def imshow(img, title="", wait_key_press=False, wait_window_close=False):
+def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=None, spacing=None):
     class ImageListener:
         def __init__(self, image_plus=None):
 
@@ -112,6 +112,15 @@ def imshow(img, title="", wait_key_press=False, wait_window_close=False):
         pyconrad.start_gui()
 
     grid = to_conrad_grid(img)
+
+    if origin:
+        assert len(
+            origin) == grid.ndim, 'spacing\'s length needs to match the number of dimensions of the grid'
+        grid.setOrigin(origin)
+    if spacing:
+        assert len(
+            spacing) == grid.ndim, 'origins\'s length needs to match the number of dimensions of the grid'
+        grid.setSpacing(spacing)
 
     listener = ImageListener()
     proxy = jpype.JProxy("ij.ImageListener", inst=listener)
