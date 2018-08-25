@@ -119,9 +119,29 @@ def test_numpy_to_gridnd():
         assert np.allclose(converted, random_matrix)
 
 
+def test_imageplus():
+
+    pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid1D(10)))
+    b = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid2D(10, 29)))
+    c = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid3D(10, 2, 4)))
+    pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid4D(10, 32, 2, 2)))
+
+    _.Grid1D(10).as_imageplus()
+    y = _.Grid2D(10, 29).as_imageplus()
+    z = _.Grid3D(10, 2, 4).as_imageplus()
+    _.Grid4D(10, 32, 2, 2).as_imageplus()
+
+    assert y is not None
+    assert z is not None
+
+    b.as_grid()
+    c.as_grid()
+
+
 if __name__ == "__main__":
-    test_gridnd__array__()
-    test_create_pointnd()
+    # test_gridnd__array__()
+    # test_create_pointnd()
+    test_imageplus()
     # test_create_gridnd()
     # test_numpy_to_gridnd()
     # test_numpy_to_grid1d()

@@ -85,6 +85,35 @@ def _extend_simple_matrix():
     simple_matrix_class.from_list = _simple_matrix_from_list
 
 
+def _extend_imageplus():
+    @classmethod
+    def _imageplus_from_numpy(cls, array, title=""):
+        # jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus()
+        grid = JPackage(
+            'edu').stanford.rsl.conrad.data.numeric.NumericGrid.from_numpy(array)
+        return JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapGrid(grid, title)
+
+    def _imageplus_as_numpy(self):
+        # jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus()
+        grid = JPackage(
+            'edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(self)
+
+        return grid.as_numpy()
+
+    def _imageplus_as_grid(self):
+        # jpype.JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus()
+        grid = JPackage(
+            'edu').stanford.rsl.conrad.utils.ImageUtil.wrapImagePlus(self)
+        return grid
+
+    imageplus_class = JPackage('ij').ImagePlus
+
+    imageplus_class.from_numpy = _imageplus_from_numpy
+    imageplus_class.as_numpy = _imageplus_as_numpy
+    imageplus_class.__array__ = _imageplus_as_numpy
+    imageplus_class.as_grid = _imageplus_as_grid
+
+
 def _extend_numeric_grid():
 
     @classmethod
@@ -106,12 +135,15 @@ def _extend_numeric_grid():
     def _numpy_grid(self):
         return np.array(PyGrid.from_grid(self))
 
+    def _numpy_grid_as_imageplus(self, title=""):
+        return JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapGrid(self, title)
+
     def _numeric_grid_getitem(self, idxs):
         if isinstance(idxs, int) and not isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid1D):
             return self.getSubGrid(idxs)
         elif isinstance(idxs, slice) and \
             (isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid3D) or
-             (isinstance(self, pyconrad.PyConrad().classes.stanford.rsl.conrad.data.numeric.Grid4D))):
+             (isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid4D))):
             start = idxs.start or 0
             end = idxs.stop or self.getSize()[2]
             assert idxs.step == 1 or not idxs.step, "Only step==1 is supported"
@@ -178,6 +210,7 @@ def _extend_numeric_grid():
 
     grid_class = JPackage('edu').stanford.rsl.conrad.data.numeric.NumericGrid
     grid_class.as_numpy = _numpy_grid
+    grid_class.as_imageplus = _numpy_grid_as_imageplus
     grid_class.from_numpy = _numeric_grid_from_numpy
     grid_class.from_list = _numeric_grid_from_list
     grid_class.from_size = _numeric_grid_from_size
@@ -324,3 +357,4 @@ def extend_all_classes():
     _extend_simple_matrix()
     _extend_numeric_grid()
     _extend_ocl_grids()
+    _extend_imageplus()
