@@ -17,9 +17,9 @@ import jpype
 # TODO: deprecate PyGrid
 from ._pygrid import PyGrid
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
+from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from pyconrad._classgetter import ClassGetter
 from .constants import java_float_dtype
-from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from ._autocomplete import generate_autocomplete_file
 from pyconrad._imageutils import imshow, to_conrad_grid
 import pyconrad.config

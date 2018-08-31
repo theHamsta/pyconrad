@@ -23,57 +23,57 @@ class ClassGetter:
         self._imported_namespaces.append(namespaces)
 
     @property
-    def SimpleVector(self):
+    def SimpleVector(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.numerics.SimpleVector:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleVector')
 
     @property
-    def PointND(self):
+    def PointND(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.shapes.simple.PointND:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')
 
     @property
-    def SimpleMatrix(self):
+    def SimpleMatrix(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.numerics.SimpleMatrix:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleMatrix')
 
     @property
-    def NumericGrid(self):
+    def NumericGrid(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.NumericGrid:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.NumericGrid')
 
     @property
-    def Grid1D(self):
+    def Grid1D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid1D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D')
 
     @property
-    def Grid2D(self):
+    def Grid2D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid2D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid2D')
 
     @property
-    def Grid3D(self):
+    def Grid3D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid3D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid3D')
 
     @property
-    def Grid4D(self):
+    def Grid4D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid4D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid4D')
 
     @property
-    def OpenCLGrid1D(self):
+    def OpenCLGrid1D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid1D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid1D')
 
     @property
-    def OpenCLGrid2D(self):
+    def OpenCLGrid2D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid2D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid2D')
 
     @property
-    def OpenCLGrid3D(self):
+    def OpenCLGrid3D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid3D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid3D')
 

@@ -1,11 +1,65 @@
 import pyconrad
 import warnings
 
-class AutoCompleteConrad(pyconrad.ClassGetter):
+class AutoCompleteConrad:
     def __init__(self):
         warnings.warn('This class should never be initialized! Use it as type hint: #type: pyconrad.AutoCompleteConrad')
     # def __init__(self, *args, **kwargs):
     #     super(AutoCompleteConrad, self).__init__(args, kwargs)
+    def add_namespaces(self, namespaces):
+        pass
+
+    @property
+    def SimpleVector(self) :
+        pass
+
+    @property
+    def PointND(self) :
+        pass
+
+    @property
+    def SimpleMatrix(self):
+        pass
+
+    @property
+    def NumericGrid(self):
+        pass
+
+    @property
+    def Grid1D(self) :
+        pass
+
+    @property
+    def Grid2D(self):
+        pass
+
+    @property
+    def Grid3D(self):
+        pass
+
+    @property
+    def Grid4D(self):
+        pass
+
+    @property
+    def OpenCLGrid1D(self):
+        pass
+
+    @property
+    def OpenCLGrid2D(self):
+        pass
+
+    @property
+    def OpenCLGrid3D(self):
+        pass
+
+    # OpenCLGrid4D does not exist!
+
+    def enumval_from_int(self, enum_name: str, value_int):
+        pass
+
+    def enumval_from_string(self, enum_name: str, value_string: str):
+        pass
 
 
     class Anisotropic_Filtering:
