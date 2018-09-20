@@ -89,6 +89,19 @@ def to_conrad_grid(img):
 
 
 def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=None, spacing=None):
+    """Shows an image in ImageJ
+
+    Arguments:
+        img {np.ndarray,} -- img can be a numpy array, a CONRAD grid, a pycuda.gpuarray.Gpuarray
+
+    Keyword Arguments:
+        title {str} -- Title of ImageJ window (default: {""})
+        wait_key_press {bool} -- Stops program until key in console is pressed (default: {False})
+        wait_window_close {bool} -- Stops program until display window in closed (default: {False})
+        origin {[type]} -- Origin of array for metric coordinates in ImageJ (default: {None})
+        spacing {[type]} -- Spacing of array for metric coordinates in ImageJ (default: {None})
+    """
+
     class ImageListener:
         def __init__(self, image_plus=None):
 
