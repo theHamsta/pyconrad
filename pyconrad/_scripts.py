@@ -40,6 +40,13 @@ def start_conrad_imagej(*args, **kwargs):
                     f = abspath(f)
                     if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
                         _.NumericGrid.from_vtk(f).show(filename)
+                    elif str.lower(f).endswith('.vdb'):
+                        import cppimport
+                        vdb_io = cppimport.imp('pyconrad.vdb_io')
+                        grids = vdb_io.readFloatVdbGrid(f, [0]*3)
+                        for name, grid in grids.items():
+                            pyconrad.imshow(grid, name)
+
                     elif str.lower(f).endswith('.npy'):
                         numpy_array = np.load(f)
                         _.NumericGrid.from_numpy(numpy_array).show(filename)

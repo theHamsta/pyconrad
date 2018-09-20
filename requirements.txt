@@ -5,3 +5,4 @@ urllib3
 pyevtk
 setuptools
 vtk
+cppimport
