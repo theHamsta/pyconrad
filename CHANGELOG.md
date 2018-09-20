@@ -1,31 +1,32 @@
 # CHANGELOG
 
-## 0.2.0 (unreleased)
-* [x]  Deprecate usage of class PyGrid outside of pyconrad (until memory sharing is efficiently implemented)
-* [ ]  Fork JPype to allow unified memory for numpy/Java?
-* [ ]  OpenCL support:
-  * [ ]  Efficient OpenCLMemory/create OpenCLGrid from pyopencl.array.Array
-  * [ ]  Add more examples:
-           e.g. use following projects gpyfft,gputools,DeepCL
+## 0.1.7
+
+* [x]  Add OpenVDB support to conrad_imagej
 
 ## 0.1.6
-* [x]  Revert single instance mode as it is casusing problems on some computers
+
+* [x]  Revert single instance mode as it is causing problems on some computers
 * [x]  Add origin and spacing parameter to pyconrad.imshow
 
 ## 0.1.5
+
 * [x]  Single instance mode for conrad_imagej
 * [x]  More dynamic defaults for launched JVM
 
 ## 0.1.4
+
 * [x]  Fix pyconrad.imsho
 
 ## 0.1.3
+
 * [x]  Add convinience methods:
         - pyconrad.close_all_windows,
         - pyconrad.imshow
         - pyconrad.to_conrad_grid
 
 ## 0.1.2
+
 * [x]  Fix issue #12: Getting rid of the raw data opener
 * [x]  Fix issue with cl.array.shape that changed to be of type list[np.int32] instead of list[int]
 
@@ -53,5 +54,5 @@
   * [x]  Add example
 * [x]  More convenience functions in pyopencl.config
 * [x]  Better desktop integration for conrad_imagej:
-    * [x]  Add .desktop files
-    * [x]  Support for .vtk, .np and  .npz support
+  * [x]  Add .desktop files
+  * [x]  Support for .vtk, .np and  .npz support
