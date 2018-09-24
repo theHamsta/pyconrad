@@ -6,7 +6,7 @@ cfg['compiler_args'] = ['-std=c++14']
 %>
 */
 #include <openvdb/openvdb.h>
-#include <openvdb/tools/VolumeToMesh.h>
+#include <openvdb/tools/Dense.h>
 #include <string>
 #include <stdexcept>
 #include <pybind11/pybind11.h>
@@ -56,6 +56,14 @@ py::array_t<T> readVdbGrid( const std::string& filename, const std::string& name
 		std::max( denseShape[2] , boundingBox.max().x() + 1 )
 	} );
 
+
+	//TODO: make work also with uniform tiles
+	// openvdb::tools::Dense<T, openvdb::tools::MemoryLayout::LayoutXYZ> denseGrid( boundingBox, array.mutable_data() );
+	// openvdb::tools::CopyToDense<typename Grid_T::TreeType, decltype( denseGrid )>( grid->tree(), denseGrid )( boundingBox );
+
+	// Voxelize uniform tiles (work around)
+	grid->tree().voxelizeActiveTiles();
+
 	// Fill with background value
 	std::fill( array.mutable_data(), array.mutable_data() + array.size(), static_cast<T>( grid->background() ) );
 
@@ -65,6 +73,70 @@ py::array_t<T> readVdbGrid( const std::string& filename, const std::string& name
 	for ( auto it = grid->beginValueOn(); it; ++it ) {
 		auto coord = it.getCoord();
 		r( coord.z() , coord.y() , coord.x() ) = it.getValue();
+	}
+
+	return array;
+
+}
+
+template <typename T, int numVectorComponents>
+py::array_t<T> readVdbVectorGrid( const std::string& filename, const std::string& name, const std::array<int, 3>& denseShape )
+{
+
+	using Grid_T = openvdb::Vec3SGrid;
+
+	openvdb::initialize();
+	openvdb::io::File file( filename );
+	file.open();
+	openvdb::GridBase::Ptr baseGrid;
+
+	if ( !name.empty() ) {
+		baseGrid = file.readGrid( name );
+	} else {
+		auto iter = file.beginName();
+
+		if ( iter != file.endName() ) {
+			baseGrid = file.readGrid( iter.gridName() );
+		}
+	}
+
+	file.close();
+
+	auto grid = openvdb::gridPtrCast<Grid_T>( baseGrid );
+
+	if ( !grid ) {
+		throw std::runtime_error( "Could not open VDB Grid" );
+	}
+
+	openvdb::CoordBBox boundingBox = grid->evalActiveVoxelBoundingBox();
+
+	py::array_t<T> array( {
+		std::max( denseShape[0] , boundingBox.max().z() + 1 ),
+		std::max( denseShape[1] , boundingBox.max().y() + 1 ),
+		std::max( denseShape[2] , boundingBox.max().x() + 1 ),
+		numVectorComponents
+	} );
+
+
+	//TODO: make work also with uniform tiles
+	// openvdb::tools::Dense<T, openvdb::tools::MemoryLayout::LayoutXYZ> denseGrid( boundingBox, array.mutable_data() );
+	// openvdb::tools::CopyToDense<typename Grid_T::TreeType, decltype( denseGrid )>( grid->tree(), denseGrid )( boundingBox );
+
+	// Voxelize uniform tiles (work around)
+	grid->tree().voxelizeActiveTiles();
+
+	// Fill with background value
+	std::fill( array.mutable_data(), array.mutable_data() + array.size(), 0 );
+
+	auto r = array.template mutable_unchecked<4>(); // Will throw if ndim != 3 or flags.writeable is false
+
+	// Set sparse voxels
+	for ( auto it = grid->beginValueOn(); it; ++it ) {
+		auto coord = it.getCoord();
+
+		for ( int i = 0; i < numVectorComponents; ++i ) {
+			r( coord.z() , coord.y() , coord.x(), i ) = it.getValue()[i];
+		}
 	}
 
 	return array;
@@ -88,7 +160,11 @@ std::map<std::string, py::array_t<T>> readVdbGrids( const std::string& filename,
 	file.close();
 
 	for ( auto& gridName : gridNames ) {
-		arrays[gridName] =  readVdbGrid<T>( filename, gridName, denseShape ) ;
+		try {
+			arrays[gridName] =  readVdbGrid<T>( filename, gridName, denseShape ) ;
+		} catch ( ... ) {
+			arrays[gridName] =  readVdbVectorGrid<T, 3>( filename, gridName, denseShape ) ;
+		}
 	}
 
 
@@ -211,3 +287,4 @@ PYBIND11_MODULE( vdb_io, m )
 	m.def( "readFloatVdbGrid", &readVdbGrid<float> );
 	m.def( "readFloatVdbGrid", &readVdbGrids<float> );
 }
+
