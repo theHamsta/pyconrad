@@ -45,6 +45,9 @@ def start_conrad_imagej(*args, **kwargs):
                         vdb_io = cppimport.imp('pyconrad.vdb_io')
                         grids = vdb_io.readFloatVdbGrid(f, [0]*3)
                         for name, grid in grids.items():
+                            if grid.ndim == 4:
+                                grid = np.linalg.norm(grid, axis=3)
+                                name += ' (Magnitude)'
                             pyconrad.imshow(grid, name)
 
                     elif str.lower(f).endswith('.npy'):
