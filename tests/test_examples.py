@@ -21,7 +21,7 @@ def test_numpy_example():
     return
 
 
-@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_opencl_example():
     import pyconrad_examples.opencl
     pyconrad.ij().WindowManager.closeAllWindows()
