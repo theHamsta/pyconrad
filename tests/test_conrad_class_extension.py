@@ -1,5 +1,7 @@
 import pyconrad.autoinit
 import numpy as np
+import os
+import pytest
 
 _ = pyconrad.ClassGetter()  # type: pyconrad.AutoCompleteConrad
 
@@ -56,7 +58,7 @@ def test_numpy_to_gridnd():
         elif dim == 3:
             grid = _.Grid3D.from_numpy(random_matrix)
         elif dim == 4:
-            grid = _.Grid3D.from_numpy(random_matrix)
+            grid = _.Grid4D.from_numpy(random_matrix)
 
         converted = grid.as_numpy()
 
@@ -74,14 +76,27 @@ def test_numpy_to_gridnd():
         elif dim == 3:
             grid = _.Grid3D.from_numpy(random_matrix)
         elif dim == 4:
-            grid = _.Grid3D.from_numpy(random_matrix)
+            grid = _.Grid4D.from_numpy(random_matrix)
 
         converted = grid.as_numpy()
 
         assert np.allclose(converted, random_matrix)
 
 
-def test_numpy_to_gridnd():
+def test_numpy_to_numericgrid():
+
+    for dim in range(2, 5):
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)]).astype(pyconrad.java_float_dtype)
+
+        grid = _.NumericGrid.from_numpy(random_matrix)
+        converted = grid.as_numpy()
+
+        assert np.allclose(converted, random_matrix)
+
+
+@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+def test_show_gridnd():
 
     for dim in range(2, 5):
         random_matrix = np.random.randn(
@@ -94,29 +109,41 @@ def test_numpy_to_gridnd():
         elif dim == 3:
             grid = _.Grid3D.from_numpy(random_matrix)
         elif dim == 4:
-            grid = _.Grid3D.from_numpy(random_matrix)
+            grid = _.Grid4D.from_numpy(random_matrix)
 
         converted = grid.as_numpy()
 
         assert np.allclose(converted, random_matrix)
 
+
+@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+def test_show_numericgrid():
     for dim in range(2, 5):
 
         random_matrix = np.random.randn(
             *[(10 * (i + 1)) for i in range(dim)])
 
-        if dim == 1:
-            grid = _.Grid1D.from_numpy(random_matrix)
-        elif dim == 2:
-            grid = _.Grid2D.from_numpy(random_matrix)
-        elif dim == 3:
-            grid = _.Grid3D.from_numpy(random_matrix)
-        elif dim == 4:
-            grid = _.Grid3D.from_numpy(random_matrix)
-
+        grid = _.NumericGrid.from_numpy(random_matrix)
         converted = grid.as_numpy()
 
         assert np.allclose(converted, random_matrix)
+        grid.show()
+    pyconrad.ij().WindowManager.closeAllWindows()
+
+
+@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+def test_show_numericgrid_without_4D():
+    for dim in range(2, 4):
+
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)])
+
+        grid = _.NumericGrid.from_numpy(random_matrix)
+        converted = grid.as_numpy()
+
+        assert np.allclose(converted, random_matrix)
+        grid.show()
+    pyconrad.ij().WindowManager.closeAllWindows()
 
 
 def test_imageplus():
@@ -124,18 +151,37 @@ def test_imageplus():
     pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid1D(10)))
     b = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid2D(10, 29)))
     c = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid3D(10, 2, 4)))
-    pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid4D(10, 32, 2, 2)))
+    d = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid4D(10, 32, 2, 2)))
 
     _.Grid1D(10).as_imageplus()
     y = _.Grid2D(10, 29).as_imageplus()
     z = _.Grid3D(10, 2, 4).as_imageplus()
-    _.Grid4D(10, 32, 2, 2).as_imageplus()
+    w = _.Grid4D(10, 32, 2, 2).as_imageplus()
 
     assert y is not None
     assert z is not None
+    assert w is not None
 
     b.as_grid()
     c.as_grid()
+    d.as_grid()
+
+
+@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+def test_show_imageplus():
+    for dim in range(2, 5):
+
+        random_matrix = np.random.randn(
+            *[(10 * (i + 1)) for i in range(dim)])
+
+        if dim == 4:
+            grid = pyconrad.edu().stanford.rsl.conrad.data.numeric.NumericGrid.from_numpy(random_matrix)
+            ij = pyconrad.edu().stanford.rsl.conrad.utils.ImageUtil.wrapGrid4D(grid, "sas")
+        else:
+            ij = pyconrad.ij().ImagePlus.from_numpy(random_matrix)
+
+        ij.show()
+    pyconrad.ij().WindowManager.closeAllWindows()
 
 
 if __name__ == "__main__":
@@ -143,5 +189,9 @@ if __name__ == "__main__":
     # test_create_pointnd()
     test_imageplus()
     # test_create_gridnd()
-    # test_numpy_to_gridnd()
+    test_numpy_to_gridnd()
+    test_numpy_to_numericgrid()
+    # test_show_numericgrid()
+    # test_show_gridnd()
+    test_show_imageplus()
     # test_numpy_to_grid1d()
