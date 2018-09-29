@@ -29,7 +29,7 @@ numpy_vector3 = java_vector3.as_numpy()
 java_matrix = _.SimpleMatrix(
     JArray(JDouble, 2)([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]]))
 java_matrix2 = _.SimpleMatrix.from_numpy(
-    np.matrix([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]]))
+    np.array([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]]))
 java_matrix3 = _.SimpleMatrix.from_list(
     [[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]])
 numpy_matrix = java_matrix.as_numpy()

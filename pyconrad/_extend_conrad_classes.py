@@ -69,20 +69,24 @@ def _extend_simple_vector():
 def _extend_simple_matrix():
     @classmethod
     def _simple_matrix_from_numpy(cls, array):
-        return cls(JArray(JDouble, np.ndim(array))(array.tolist()))
+        return cls(JArray(JDouble, np.ndim(array))(np.array(array).tolist()))
 
     @classmethod
     def _simple_matrix_from_list(cls, array):
         return cls(JArray(JDouble, np.ndim(array))(array))
 
     def _numpy_simple_matrix(self):
-        return np.matrix(self.copyAsDoubleArray())
+        return np.array(self.copyAsDoubleArray())
+    @property
+    def _simple_matrix_shape(self):
+        return (self.rows, self.cols)
 
     simple_matrix_class = JPackage(
         'edu').stanford.rsl.conrad.numerics.SimpleMatrix
     simple_matrix_class.as_numpy = _numpy_simple_matrix
     simple_matrix_class.from_numpy = _simple_matrix_from_numpy
     simple_matrix_class.from_list = _simple_matrix_from_list
+    simple_matrix_class.shape = _simple_matrix_shape
 
 
 def _extend_imageplus():

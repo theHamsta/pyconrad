@@ -185,13 +185,14 @@ def test_show_imageplus():
 
 
 if __name__ == "__main__":
-    # test_gridnd__array__()
-    # test_create_pointnd()
+    test_create_gridnd()
+    test_create_pointnd()
+    test_gridnd__array__()
     test_imageplus()
-    # test_create_gridnd()
+    test_numpy_to_grid1d()
     test_numpy_to_gridnd()
     test_numpy_to_numericgrid()
-    # test_show_numericgrid()
-    # test_show_gridnd()
+    test_show_gridnd()
     test_show_imageplus()
-    # test_numpy_to_grid1d()
+    test_show_numericgrid()
+    test_show_numericgrid_without_4D()
