@@ -32,7 +32,7 @@ class PyConradNotInitializedError(Exception):
     pass
 
 
-def setup_pyconrad(max_ram='8G', min_ram='7G', dev_dirs=[]):
+def setup_pyconrad(max_ram='60G', min_ram='200M', dev_dirs=[]):
     PyConrad().setup(max_ram, min_ram, dev_dirs)
 
 
