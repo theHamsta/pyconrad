@@ -96,6 +96,10 @@ You can access CONRAD's Java classes via pyconrad.edu() or using the convinience
 
     print('This is a Java class: ' + str(_.NumericalSheppLogan3D))
 
+    # Shape is for dimensions (z,y,x), size for (x,y,z) 
+    print(grid.shape)
+    print(grid.size)
+
     # Use Java method of class MickeyMouseGrid2D
     phantom2d.show()
     phantom3d.show()

@@ -22,7 +22,7 @@ grid.setValue(5.0, [0, 1, 3])
 # or easier with Python indices (reversed)
 grid[3,1,0] = 5
 
-# Shape 
+# Shape is for dimensions (z,y,x), size for (x,y,z) 
 print(grid.shape)
 print(grid.size)
 
