@@ -7,7 +7,7 @@ pyconrad
    :alt: PyPI version
 
 
-.. image:: https://travis-ci.org/theHamsta/pyconrad.svg?branch=develop
+.. image:: https://travis-ci.org/theHamsta/pyconrad.svg?branch=master
    :target: https://travis-ci.org/theHamsta/pyconrad
    :alt: Build Status
 
@@ -176,7 +176,7 @@ Frequently encountered problems
 
    # Creating a PointND
    _.PointND(3,3)  # does not work
-   _.PointND([3,3])  # neither does this
+   _.PointND([3,3])  # this does work
    _.PointND(JArray(JDouble)([3,2]))  # works
    _.PointND.from_numpy(np.array([2.1,3.1])) #works, uses extension method
    _.PointND.from_list([2.1,3.1]) #works, uses extension method
@@ -185,6 +185,7 @@ Frequently encountered problems
    numpy_point = java_point.as_numpy()
 
    # the same applies for SimpleVector
+   _.SimpleVector([3,2])  # does not work. pyconrad does not know whether you want to call SimpleVector(final double... otherBuffer) or public SimpleVector(final float... otherBuffer)
    _.SimpleVector(JArray(JDouble)([3,2]))  # works
    _.SimpleVector.from_numpy(np.array([2.1,3.1])) #works, uses extension method
    _.SimpleVector.from_list([2.1,3.1]) #works, uses extension method
