@@ -2,32 +2,23 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
-import pyconrad
+import pyconrad.autoinit
+import edu.stanford.rsl.tutorial.phantoms
+from edu.stanford.rsl.conrad.phantom import NumericalSheppLogan3D
 
-# setup PyConrad
-pyconrad.setup_pyconrad(min_ram='50M', max_ram='8G')
-# Optional parameters for Java Virtual Machine RAM and own Java projects
-# pyconrad.setup(max_ram = '8G', min_ram= '500M', dev_dirs=['path/to/project/with/own/java/classes']
+phantom2d = edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(100, 100)
+phantom3d = NumericalSheppLogan3D(
+    100, 100, 100).getNumericalSheppLoganPhantom()
 
-pyconrad.start_gui()
-
-# Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
-phantom = pyconrad.edu().stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(50, 50)
-
-
+# You can also group Java packages an access all classes that are contained (import * does not work)
 # Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
 _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.tutorial.phantoms',
     'edu.stanford.rsl.conrad.phantom'
 )  # type: pyconrad.AutoCompleteConrad
 
-# You can add more namespaces also later
-_.add_namespaces('edu.stanford.rsl.tutorial.dmip')
-
-phantom2d = _.MickeyMouseGrid2D(100, 100)
-phantom3d = _.NumericalSheppLogan3D(
-    100, 100, 100).getNumericalSheppLoganPhantom()
+print('This is a Java class: ' + str(_.NumericalSheppLogan3D))
 
 # Use Java method of class MickeyMouseGrid2D
-phantom.show()
+phantom2d.show()
 phantom3d.show()
