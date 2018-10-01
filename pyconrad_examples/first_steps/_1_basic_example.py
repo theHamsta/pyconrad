@@ -17,7 +17,6 @@ _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.conrad.phantom'
 )  # type: pyconrad.AutoCompleteConrad
 
-a = _.SimpleVector([4,3])
 print('This is a Java class: ' + str(_.NumericalSheppLogan3D))
 
 # Use Java method of class MickeyMouseGrid2D
