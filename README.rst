@@ -79,34 +79,26 @@ You can access CONRAD's Java classes via pyconrad.edu() or using the convinience
 
 .. code-block:: python
 
-   import pyconrad
+    import pyconrad.autoinit
+    import edu.stanford.rsl.tutorial.phantoms
+    from edu.stanford.rsl.conrad.phantom import NumericalSheppLogan3D
 
-   # setup PyConrad
-   pyconrad.setup_pyconrad(min_ram='500M', max_ram='8G')
-   # Optional parameters for Java Virtual Machine RAM
+    phantom2d = edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(100, 100)
+    phantom3d = NumericalSheppLogan3D(
+        100, 100, 100).getNumericalSheppLoganPhantom()
 
-   pyconrad.start_gui()
+    # You can also group Java packages an access all classes that are contained (import * does not work)
+    # Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
+    _ = pyconrad.ClassGetter(
+        'edu.stanford.rsl.tutorial.phantoms',
+        'edu.stanford.rsl.conrad.phantom'
+    )  # type: pyconrad.AutoCompleteConrad
 
-   # Create Phantom (edu.stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D)
-   phantom = pyconrad.edu().stanford.rsl.tutorial.phantoms.MickeyMouseGrid2D(300, 300)
+    print('This is a Java class: ' + str(_.NumericalSheppLogan3D))
 
-
-   # Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
-   _ = pyconrad.ClassGetter(
-       'edu.stanford.rsl.tutorial.phantoms',
-       'edu.stanford.rsl.conrad.phantom'
-   )  # type: pyconrad.AutoCompleteConrad
-
-   # You can add more namespaces also later
-   _.add_namespaces('edu.stanford.rsl.tutorial.dmip')
-
-   phantom2d = _.MickeyMouseGrid2D(200, 200)
-   phantom3d = _.NumericalSheppLogan3D(
-       200, 200, 200).getNumericalSheppLoganPhantom()
-
-   # Use Java method of class MickeyMouseGrid2D
-   phantom.show()
-   phantom3d.show()
+    # Use Java method of class MickeyMouseGrid2D
+    phantom2d.show()
+    phantom3d.show()
 
 Also memory transfers to numpy.ndarray are possible. Numeric grids have the additional methods `from_numpy` and `as_numpy`:
 
@@ -118,8 +110,16 @@ Also memory transfers to numpy.ndarray are possible. Numeric grids have the addi
     array = np.random.rand(4, 2, 3).astype(pyconrad.java_float_dtype)
     grid = _.NumericGrid.from_numpy(array)
 
+    
+
     # Manipulate data in using CONRAD at Position (x,y,z) = (0,1,3)
     grid.setValue(5.0, [0, 1, 3])
+    # or easier with Python indices (reversed)
+    grid[3,1,0] = 5
+
+    # Shape 
+    print(grid.shape)
+    print(grid.size)
 
     # Get modified array
     new_array = grid.as_numpy()
