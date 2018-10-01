@@ -14,6 +14,7 @@ except:
 
 from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage, attachThreadToJVM, detachThreadFromJVM
 import jpype
+import jpype.imports
 # TODO: deprecate PyGrid
 from ._pygrid import PyGrid
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
@@ -30,7 +31,7 @@ except Exception as e:
 
 
 def edu() -> AutoCompleteConrad.edu:
-    if not _pyconrad.PyConrad().is_initialized:
+    if not is_initialized():
         raise _pyconrad.PyConradNotInitializedError()
 
     return JPackage('edu')
@@ -38,14 +39,14 @@ def edu() -> AutoCompleteConrad.edu:
 
 def ij():
 
-    if not _pyconrad.PyConrad().is_initialized:
+    if not is_initialized():
         raise _pyconrad.PyConradNotInitializedError()
 
     return JPackage('ij')
 
 
 def stanfordrsl() -> AutoCompleteConrad.edu.stanford.rsl:
-    if not _pyconrad.PyConrad().is_initialized:
+    if not is_initialized():
         raise _pyconrad.PyConradNotInitializedError()
 
     return JPackage('edu.stanford.rsl')
