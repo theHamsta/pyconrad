@@ -3,7 +3,7 @@
 # CONRAD is developed as an Open Source project under the GNU General
 # Public License (GPL-3.0)
 
-from jpype import JPackage, JArray, JDouble, JClass
+from jpype import JPackage, JArray, JDouble, JClass, JInt
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
@@ -168,8 +168,11 @@ def _extend_numeric_grid():
     def _numeric_grid_setitem(self, idxs, value):
         if isinstance(idxs, int) and not isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid1D):
             return self.setSubGrid(idxs, value)
+        elif isinstance(idxs, tuple):
+            print(idxs)
+            return self.setValue( value, JArray(JInt)(idxs))
         else:
-            return self.setValue(idxs, value)
+            raise ValueError('not implemented')
 
     @property
     def _numeric_grid_shape(self):
