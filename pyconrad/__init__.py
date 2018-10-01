@@ -29,6 +29,9 @@ try:
 except Exception as e:
     print(e)
 
+jpype.imports.registerDomain('edu')
+jpype.imports.registerDomain('ij')
+
 
 def edu() -> AutoCompleteConrad.edu:
     if not is_initialized():
