@@ -7,7 +7,7 @@ def main():
     parser.add_argument('--dev_path', nargs='*',
                         help="Path to CONRAD or CONRADRSL folder (root for classpath)")
     parser.add_argument(
-        'class_with_main', help="Java class with main (e.g. edu.stanford.rsl.apps.gui.ReconstructionPipelineFrame")
+        'class_with_main', help="Java class with main (e.g. edu.stanford.rsl.apps.gui.ReconstructionPipelineFrame)")
     parser.add_argument('args', nargs='*', help="CLI arguments")
     parser.add_argument('--gui', action='store_true',
                         help="Activate this flag for GUI applications")
