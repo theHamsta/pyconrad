@@ -9,7 +9,7 @@ class JavaPyConrad():
     def eval(self, object, code, args):
         if object.autoConvertConradGrids:
             args = [(i.as_numpy() if jpype.JClass('edu.stanford.rsl.conrad.data.numeric.NumericGrid') else i) for i in args]
-        if not object in self.globals_dict.keys():
+        if not object in self.globals_dict:
             self.globals_dict[object] = dict()
         locals().update({**self.globals_dict[object]})
         rtn = eval(code)
@@ -21,7 +21,7 @@ class JavaPyConrad():
     def exec(self, object, code, args):
         if object.autoConvertConradGrids:
             args = [(i.as_numpy() if hasattr(object, "as_numpy") else i) for i in args]
-        if not object in self.globals_dict.keys():
+        if not object in self.globals_dict:
             self.globals_dict[object] = dict()
         locals().update({**self.globals_dict[object]})
         exec(code)
