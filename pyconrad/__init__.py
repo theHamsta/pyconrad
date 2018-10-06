@@ -23,6 +23,10 @@ from .constants import java_float_dtype
 from ._autocomplete import generate_autocomplete_file
 from pyconrad._imageutils import imshow, to_conrad_grid
 import pyconrad.config
+import jpype.imports
+
+jpype.imports.registerDomain('edu')
+
 try:
     import pyconrad.opencl
 except Exception as e:

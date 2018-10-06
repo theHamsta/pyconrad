@@ -3,13 +3,14 @@
 # CONRAD is developed as an Open Source project under the GNU General
 # Public License (GPL-3.0)
 
-from jpype import JPackage, JArray, JDouble, JClass
+from jpype import JPackage, JArray, JDouble, JClass, JProxy
 from .constants import java_float_dtype
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 import pyconrad
 import warnings
 from os.path import splitext
+from pyconrad._java_pyconrad import JavaPyConrad
 
 import numpy as np
 
@@ -354,6 +355,12 @@ def _extend_ocl_grids():
         clgrid_class.from_clbuffer = _not_implemented_function
         clgrid_class.from_clarray = _oclgrid_from_clarray
 
+def _extend_pyconrad_java():
+    pyconrad_class = JClass(
+            'edu.stanford.rsl.conrad.pyconrad.PyConrad')
+    callback = JProxy("edu.stanford.rsl.conrad.pyconrad.PythonCallback", inst=JavaPyConrad())
+    pyconrad_class.pythonCallback = callback
+
 
 def extend_all_classes():
     _extend_pointnd()
@@ -362,3 +369,4 @@ def extend_all_classes():
     _extend_numeric_grid()
     _extend_ocl_grids()
     _extend_imageplus()
+    _extend_pyconrad_java()
