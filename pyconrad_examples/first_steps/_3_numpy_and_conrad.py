@@ -2,12 +2,36 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 from pyconrad import setup_pyconrad, PyGrid, java_float_dtype, JArray, JDouble, ClassGetter
+import pyconrad
 import numpy as np
 
-setup_pyconrad()
+# Setup pyconrad explicitly specifying RAM for JVM, dev_dirs can be your custom CONRAD, CONRADRSL directory
+pyconrad.setup_pyconrad(min_ram='500M', max_ram='8G', dev_dirs=[])
 # ClassGetter provides basic classes like PointND, SimpleVector, SimpleMatrix, GridND without any imports
 _ = ClassGetter()
 
+
+# Create PyGrid from numpy array (more efficient if using Java float type pyconrad.java_float_dtype)
+array = np.random.rand(4, 2, 3).astype(pyconrad.java_float_dtype)
+grid = _.NumericGrid.from_numpy(array)
+
+
+
+# Manipulate data in using CONRAD at Position (x,y,z) = (0,1,3)
+grid.setValue(5.0, [0, 1, 3])
+# or easier with Python indices (reversed)
+grid[3,1,0] = 5
+
+# Shape is for dimensions (z,y,x), size for (x,y,z) 
+print(grid.shape)
+print(grid.size)
+
+# Get modified array
+new_array = grid.as_numpy()
+
+# Attention: Python has a different indexing (z,y,x)
+print('Old value: %f' % array[3, 1, 0])
+print('New value: %f' % new_array[3, 1, 0])
 
 # Test extention methods to create from numpy and to convert to numpy: PointND
 java_point = _.PointND([2.1, 3.1])

@@ -95,7 +95,7 @@ def test_numpy_to_numericgrid():
         assert np.allclose(converted, random_matrix)
 
 
-@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
 def test_show_gridnd():
 
     for dim in range(2, 5):
@@ -116,7 +116,7 @@ def test_show_gridnd():
         assert np.allclose(converted, random_matrix)
 
 
-@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
 def test_show_numericgrid():
     for dim in range(2, 5):
 
@@ -131,7 +131,7 @@ def test_show_numericgrid():
     pyconrad.ij().WindowManager.closeAllWindows()
 
 
-@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
 def test_show_numericgrid_without_4D():
     for dim in range(2, 4):
 
@@ -167,7 +167,7 @@ def test_imageplus():
     d.as_grid()
 
 
-@pytest.mark.skipif("TRAVIS" in os.environ and os.environ["TRAVIS"] == "true", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
 def test_show_imageplus():
     for dim in range(2, 5):
 
