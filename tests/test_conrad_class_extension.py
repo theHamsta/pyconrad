@@ -148,7 +148,6 @@ def test_show_numericgrid_without_4D():
 
 def test_imageplus():
 
-    pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid1D(10)))
     b = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid2D(10, 29)))
     c = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid3D(10, 2, 4)))
     d = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid4D(10, 32, 2, 2)))
