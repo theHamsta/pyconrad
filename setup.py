@@ -78,8 +78,9 @@ def setup_package():
           entry_points={
               'gui_scripts': [
                   'conrad = pyconrad._scripts:start_pyconrad',
-                  'conrad_imagej = pyconrad._scripts:start_conrad_imagej'
-              ]
+                  'conrad_imagej = pyconrad._scripts:start_conrad_imagej',
+                  'pyconrad_run = pyconrad._pyconrad_run:main'
+              ],
           },
           setup_requires=['pytest-runner'],
           tests_require=['pytest', 'pytest-cov'],

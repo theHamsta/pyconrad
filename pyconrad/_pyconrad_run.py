@@ -1,5 +1,6 @@
 import argparse
 import pyconrad
+import sys
 
 
 def main():
@@ -14,6 +15,9 @@ def main():
 
     args = parser.parse_args()
     pyconrad.setup_pyconrad(dev_dirs=args.dev_path if args.dev_path else [])
+
+    for dir in args.dev_path:
+        sys.path.append(dir)
 
     if args.gui:
         pyconrad.start_gui()
