@@ -83,7 +83,7 @@ def to_conrad_grid(img):
         grid = pyconrad.PyGrid.from_numpy(imgs.astype(
             pyconrad.java_float_dtype)).grid
     else:
-        raise TypeError('Unsupported Type')
+        raise TypeError('Unsupported Type: %s' % type(img))
 
     return grid
 
