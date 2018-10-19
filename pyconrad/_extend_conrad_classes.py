@@ -78,6 +78,7 @@ def _extend_simple_matrix():
 
     def _numpy_simple_matrix(self):
         return np.array(self.copyAsDoubleArray())
+
     @property
     def _simple_matrix_shape(self):
         return (self.rows, self.cols)
@@ -170,8 +171,7 @@ def _extend_numeric_grid():
         if isinstance(idxs, int) and not isinstance(self, JPackage('edu').stanford.rsl.conrad.data.numeric.Grid1D):
             return self.setSubGrid(idxs, value)
         elif isinstance(idxs, tuple):
-            print(idxs)
-            return self.setValue( value, JArray(JInt)(idxs))
+            return self.setValue(value, JArray(JInt)(idxs))
         else:
             raise ValueError('not implemented')
 
@@ -358,10 +358,12 @@ def _extend_ocl_grids():
         clgrid_class.from_clbuffer = _not_implemented_function
         clgrid_class.from_clarray = _oclgrid_from_clarray
 
+
 def _extend_pyconrad_java():
     pyconrad_class = JClass(
-            'edu.stanford.rsl.conrad.pyconrad.PyConrad')
-    callback = JProxy("edu.stanford.rsl.conrad.pyconrad.PythonCallback", inst=JavaPyConrad())
+        'edu.stanford.rsl.conrad.pyconrad.PyConrad')
+    callback = JProxy(
+        "edu.stanford.rsl.conrad.pyconrad.PythonCallback", inst=JavaPyConrad())
     pyconrad_class.pythonCallback = callback
 
 
