@@ -106,9 +106,6 @@ def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=
     class ImageListener:
         def __init__(self, image_plus=None):
 
-            # for i, j in kw.items():
-            #     setattr(self, i, j)
-
             self.is_open = True
             self.image_plus = image_plus
 
