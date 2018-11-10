@@ -88,7 +88,7 @@ def to_conrad_grid(img):
     return grid
 
 
-def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=None, spacing=None):
+def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=None, spacing=None, auto_assume_channels=True):
     """Shows an image in ImageJ
 
     Arguments:
@@ -100,6 +100,7 @@ def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=
         wait_window_close {bool} -- Stops program until display window in closed (default: {False})
         origin {[type]} -- Origin of array for metric coordinates in ImageJ (default: {None})
         spacing {[type]} -- Spacing of array for metric coordinates in ImageJ (default: {None})
+        auto_assume_channels {bool} -- Try to guess when the last dimension could be channel data (much smaller size than other dimensions)
     """
 
     class ImageListener:
@@ -123,6 +124,10 @@ def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=
 
     if not pyconrad.is_gui_started():
         pyconrad.start_gui()
+
+    if isinstance(img, np.ndarray) and auto_assume_channels:
+        if all(s > 10 for s in img.shape[:-1]) and img.shape[-1] < 10:
+            img = np.moveaxis(img, -1, 0)
 
     grid = to_conrad_grid(img)
 
