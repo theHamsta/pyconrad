@@ -21,6 +21,13 @@ def test_numpy_example():
     return
 
 
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
+def test_run_ij_commands():
+    import pyconrad_examples.first_steps._5_run_ij_commands
+    pyconrad.ij().WindowManager.closeAllWindows()
+    return
+
+
 @pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_opencl_example():
     import pyconrad_examples.opencl
@@ -59,3 +66,4 @@ if __name__ == "__main__":
     # test_basic_example()
     test_numpy_example()
     test_readme_example()
+    test_run_ij_commands()

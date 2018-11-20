@@ -1,10 +1,13 @@
 # CHANGELOG
 
+## 0.2.2 -- 0.2.3
+* [x] Fix `README.rst`
+
 ## 0.2.1
 
 * [x]  Improve `pyconrad.imshow`:
-        * [x]  Add `lut` and `run` parameter to run ImageJ commands
-        * [x]  Automatically try to guess if channel information is in fastest index and swap axes accordingly
+        -  Add `lut` and `run` parameter to run ImageJ commands
+        -  Automatically try to guess if channel information is in fastest index and swap axes accordingly
 
 ## 0.1.7
 
