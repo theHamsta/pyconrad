@@ -88,7 +88,16 @@ def to_conrad_grid(img):
     return grid
 
 
-def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=None, spacing=None, auto_assume_channels=True):
+def imshow(img,
+           title="",
+           wait_key_press=False,
+           wait_window_close=False,
+           origin=None,
+           spacing=None,
+           auto_assume_channels=True,
+           lut=None,
+           run=None,
+           run_args=""):
     """Shows an image in ImageJ
 
     Arguments:
@@ -101,7 +110,11 @@ def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=
         origin {[type]} -- Origin of array for metric coordinates in ImageJ (default: {None})
         spacing {[type]} -- Spacing of array for metric coordinates in ImageJ (default: {None})
         auto_assume_channels {bool} -- Try to guess when the last dimension could be channel data (much smaller size than other dimensions)
+        lut {str} -- Apply a lut. Choose from "Fire", "Grays", "Ice", "Spectrum", "3-3-2 RGB", "Red", "Blue", "Cyan", "Magenta", "Yellow", "Red/Green" (alias for run)
+        run {str} -- Run a ImageJ command with `run_args`
+        run_args {str} -- Commands for ImageJ command `run_args`
     """
+    import ij
 
     class ImageListener:
         def __init__(self, image_plus=None):
@@ -148,7 +161,14 @@ def imshow(img, title="", wait_key_press=False, wait_window_close=False, origin=
         window.setImage(imageplus)
     else:
         grid.show(title)
-        window = pyconrad.ij().WindowManager.getImage(title) if title else None
+        window = pyconrad.ij().WindowManager.getImage(title) if title else ij.WindowManager.getCurrentWindow().getImagePlus()
+
+    if run:
+        ij.IJ.run(window, run, run_args)
+        window.close()
+
+    if lut:
+        ij.IJ.run(lut)
 
     if listener and wait_window_close:
         while listener.is_open:
