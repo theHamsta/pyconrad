@@ -2,7 +2,6 @@ import pyconrad.autoinit
 import ij
 from edu.stanford.rsl.conrad.data.numeric import NumericGrid
 import numpy as np
-import time
 
 pyconrad.start_gui()
 

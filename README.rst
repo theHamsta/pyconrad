@@ -83,7 +83,6 @@ You can access all classes of ImageJ and Conrad after you initialized the JVM.
     import ij
     from edu.stanford.rsl.conrad.data.numeric import NumericGrid
     import numpy as np
-    import time
 
     pyconrad.start_gui()
 
@@ -92,6 +91,31 @@ You can access all classes of ImageJ and Conrad after you initialized the JVM.
     grid.show()
 
     ij.IJ.run('FFT')
+
+imshow
+------
+
+You can also use `pyconrad` to view NumPy array in ImageJ.
+
+.. code-block:: python
+
+    import pyconrad.autoinit
+    import numpy as np
+    import time
+
+    a = np.random.rand(20, 30)
+    luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
+
+    for lut in luts:
+        pyconrad.imshow(a, lut, lut=lut)
+
+    print('Enjoy white noise!')
+    for i in range(300):
+        noise = np.random.rand(200, 200)
+        pyconrad.imshow(noise, 'White noise', spacing=[200, 2, 3], origin=[0, 2])
+        time.sleep(0.01)
+
+pyconrad.close_all_windows()
 
 Basic example
 -------------
