@@ -72,8 +72,8 @@ Or you can run CONRAD Reconstruction Pipeline from command line:
    conrad
    # or: conrad_imagej
 
-ImageJ Command
--------------
+ImageJ Commands
+---------------
 
 You can access all classes of ImageJ and Conrad after you initialized the JVM.
 
