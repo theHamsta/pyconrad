@@ -115,7 +115,7 @@ You can also use `pyconrad` to view NumPy array in ImageJ.
         pyconrad.imshow(noise, 'White noise', spacing=[200, 2, 3], origin=[0, 2])
         time.sleep(0.01)
 
-pyconrad.close_all_windows()
+    pyconrad.close_all_windows()
 
 Basic example
 -------------
