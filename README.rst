@@ -72,6 +72,27 @@ Or you can run CONRAD Reconstruction Pipeline from command line:
    conrad
    # or: conrad_imagej
 
+ImageJ Command
+-------------
+
+You can access all classes of ImageJ and Conrad after you initialized the JVM.
+
+.. code-block:: python
+
+    import pyconrad.autoinit
+    import ij
+    from edu.stanford.rsl.conrad.data.numeric import NumericGrid
+    import numpy as np
+    import time
+
+    pyconrad.start_gui()
+
+    a = np.random.rand(20, 30)
+    grid = NumericGrid.from_numpy(a)
+    grid.show()
+
+    ij.IJ.run('FFT')
+
 Basic example
 -------------
 
