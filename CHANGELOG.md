@@ -2,6 +2,12 @@
 
 ## 0.1.7
 
+* [x]  Improve `pyconrad.imshow`:
+        * [x]  Add `lut` and `run` parameter to run ImageJ commands
+        * [x]  Automatically try to guess if channel information is in fastest index and swap axes accordingly
+
+## 0.1.7
+
 * [x]  Add OpenVDB support to conrad_imagej
 
 ## 0.1.6
