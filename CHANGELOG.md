@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.1.7
+## 0.2.1
 
 * [x]  Improve `pyconrad.imshow`:
         * [x]  Add `lut` and `run` parameter to run ImageJ commands
