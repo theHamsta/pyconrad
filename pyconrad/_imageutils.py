@@ -95,7 +95,7 @@ def imshow(img,
            origin=None,
            spacing=None,
            auto_assume_channels=True,
-           lut='Fire',
+           lut=None,
            run=None,
            run_args=""):
     """Shows an image in ImageJ

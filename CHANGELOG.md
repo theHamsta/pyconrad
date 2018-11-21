@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.2.5
+* [x] Make `Grays` the default LUT again
+
 ## 0.2.4
 * [x] Apply LUT to correct ImagePlus and make 'Fire' default LUT for pyconrad.imshow
 
