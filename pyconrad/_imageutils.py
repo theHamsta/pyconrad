@@ -95,7 +95,7 @@ def imshow(img,
            origin=None,
            spacing=None,
            auto_assume_channels=True,
-           lut=None,
+           lut='Fire',
            run=None,
            run_args=""):
     """Shows an image in ImageJ
@@ -168,7 +168,7 @@ def imshow(img,
         window.close()
 
     if lut:
-        ij.IJ.run(lut)
+        ij.IJ.run(window, lut, '')
 
     if listener and wait_window_close:
         while listener.is_open:
