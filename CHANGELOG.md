@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.2.4
+* [x] Apply LUT to correct ImagePlus and make 'Fire' default LUT for pyconrad.imshow
+
 ## 0.2.2 -- 0.2.3
 * [x] Fix `README.rst`
 
