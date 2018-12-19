@@ -23,7 +23,7 @@ module_path = os.path.dirname(__file__)
 
 
 def assert_pyconrad_initialization():
-    if not PyConrad().is_java_initalized():
+    if not PyConrad().is_java_initialized():
         raise PyConradNotInitializedError(
             'pyconrad was not initialized! Use pyconrad.setup_pyconrad()!')
 
@@ -38,9 +38,7 @@ def setup_pyconrad(max_ram='60G', min_ram='200M', dev_dirs=None):
     Keyword Arguments:
         max_ram {str} -- Maximum heap size for JVM (default: {'60G'})
         min_ram {str} -- Minimum heap size for JVM (default: {'200M'})
-        dev_dirs {list} -- List of directories/JARs for Java runtime path.
-                           Can be used to make custom CONRAD directory or own Java code available (default: {[]}).
-                           Can be set by the enviroment variable CONRAD_DEV_DIRS (a ; separated list)
+        dev_dirs {list} -- List of directories/JARs for Java runtime path. Can be used to make custom CONRAD directory or own Java code available (default: {[]}). Can be set by the environment variable `CONRAD_DEV_DIRS` (a ';'-separated list)
     """
 
     PyConrad().setup(max_ram, min_ram, dev_dirs)
@@ -102,7 +100,7 @@ class PyConrad:
                 dev_dirs = []
         print(dev_dirs)
 
-        if not self.is_java_initalized():
+        if not self.is_java_initialized():
             try:
                 curr_directory = os.getcwd()
                 conrad_source_and_libs = self.__import__libs(dev_dirs)
@@ -128,7 +126,7 @@ class PyConrad:
             warnings.warn("JVM already started")
 
     def start_conrad(self):
-        if not self.is_java_initalized():
+        if not self.is_java_initialized():
             raise PyConradNotInitializedError()
         if self.__gui_thread is None:
             self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
@@ -148,7 +146,7 @@ class PyConrad:
             print("Some GUI is already started")
 
     @staticmethod
-    def is_java_initalized():
+    def is_java_initialized():
         return isJVMStarted()
 
     def terminate_pyconrad(self):
@@ -249,7 +247,7 @@ class PyConrad:
 
     @property
     def is_initialized(self):
-        return self.is_java_initalized()
+        return self.is_java_initialized()
 
     def _check_jre_version(self):
         '''
