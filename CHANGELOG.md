@@ -1,12 +1,19 @@
 # CHANGELOG
 
+## 0.2.6
+
+* [x] Let environment variable `CONRAD_DEV_DIRS` change CONRAD development directories
+
 ## 0.2.5
+
 * [x] Make `Grays` the default LUT again
 
 ## 0.2.4
+
 * [x] Apply LUT to correct ImagePlus and make 'Fire' default LUT for pyconrad.imshow
 
 ## 0.2.2 -- 0.2.3
+
 * [x] Fix `README.rst`
 
 ## 0.2.1
@@ -26,12 +33,12 @@
 
 ## 0.1.5
 
-* [x]  Single instance mode for conrad_imagej
+* [x]  Single instance mode for `conrad_imagej`
 * [x]  More dynamic defaults for launched JVM
 
 ## 0.1.4
 
-* [x]  Fix pyconrad.imsho
+* [x]  Fix `pyconrad.imshow`
 
 ## 0.1.3
 
