@@ -32,7 +32,17 @@ class PyConradNotInitializedError(Exception):
     pass
 
 
-def setup_pyconrad(max_ram='60G', min_ram='200M', dev_dirs=[]):
+def setup_pyconrad(max_ram='60G', min_ram='200M', dev_dirs=None):
+    """ Launches JVM for execution of CONRAD code
+
+    Keyword Arguments:
+        max_ram {str} -- Maximum heap size for JVM (default: {'60G'})
+        min_ram {str} -- Minimum heap size for JVM (default: {'200M'})
+        dev_dirs {list} -- List of directories/JARs for Java runtime path.
+                           Can be used to make custom CONRAD directory or own Java code available (default: {[]}).
+                           Can be set by the enviroment variable CONRAD_DEV_DIRS (a ; separated list)
+    """
+
     PyConrad().setup(max_ram, min_ram, dev_dirs)
 
 
@@ -47,13 +57,9 @@ def start_reconstruction_pipeline_gui():
 def terminate_pyconrad():
     PyConrad().terminate_pyconrad()
 
-# @property
-
 
 def is_initialized():
     return PyConrad().is_initialized
-
-# @property
 
 
 def is_gui_started():
@@ -87,7 +93,15 @@ class PyConrad:
             PyConrad.___instance = PyConrad()
         return PyConrad.___instance
 
-    def setup(self, max_ram="18G", min_ram="200M", dev_dirs=[]):
+    def setup(self, max_ram="18G", min_ram="200M", dev_dirs=None):
+
+        if not dev_dirs:
+            if 'CONRAD_DEV_DIRS' in os.environ:
+                dev_dirs = os.environ['CONRAD_DEV_DIRS'].split(';')
+            else:
+                dev_dirs = []
+        print(dev_dirs)
+
         if not self.is_java_initalized():
             try:
                 curr_directory = os.getcwd()
@@ -185,6 +199,10 @@ class PyConrad:
         dev_src = []
         for dev in dev_dirs:
             dev_path = Path(dev)
+
+            if not dev_path.exists():
+                continue
+
             subdirs = [x for x in dev_path.iterdir() if x.is_dir()]
             dev_src.append(str(dev_path))
             for d in subdirs:
