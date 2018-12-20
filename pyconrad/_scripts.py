@@ -4,7 +4,10 @@ import os
 from os.path import basename, isfile, abspath
 import numpy as np
 import argparse
-import procbridge
+try:
+    import procbridge
+except:
+    print('Could not import procbridge')
 
 
 _ = pyconrad.ClassGetter()
