@@ -3,6 +3,7 @@
 ## 0.2.6
 
 * [x] Let environment variable `CONRAD_DEV_DIRS` change CONRAD development directories
+* [x] Fix broken `procbridge` import
 
 ## 0.2.5
 
