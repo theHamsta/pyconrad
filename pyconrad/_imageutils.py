@@ -14,6 +14,21 @@ except ImportError:
     pass
 
 
+def in_ipynb():
+    """ Detects if running inside a Jupyter notebookself.
+    Modified from: https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook
+    """
+    try:
+        import IPython
+        IPython.get_ipython().config
+        return True
+    except Exception as ex:
+        return False
+
+
+IN_IPYTHON_NOTEBOOK = in_ipynb()
+
+
 class ImageUtil:
 
     ########################
@@ -97,6 +112,7 @@ def imshow(img,
            auto_assume_channels=True,
            lut=None,
            run=None,
+           use_matplotlib_in_jupyter=True,
            run_args=""):
     """Shows an image in ImageJ
 
@@ -115,6 +131,11 @@ def imshow(img,
         run_args {str} -- Commands for ImageJ command `run_args`
     """
     import ij
+
+    if IN_IPYTHON_NOTEBOOK and use_matplotlib_in_jupyter:
+        import matplotlib.pyplot
+        matplotlib.pyplot.imshow(img)
+        return
 
     class ImageListener:
         def __init__(self, image_plus=None):
