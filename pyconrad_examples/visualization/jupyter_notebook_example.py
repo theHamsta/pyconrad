@@ -15,7 +15,7 @@ import pyconrad.autoinit
 
 
 def in_ipynb():
-    """ Detects if running inside a Jupyter notebookself.
+    """ Detects if running inside a Jupyter notebook.
     Modified from: https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook
     """
     try:
