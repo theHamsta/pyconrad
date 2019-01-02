@@ -98,7 +98,6 @@ class PyConrad:
                 dev_dirs = os.environ['CONRAD_DEV_DIRS'].split(';')
             else:
                 dev_dirs = []
-        print(dev_dirs)
 
         if not self.is_java_initialized():
             try:
