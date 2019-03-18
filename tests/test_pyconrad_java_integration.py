@@ -1,10 +1,10 @@
 import sys
 
+import pytest
 from jpype import JClass
 
 import pyconrad
-import pytest
-import os
+
 
 @pytest.mark.skip(reason="Only works if cpp file is available")
 def test_pyconrad_pyconrad_example():
