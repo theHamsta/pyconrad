@@ -1,6 +1,8 @@
 import pyconrad.autoinit
 import numpy as np
 import ij
+import pytest
+import os
 
 
 @pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
