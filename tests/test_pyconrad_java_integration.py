@@ -6,7 +6,7 @@ import pyconrad
 import pytest
 import os
 
-@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Only works if cpp file is available")
+@pytest.mark.skip(reason="Only works if cpp file is available")
 def test_pyconrad_pyconrad_example():
     """Test PyConradExample in Java"""
     sys.path.append("/home/stephan/projects/CONRAD/")
