@@ -152,7 +152,6 @@ def test_imageplus():
     c = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid3D(10, 2, 4)))
     d = pyconrad.ij().ImagePlus.from_numpy(np.array(_.Grid4D(10, 32, 2, 2)))
 
-    _.Grid1D(10).as_imageplus()
     y = _.Grid2D(10, 29).as_imageplus()
     z = _.Grid3D(10, 2, 4).as_imageplus()
     w = _.Grid4D(10, 32, 2, 2).as_imageplus()
