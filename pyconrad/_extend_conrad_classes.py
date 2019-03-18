@@ -138,8 +138,8 @@ def _extend_numeric_grid():
     def _numeric_grid_from_shape(cls, *shape):
         return PyGrid(list(reversed(shape))).grid
 
-    def _numpy_grid(self):
-        return np.array(PyGrid.from_grid(self))
+    def _numpy_grid(self, dtype=pyconrad.java_float_dtype):
+        return np.array(PyGrid.from_grid(self), dtype)
 
     def _numpy_grid_as_imageplus(self, title=""):
         return JPackage('edu').stanford.rsl.conrad.utils.ImageUtil.wrapGrid(self, title)
