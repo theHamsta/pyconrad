@@ -112,7 +112,7 @@ You can also use `pyconrad` to view NumPy array in ImageJ.
     print('Enjoy white noise!')
     for i in range(300):
         noise = np.random.rand(200, 200)
-        pyconrad.imshow(noise, 'White noise', spacing=[200, 2, 3], origin=[0, 2])
+        pyconrad.imshow(noise, 'White noise', spacing=(3, 2), origin=(0, 2))
         time.sleep(0.01)
 
     pyconrad.close_all_windows()
