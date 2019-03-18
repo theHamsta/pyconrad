@@ -1,3 +1,5 @@
+import numpy as np
+
 import pyconrad
 
 _ = pyconrad.ClassGetter(
@@ -9,19 +11,21 @@ _ = pyconrad.ClassGetter(
 
 
 def get_conf() -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.utils.Configuration:
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
 
     return conf
 
 
 def get_geometry() -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.trajectories.Trajectory:
-    #  #TODO load config on pyconrad startup
-    geo = _.Configuration.getGlobalConfiguration().getGeometry()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    geo = Configuration.getGlobalConfiguration().getGeometry()
     return geo
 
 
 def get_sino_shape() -> tuple:
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()
     return (geo.getProjectionStackSize(), geo.getDetectorHeight(), geo.getDetectorWidth())
 
@@ -31,8 +35,9 @@ def get_sino_size() -> list:
 
 
 def get_reco_shape() -> tuple:
-    conf = _.Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
+    geo = conf.getGeometry()
     return (geo.getReconDimensionZ(), geo.getReconDimensionY(), geo.getReconDimensionX())
 
 
@@ -41,19 +46,22 @@ def get_reco_size() -> list:
 
 
 def get_reco_origin() -> tuple:
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
     return (geo.getOriginX(), geo.getOriginY(), geo.getOriginZ())
 
 
 def get_reco_spacing() -> tuple:
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
     return (geo.getVoxelSpacingX(), geo.getVoxelSpacingY(), geo.getVoxelSpacingZ())
 
 
 def set_reco_spacing(spacing):
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
     geo.setVoxelSpacingX(spacing[0])
     geo.setVoxelSpacingY(spacing[1])
@@ -61,14 +69,16 @@ def set_reco_spacing(spacing):
 
 
 def set_reco_origin(origin):
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
 
     geo.setOriginInWorld(_.PointND([origin[0], origin[1], origin[2]]))
 
 
 def set_reco_shape(shape):
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
 
     geo.setReconDimensionX(shape[2])
@@ -77,7 +87,8 @@ def set_reco_shape(shape):
 
 
 def set_reco_size(size):
-    conf = _.Configuration.getGlobalConfiguration()
+    from edu.stanford.rsl.conrad.utils import Configuration
+    conf = Configuration.getGlobalConfiguration()
     geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
 
     geo.setReconDimensionX(size[0])
@@ -92,3 +103,18 @@ def center_volume():
     origin_in_world = [-(reco_size[i] - 1.0) / 2. * spacing[i]
                        for i in range(3)]
     get_geometry().setOriginInWorld(_.PointND(origin_in_world))
+
+
+def get_projection_matrices() -> np.ndarray:
+    projMats = pyconrad.config.get_geometry().getProjectionMatrices()
+    numProjs = pyconrad.config.get_geometry().getProjectionStackSize()
+    projMatsArray = np.empty((numProjs, 3, 4), np.float32)
+    idx = 0
+
+    for p in range(numProjs):
+        matrix = projMats[p].computeP()
+        for row in range(3):
+            for col in range(4):
+                projMatsArray[p, row, col] = np.float32(
+                    matrix.getElement(row, col))
+    return projMatsArray
