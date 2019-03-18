@@ -45,7 +45,8 @@ def start_conrad_imagej(*args, **kwargs):
                         _.NumericGrid.from_vtk(f).show(filename)
                     elif str.lower(f).endswith('.vdb'):
                         import cppimport
-                        vdb_io = cppimport.imp('pyconrad.vdb_io')
+                        cppimport.set_quiet(False)
+                        vdb_io = cppimport.imp('pyconrad.vdb_io', opt_in=True)
                         grids = vdb_io.readFloatVdbGrid(f, [0]*3)
                         for name, grid in grids.items():
                             if grid.ndim == 4:

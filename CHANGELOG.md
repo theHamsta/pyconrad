@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3
+
+* [x] Update to CONRAD version 1.0.9
+* [x] Add pyconrad.config.get_projection_matrices()
+
 ## 0.2.6
 
 * [x] Let environment variable `CONRAD_DEV_DIRS` change CONRAD development directories
