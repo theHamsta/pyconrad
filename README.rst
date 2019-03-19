@@ -95,7 +95,7 @@ You can access all classes of ImageJ and Conrad after you initialized the JVM.
 imshow
 ------
 
-You can also use `pyconrad` to view NumPy array in ImageJ.
+You can also use `pyconrad` to view NumPy arrays in ImageJ.
 
 .. code-block:: python
 
