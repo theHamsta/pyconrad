@@ -8,7 +8,6 @@ from .constants import java_float_dtype
 from ._imageutils import ImageUtil
 from ._pygrid import PyGrid
 import pyconrad
-import warnings
 from os.path import splitext
 from pyconrad._java_pyconrad import JavaPyConrad
 
@@ -16,11 +15,8 @@ import numpy as np
 
 try:
     import pyopencl as cl
-except ImportError as e:
-    warnings.warn(
-        'Failed to import pyopencl.\n' +
-        'Pyconrad offers additional functionality ' +
-        'if this package is available.')
+except ImportError:
+    pass
 
 import pyconrad._vtk
 
