@@ -3,22 +3,23 @@
 # CONRAD is developed as an Open Source project under the GNU General
 # Public License (GPL-3.0)
 
-from jpype import JPackage, JArray, JDouble, JClass, JInt, JProxy
-from .constants import java_float_dtype
-from ._imageutils import ImageUtil
-from ._pygrid import PyGrid
-import pyconrad
 from os.path import splitext
-from pyconrad._java_pyconrad import JavaPyConrad
 
 import numpy as np
+from jpype import JArray, JClass, JDouble, JInt, JPackage, JProxy
+
+import pyconrad
+import pyconrad._vtk
+from pyconrad._java_pyconrad import JavaPyConrad
+
+from ._imageutils import ImageUtil
+from ._pygrid import PyGrid
+from .constants import java_float_dtype
 
 try:
     import pyopencl as cl
-except ImportError:
-    pass
-
-import pyconrad._vtk
+except ModuleNotFoundError:
+    cl = None
 
 
 def _not_implemented_function(self):
@@ -368,6 +369,7 @@ def extend_all_classes():
     _extend_simple_vector()
     _extend_simple_matrix()
     _extend_numeric_grid()
-    _extend_ocl_grids()
     _extend_imageplus()
     _extend_pyconrad_java()
+    if cl:
+        _extend_ocl_grids()
