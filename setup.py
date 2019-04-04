@@ -29,6 +29,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import os
 import sys
+
 from setuptools import setup
 from setuptools.command.install import _install
 
@@ -61,15 +62,15 @@ def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
     sphinx = ['sphinx'] if needs_sphinx else []
     setup(name='pyconrad',
-          version='0.3',
+          version='0.4',
           packages=['pyconrad', 'pyconrad._autocomplete_files', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
           install_requires=[
-                       'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk', 'procbridge', 'cppimport'
-          ],
+               'jpype1', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk', 'procbridge', 'cppimport'
+          ] + sphinx,
           extras_require={'opencl': ['pyopencl']},
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
