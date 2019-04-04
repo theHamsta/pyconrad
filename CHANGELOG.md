@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4
+
+* [x] Update to CONRAD version 1.1.10
+
 ## 0.3
 
 * [x] Update to CONRAD version 1.0.9
