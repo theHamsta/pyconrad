@@ -30,7 +30,7 @@ jpype.imports.registerDomain('edu')
 
 try:
     import pyconrad.opencl
-except ModuleNotFoundError:
+except:
     pass
 
 jpype.imports.registerDomain('edu')
