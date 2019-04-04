@@ -62,7 +62,7 @@ def setup_package():
     needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
     sphinx = ['sphinx'] if needs_sphinx else []
     setup(name='pyconrad',
-          version='0.4',
+          version='0.4.1',
           packages=['pyconrad', 'pyconrad._autocomplete_files', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
