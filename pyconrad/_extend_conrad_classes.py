@@ -18,7 +18,7 @@ from .constants import java_float_dtype
 
 try:
     import pyopencl as cl
-except ModuleNotFoundError:
+except:
     cl = None
 
 
