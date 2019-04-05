@@ -17,7 +17,7 @@ except ImportError:
 class ImageUtil:
 
     ########################
-    ## Convert Grid/numpy ##
+    #  Convert Grid/numpy  #
     ########################
 
     @staticmethod
@@ -29,7 +29,7 @@ class ImageUtil:
         return np.ndarray.view(pyconrad.PyGrid.from_grid(ndarray))
 
     #################
-    ## Save Images ##
+    #  Save Images  #
     #################
 
     @staticmethod
@@ -44,7 +44,7 @@ class ImageUtil:
             'edu').stanford.rsl.conrad.utils.ImageUtil.saveAs(grid, path)
 
     #################
-    ## Load Images ##
+    #  Load Images  #
     #################
 
     @staticmethod
