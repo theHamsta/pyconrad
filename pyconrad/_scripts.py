@@ -6,8 +6,8 @@ import numpy as np
 import argparse
 try:
     import procbridge
-except:
-    print('Could not import procbridge')
+except Exception:
+    pass
 
 
 _ = pyconrad.ClassGetter()
