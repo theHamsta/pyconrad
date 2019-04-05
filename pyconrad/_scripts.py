@@ -1,5 +1,4 @@
 import pyconrad
-import sys
 import os
 from os.path import basename, isfile, abspath
 import numpy as np
