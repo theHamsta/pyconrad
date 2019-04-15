@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.4.4
+
+* [x] Set imagej calibration to grid.spacing/origin in pyconrad.imshow
+* [x] Improve warnig when `import pyopencl` fails
+
 ## 0.4
 
 * [x] Update to CONRAD version 1.1.10
