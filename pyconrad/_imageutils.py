@@ -2,11 +2,13 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
-import jpype
-import numpy as np
-import pyconrad
 import sys
 import time
+
+import jpype
+import numpy as np
+
+import pyconrad
 
 try:
     import pycuda.gpuarray as gpuarray
@@ -97,7 +99,6 @@ def imshow(img,
            auto_assume_channels=True,
            lut=None,
            run=None,
-           use_matplotlib_in_jupyter=True,
            run_args=""):
     """Shows an image in ImageJ
 
@@ -110,8 +111,10 @@ def imshow(img,
         wait_window_close {bool} -- Stops program until display window in closed (default: {False})
         origin {[type]} -- Origin of array for metric coordinates in ImageJ (default: {None})
         spacing {[type]} -- Spacing of array for metric coordinates in ImageJ (default: {None})
-        auto_assume_channels {bool} -- Try to guess when the last dimension could be channel data (much smaller size than other dimensions)
-        lut {str} -- Apply a lut. Choose from "Fire", "Grays", "Ice", "Spectrum", "3-3-2 RGB", "Red", "Blue", "Cyan", "Magenta", "Yellow", "Red/Green" (alias for run)
+        auto_assume_channels {bool} -- Try to guess when the last dimension could be channel data
+                                         (much smaller size than other dimensions)
+        lut {str} -- Apply a lut. Choose from "Fire", "Grays", "Ice", "Spectrum", "3-3-2 RGB", "Red", "Blue", "Cyan",
+                     "Magenta", "Yellow", "Red/Green" (alias for run)
         run {str} -- Run a ImageJ command with `run_args`
         run_args {str} -- Commands for ImageJ command `run_args`
     """
@@ -146,10 +149,16 @@ def imshow(img,
         assert len(
             origin) == grid.ndim, 'spacing\'s length needs to match the number of dimensions of the grid'
         grid.setOrigin(origin)
+    else:
+        origin = list(grid.getOrigin())
     if spacing:
         assert len(
             spacing) == grid.ndim, 'origins\'s length needs to match the number of dimensions of the grid'
         grid.setSpacing(spacing)
+    else:
+        spacing = list(grid.getSpacing())
+        if all(s == 0 for s in spacing):
+            spacing = (1,) * max(grid.ndim, 3)
 
     listener = ImageListener()
     proxy = jpype.JProxy("ij.ImageListener", inst=listener)
@@ -164,6 +173,18 @@ def imshow(img,
         grid.show(title)
         window = pyconrad.ij().WindowManager.getImage(
             title) if title else ij.WindowManager.getCurrentWindow().getImagePlus()
+
+    calibration = window.getCalibration()
+    calibration.pixelWidth = spacing[-1]
+    if len(spacing) >= 2:
+        calibration.pixelHeight = spacing[-2]
+    if len(spacing) >= 3:
+        calibration.pixelDepth = spacing[-3]
+    calibration.xOrigin = 0
+    if len(origin) >= 2:
+        calibration.yOrigin = 0
+    if len(origin) >= 3:
+        calibration.zOrigin = 0
 
     if run:
         ij.IJ.run(window, run, run_args)
