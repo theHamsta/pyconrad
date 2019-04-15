@@ -1,22 +1,25 @@
 
-import warnings
-import pytest
 import os
+import warnings
 
+import jpype
+import numpy as np
+import pytest
 
 # import pyconrad.autoinit
 try:
     from pyconrad.opencl import *
+except Exception as e:
+    warnings.warn(str(e))
+
+try:
     import pyconrad
     if not pyconrad.is_initialized():
         # pyconrad.setup_pyconrad(dev_dirs=['/home/stephan/projects/CONRAD'])
         pyconrad.setup_pyconrad()
     _ = pyconrad.ClassGetter('edu.stanford.rsl.tutorial.cone')
-
 except Exception as e:
     warnings.warn(str(e))
-import numpy as np
-import jpype
 
 
 @pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
@@ -191,10 +194,9 @@ def test_javacl_from_pycl():
 
 
 if __name__ == "__main__":
-    # test_device_info()
-    # test_pyopencl_kernel_on_openclgrid()
+    test_device_info()
+    test_pyopencl_kernel_on_openclgrid()
     test_javacl_from_pycl()
-    # test_init_cone_beam_backprojector()
-    # test_get_conrad_cl()
-    # test_pyopenclgrid()
-    # test_add_noise()
+    test_init_cone_beam_backprojector()
+    test_get_conrad_cl()
+    test_add_noise()
