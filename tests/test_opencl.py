@@ -2,7 +2,6 @@
 import os
 import warnings
 
-import jpype
 import numpy as np
 import pytest
 
