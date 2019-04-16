@@ -2,6 +2,10 @@ import jpype
 
 
 class JavaPyConrad():
+    """
+    Helper class for invoking Python from CONRAD (on the Java side)
+    """
+
     def __init__(self):
         self.globals_dict = dict()
 
