@@ -2,22 +2,20 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
+import glob
 import os
 import threading
 import time
-import sys
 import warnings
+from os.path import join
 from pathlib import Path
 
-from jpype import attachThreadToJVM, detachThreadFromJVM, JavaException, JProxy, JClass, JDouble, JArray
-from jpype import startJVM, shutdownJVM, getDefaultJVMPath, isJVMStarted, JPackage, java
+from jpype import (JArray, JavaException, JClass, JDouble, JPackage, JProxy,
+                   attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
+                   isJVMStarted, java, shutdownJVM, startJVM)
 
+from . import _download_conrad, _extend_conrad_classes
 from . import _windowlistener as wl
-from . import _download_conrad
-
-from . import _extend_conrad_classes
-from ._deprecated import deprecated
-
 
 module_path = os.path.dirname(__file__)
 
@@ -38,7 +36,9 @@ def setup_pyconrad(max_ram='60G', min_ram='200M', dev_dirs=None):
     Keyword Arguments:
         max_ram {str} -- Maximum heap size for JVM (default: {'60G'})
         min_ram {str} -- Minimum heap size for JVM (default: {'200M'})
-        dev_dirs {list} -- List of directories/JARs for Java runtime path. Can be used to make custom CONRAD directory or own Java code available (default: {[]}). Can be set by the environment variable `CONRAD_DEV_DIRS` (a ';'-separated list)
+        dev_dirs {list} -- List of directories/JARs for Java runtime path.
+        Can be used to make custom CONRAD directory or own Java code available (default: {[]}).
+        Can be set by the environment variable `CONRAD_DEV_DIRS` (a ';'-separated list)
     """
 
     PyConrad().setup(max_ram, min_ram, dev_dirs)
@@ -191,7 +191,6 @@ class PyConrad:
         # no: use conrad.jar
         # list directories, check whether CONRAD/RSL are there
         self.conrad_repo_set = False
-
         extra_libs = ""
         dev_src = []
         for dev in dev_dirs:
@@ -220,6 +219,7 @@ class PyConrad:
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
         else:
             self.__conrad_path = _download_conrad.conrad_jar_dir()
+            dev_src.extend(g for g in glob.glob(join(_download_conrad.conrad_jar_dir(), '*.jar')) if 'conrad_' not in g)
             dev_src.append(_download_conrad.conrad_jar_file())
             src = ";".join(map(str, dev_src))
             s = "-Djava.class.path=%s;%s" % (src, extra_libs)
