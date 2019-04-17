@@ -21,6 +21,7 @@ except Exception as e:
     warnings.warn(str(e))
 
 
+@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_init_cone_beam_backprojector():
     """
     CONRAD crashes on the creation of a OpenCL when using the CONRAD.jar version 1.0.7 on Linux
