@@ -13,6 +13,7 @@ from pathlib import Path
 from jpype import (JArray, JavaException, JClass, JDouble, JPackage, JProxy,
                    attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
                    isJVMStarted, java, shutdownJVM, startJVM)
+import jpype
 
 from . import _download_conrad, _extend_conrad_classes
 from . import _windowlistener as wl
@@ -137,6 +138,8 @@ class PyConrad:
 
     def start_reconstruction_filter_pipeline(self):
         if self.__gui_thread is None:
+            self._context_class_loader = jpype.java.lang.Thread.currentThread().getContextClassLoader()
+            print(self._context_class_loader)
             self.__gui_thread = threading.Thread(target=self.__start_rfp_gui)
             self.__gui_thread.start()
             while not self.__is_gui_started:
@@ -162,7 +165,10 @@ class PyConrad:
         self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
         self.__is_gui_started = True
 
+        conrad_class = JClass('edu.stanford.rsl.conrad.utils.CONRAD')
+        conrad_class.classLoaderForPyconrad = self._context_class_loader
         detachThreadFromJVM()
+
         while self.__is_gui_started:
             time.sleep(1)
 
