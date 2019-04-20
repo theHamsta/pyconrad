@@ -139,7 +139,6 @@ class PyConrad:
     def start_reconstruction_filter_pipeline(self):
         if self.__gui_thread is None:
             self._context_class_loader = jpype.java.lang.Thread.currentThread().getContextClassLoader()
-            print(self._context_class_loader)
             self.__gui_thread = threading.Thread(target=self.__start_rfp_gui)
             self.__gui_thread.start()
             while not self.__is_gui_started:
