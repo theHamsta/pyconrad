@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.1
+
+* [x] Fix loading of filter (requires CONRAD patch `8674665`)
+* [x] Allow omitting `--dev-dirs` argument for `pyconrad_run`
+
 ## 0.4.4
 
 * [x] Set imagej calibration to grid.spacing/origin in pyconrad.imshow
