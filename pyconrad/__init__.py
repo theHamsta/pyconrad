@@ -12,7 +12,11 @@ except:
     __version__ = 'unknown'
 
 
-from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, JavaException, java, JPackage, attachThreadToJVM, detachThreadFromJVM
+from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, java, JPackage, attachThreadToJVM, detachThreadFromJVM
+try:
+    from jpype import JavaException
+except Exception as e:
+    from jpype import JException
 import jpype
 import jpype.imports
 # TODO: deprecate PyGrid

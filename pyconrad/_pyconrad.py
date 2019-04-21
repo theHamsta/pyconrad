@@ -10,9 +10,14 @@ import warnings
 from os.path import join
 from pathlib import Path
 
-from jpype import (JArray, JavaException, JClass, JDouble, JPackage, JProxy,
+from jpype import (JArray, JClass, JDouble, JPackage, JProxy,
                    attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
                    isJVMStarted, java, shutdownJVM, startJVM)
+try:
+    from jpype import JavaException
+except Exception as e:
+    from jpype import JException
+
 import jpype
 
 from . import _download_conrad, _extend_conrad_classes
