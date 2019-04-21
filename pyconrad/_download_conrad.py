@@ -1,6 +1,8 @@
 import os.path
 import zipfile
 from os.path import join
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context 
 
 __conrad_url = "https://www5.cs.fau.de/fileadmin/user_upload/CONRAD_1.1.0.zip"
 __conrad_release = __conrad_url.split('/')[-1].rstrip(".zip")
