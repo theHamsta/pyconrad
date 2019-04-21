@@ -14,9 +14,9 @@ except:
 
 from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, java, JPackage, attachThreadToJVM, detachThreadFromJVM
 try:
-    from jpype import JavaException
+    from jpype import JavaException as JException
 except Exception as e:
-    from jpype import JException
+    from jpype import JException 
 import jpype
 import jpype.imports
 # TODO: deprecate PyGrid

@@ -14,7 +14,7 @@ from jpype import (JArray, JClass, JDouble, JPackage, JProxy,
                    attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
                    isJVMStarted, java, shutdownJVM, startJVM)
 try:
-    from jpype import JavaException
+    from jpype import JavaException as JException
 except Exception as e:
     from jpype import JException
 
@@ -124,7 +124,7 @@ class PyConrad:
                 _extend_conrad_classes.extend_all_classes()
                 self.classes.stanford.rsl.conrad.utils.Configuration.loadConfiguration()
 
-            except JavaException as ex:
+            except JException as ex:
                 print(ex)
         else:
             # raise Exception("JVM already started")
