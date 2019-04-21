@@ -14,33 +14,22 @@ python:
 # before_install:
 #   - sudo -H pip install --upgrade
 env:
-  - WITH_OPENCL=1
+  #- WITH_OPENCL=1
   - WITH_OPENCL=0
 
 matrix:
   fast_finish: true
-  config:
-    WITH_OPENCL=1:
-      addons:
-        apt:
-          packages:
-          - python-pyopencl
-          - python3-pyopencl
-          - opencl-headers
+  #config:
+    #WITH_OPENCL=1:
+      #addons:
+        #apt:
+          #packages:
+          #- python-pyopencl
+          #- python3-pyopencl
+          #- opencl-headers
 
   allow_failures:
-      - python: '3.5'
-        env:  WITH_OPENCL=1
-      - python: '3.6'
-        env:  WITH_OPENCL=1
-      - python: '3.7'
-        env:  WITH_OPENCL=0
-      - python: '3.7'
-        env:  WITH_OPENCL=1
       - python: 'nightly'
-        env:  WITH_OPENCL=0
-      - python: 'nightly'
-        env:  WITH_OPENCL=1
 
 matrix:
   include:
