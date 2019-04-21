@@ -7,12 +7,8 @@ python:
   # - "3.4" #fails
   - "3.5"
   - "3.6"
-  # - "3.6-dev"  # 3.6 development branch
   - "3.7"  # 3.7 development branch
   - "nightly"
-# command to install dependencies
-# before_install:
-#   - sudo -H pip install --upgrade
 env:
   #- WITH_OPENCL=1
   - WITH_OPENCL=0
@@ -48,14 +44,13 @@ matrix:
 
 
 install:
-  - pip install --upgrade pip
-  - pip install --ignore-installed setuptools
-  - pip install --ignore-installed wheel
-  - pip install --ignore-installed pytest-cov
-  - pip install --ignore-installed pytest
+  - pip3 install --upgrade pip
+  - pip3 install --ignore-installed setuptools
+  - pip3 install --ignore-installed wheel
+  - pip3 install --ignore-installed pytest-cov
+  - pip3 install --ignore-installed pytest
   - if [[ "$WITH_OPENCL" == "1" ]]; then pip install --ignore-installed pyopencl; fi
-  - python setup.py sdist
-  - pip install -e .
+  - pip3 install -e .
   - export DISPLAY=:0.0
   # - python -c "import pyconrad.autoinit;pyconrad.edu().stanford.rsl.conrad.utils.Configuration.initConfig()"
 # command to run tests
