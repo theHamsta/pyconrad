@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.6.1
+
+* [x] Re-enable access to private Java members
+
+## 0.6
+
+* [x] Fix breaking API changes in JPype 0.7 (JPype 0.7 is required now)
+
 ## 0.5.1
 
 * [x] Fix loading of filter (requires CONRAD patch `8674665`)
