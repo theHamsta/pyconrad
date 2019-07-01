@@ -10,18 +10,20 @@ import warnings
 from os.path import join
 from pathlib import Path
 
+import jpype
 from jpype import (JArray, JClass, JDouble, JPackage, JProxy,
                    attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
                    isJVMStarted, java, shutdownJVM, startJVM)
+
+
+from . import _download_conrad, _extend_conrad_classes
+from . import _windowlistener as wl
+
 try:
     from jpype import JavaException as JException
 except Exception as e:
     from jpype import JException
 
-import jpype
-
-from . import _download_conrad, _extend_conrad_classes
-from . import _windowlistener as wl
 
 module_path = os.path.dirname(__file__)
 
@@ -114,7 +116,7 @@ class PyConrad:
                     _download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
                 startJVM(getDefaultJVMPath(), conrad_source_and_libs,
-                         "-Xmx%s" % max_ram, "-Xmn%s" % min_ram)
+                         "-Xmx%s" % max_ram, "-Xmn%s" % min_ram, convertStrings=True)
                 os.chdir(curr_directory)
 
                 self._check_jre_version()

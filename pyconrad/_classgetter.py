@@ -1,5 +1,7 @@
-import pyconrad
 from jpype import JPackage
+
+import pyconrad
+from pyconrad._autocomplete import AutoCompleteConrad
 from pyconrad._pyconrad import assert_pyconrad_initialization
 
 
@@ -23,57 +25,57 @@ class ClassGetter:
         self._imported_namespaces.append(namespaces)
 
     @property
-    def SimpleVector(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.numerics.SimpleVector:
+    def SimpleVector(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.numerics.SimpleVector:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleVector')
 
     @property
-    def PointND(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.shapes.simple.PointND:
+    def PointND(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.shapes.simple.PointND:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.geometry.shapes.simple.PointND')
 
     @property
-    def SimpleMatrix(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.numerics.SimpleMatrix:
+    def SimpleMatrix(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.numerics.SimpleMatrix:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.numerics.SimpleMatrix')
 
     @property
-    def NumericGrid(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.NumericGrid:
+    def NumericGrid(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.NumericGrid:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.NumericGrid')
 
     @property
-    def Grid1D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid1D:
+    def Grid1D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid1D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D')
 
     @property
-    def Grid2D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid2D:
+    def Grid2D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid2D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid2D')
 
     @property
-    def Grid3D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid3D:
+    def Grid3D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid3D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid3D')
 
     @property
-    def Grid4D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid4D:
+    def Grid4D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.Grid4D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.Grid4D')
 
     @property
-    def OpenCLGrid1D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid1D:
+    def OpenCLGrid1D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid1D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid1D')
 
     @property
-    def OpenCLGrid2D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid2D:
+    def OpenCLGrid2D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid2D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid2D')
 
     @property
-    def OpenCLGrid3D(self) -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid3D:
+    def OpenCLGrid3D(self) -> AutoCompleteConrad.edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid3D:
         assert_pyconrad_initialization()
         return pyconrad.JClass('edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid3D')
 

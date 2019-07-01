@@ -9,11 +9,6 @@ import numpy as np
 from jpype import JArray, JClass, JDouble, JInt, JPackage, JProxy
 
 import pyconrad
-try:
-    import pyconrad._vtk
-except Exception:
-    import warnings
-    warnings.warn("Could not import pyconrad._vtk")
 from pyconrad._java_pyconrad import JavaPyConrad
 
 from ._imageutils import ImageUtil
@@ -21,8 +16,17 @@ from ._pygrid import PyGrid
 from .constants import java_float_dtype
 
 try:
+    import pyconrad._vtk
+except Exception:
+    import warnings
+    warnings.warn("Could not import pyconrad._vtk")
+
+
+del JClass.__setattr__
+
+try:
     import pyopencl as cl
-except:
+except Exception:
     cl = None
 
 
@@ -181,6 +185,10 @@ def _extend_numeric_grid():
         return tuple(reversed(self.getSize()[:]))
 
     @property
+    def _numeric_grid_size(self):
+        return tuple(self.getSize()[:])
+
+    @property
     def _numeric_grid_ndim(self):
         return len(self.getSize()[:])
 
@@ -232,6 +240,7 @@ def _extend_numeric_grid():
     grid_class.__getitem__ = _numeric_grid_getitem
     grid_class.__setitem__ = _numeric_grid_setitem
     grid_class.shape = _numeric_grid_shape
+    grid_class.size = _numeric_grid_size
     grid_class.ndim = _numeric_grid_ndim
     grid_class.pygrid = _pygrid
     grid_class.__array__ = _numpy_grid

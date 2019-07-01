@@ -12,20 +12,14 @@ except:
     __version__ = 'unknown'
 
 
-from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, java, JPackage, attachThreadToJVM, detachThreadFromJVM
-try:
-    from jpype import JavaException as JException
-except Exception as e:
-    from jpype import JException 
+from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, java, JPackage, attachThreadToJVM, JException, detachThreadFromJVM
 import jpype
 import jpype.imports
-# TODO: deprecate PyGrid
-from ._pygrid import PyGrid
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
-from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
+from pyconrad._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from pyconrad._classgetter import ClassGetter
-from .constants import java_float_dtype
-from ._autocomplete import generate_autocomplete_file
+from pyconrad.constants import java_float_dtype
+from pyconrad._autocomplete import generate_autocomplete_file
 from pyconrad._imageutils import imshow, to_conrad_grid
 import pyconrad.config
 import jpype.imports

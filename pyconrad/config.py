@@ -1,6 +1,9 @@
 import numpy as np
 
+from pyconrad._classgetter import ClassGetter
 import pyconrad
+
+from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 
 _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.conrad.utils',
@@ -10,14 +13,14 @@ _ = pyconrad.ClassGetter(
 )
 
 
-def get_conf() -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.utils.Configuration:
+def get_conf() -> AutoCompleteConrad.edu.stanford.rsl.conrad.utils.Configuration:
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
 
     return conf
 
 
-def get_geometry() -> pyconrad.AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.trajectories.Trajectory:
+def get_geometry() -> AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.trajectories.Trajectory:
     from edu.stanford.rsl.conrad.utils import Configuration
     geo = Configuration.getGlobalConfiguration().getGeometry()
     return geo
