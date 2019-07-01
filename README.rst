@@ -155,7 +155,6 @@ Also memory transfers to numpy.ndarray are possible. Numeric grids have the addi
 
     _ = pyconrad.ClassGetter()
 
-    # Create PyGrid from numpy array (more efficient if using Java float type pyconrad.java_float_dtype)
     array = np.random.rand(4, 2, 3).astype(pyconrad.java_float_dtype)
     grid = _.NumericGrid.from_numpy(array)
 
@@ -252,8 +251,6 @@ Frequently encountered problems
 
    # Grid.setOrigin(...), setSpacing
    _.Grid2D(3,2).setOrigin(JArray(JDouble)([2,3]))
-   PyGrid.from_grid(_.Grid2D(3,2)).set_origin([2,3])
-   PyGrid.from_grid(_.Grid2D(3,2)).set_spacing([2,3])
 
    # Creating nested enums
    traj = _.HelicalTrajectory()

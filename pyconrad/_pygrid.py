@@ -26,11 +26,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import jpype
 import numpy as np
-from pyconrad._deprecated import deprecated
-
-from .constants import java_float_dtype
-from ._imageutils import ImageUtil
 from jpype import JPackage
+
+from pyconrad._imageutils import ImageUtil
+from pyconrad.constants import java_float_dtype
 
 
 def grid_to_ndarray(grid):
@@ -173,8 +172,9 @@ class PyGrid(np.ndarray):
             # Grid1D.getBuffer() would generate as copy of the original buffer
             # for i in range(shape[0]):
             #     self[i] = self.__gr
+            
             self.__grid.notifyBeforeRead()
-            f_buffer.put(self.__grid.buffer)
+            f_buffer.put(jpype.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D').class_.getDeclaredField('buffer').get(self.__grid))
 
         elif len(shape) == 2:
             f_buffer.put(self.__grid.getBuffer())

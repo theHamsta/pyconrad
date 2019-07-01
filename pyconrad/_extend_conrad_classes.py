@@ -22,8 +22,6 @@ except Exception:
     warnings.warn("Could not import pyconrad._vtk")
 
 
-del JClass.__setattr__
-
 try:
     import pyopencl as cl
 except Exception:
@@ -88,12 +86,22 @@ def _extend_simple_matrix():
     def _simple_matrix_shape(self):
         return (self.rows, self.cols)
 
+    @property
+    def _simple_matrix_rows(self):
+        return self.getRows()
+
+    @property
+    def _simple_matrix_cols(self):
+        return self.getCols()
+
     simple_matrix_class = JPackage(
         'edu').stanford.rsl.conrad.numerics.SimpleMatrix
     simple_matrix_class.as_numpy = _numpy_simple_matrix
     simple_matrix_class.from_numpy = _simple_matrix_from_numpy
     simple_matrix_class.from_list = _simple_matrix_from_list
     simple_matrix_class.shape = _simple_matrix_shape
+    simple_matrix_class.cols = _simple_matrix_cols
+    simple_matrix_class.rows = _simple_matrix_rows
 
 
 def _extend_imageplus():
@@ -196,6 +204,14 @@ def _extend_numeric_grid():
     def _pygrid(self):
         return PyGrid.from_grid(self)
 
+    @property
+    def _numeric_origin(self):
+        return self.getOrigin()
+
+    @property
+    def _numeric_spacing(self):
+        return self.getOrigin()
+
     def _save_as_tiff(self, path):
         ImageUtil.save_grid_as_tiff(self, path)
 
@@ -241,6 +257,8 @@ def _extend_numeric_grid():
     grid_class.__setitem__ = _numeric_grid_setitem
     grid_class.shape = _numeric_grid_shape
     grid_class.size = _numeric_grid_size
+    grid_class.spacing = _numeric_spacing
+    grid_class.origin = _numeric_origin
     grid_class.ndim = _numeric_grid_ndim
     grid_class.pygrid = _pygrid
     grid_class.__array__ = _numpy_grid
@@ -378,6 +396,8 @@ def _extend_pyconrad_java():
 
 
 def extend_all_classes():
+    __setattr = JClass.__setattr__
+    JClass.__setattr__ = type.__setattr__
     _extend_pointnd()
     _extend_simple_vector()
     _extend_simple_matrix()
@@ -386,3 +406,4 @@ def extend_all_classes():
     _extend_pyconrad_java()
     if cl:
         _extend_ocl_grids()
+    JClass.__setattr__ = __setattr

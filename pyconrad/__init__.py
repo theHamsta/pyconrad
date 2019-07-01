@@ -15,6 +15,7 @@ except:
 from jpype import JDouble, JArray, JInt, JString, JShort, JProxy, JByte, JBoolean, JChar, JLong, JFloat, JClass, JIterator, java, JPackage, attachThreadToJVM, JException, detachThreadFromJVM
 import jpype
 import jpype.imports
+from ._pygrid import PyGrid
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
 from pyconrad._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from pyconrad._classgetter import ClassGetter
