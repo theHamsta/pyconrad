@@ -10,9 +10,15 @@ import warnings
 from os.path import join
 from pathlib import Path
 
-from jpype import (JArray, JavaException, JClass, JDouble, JPackage, JProxy,
+from jpype import (JArray, JClass, JDouble, JPackage, JProxy,
                    attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
                    isJVMStarted, java, shutdownJVM, startJVM)
+try:
+    from jpype import JavaException as JException
+except Exception as e:
+    from jpype import JException
+
+import jpype
 
 from . import _download_conrad, _extend_conrad_classes
 from . import _windowlistener as wl
@@ -118,7 +124,7 @@ class PyConrad:
                 _extend_conrad_classes.extend_all_classes()
                 self.classes.stanford.rsl.conrad.utils.Configuration.loadConfiguration()
 
-            except JavaException as ex:
+            except JException as ex:
                 print(ex)
         else:
             # raise Exception("JVM already started")
@@ -137,6 +143,7 @@ class PyConrad:
 
     def start_reconstruction_filter_pipeline(self):
         if self.__gui_thread is None:
+            self._context_class_loader = jpype.java.lang.Thread.currentThread().getContextClassLoader()
             self.__gui_thread = threading.Thread(target=self.__start_rfp_gui)
             self.__gui_thread.start()
             while not self.__is_gui_started:
@@ -162,7 +169,10 @@ class PyConrad:
         self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
         self.__is_gui_started = True
 
+        conrad_class = JClass('edu.stanford.rsl.conrad.utils.CONRAD')
+        conrad_class.classLoaderForPyconrad = self._context_class_loader
         detachThreadFromJVM()
+
         while self.__is_gui_started:
             time.sleep(1)
 
@@ -254,14 +264,15 @@ class PyConrad:
         '''
         jre_version = java.lang.System.getProperty("java.version").split('.')
 
-        if jre_version[0].isdigit() and jre_version[1].isdigit():
-            if int(jre_version[0]) > 1:
-                # format 9.0.1
-                assert int(
-                    jre_version[0]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
-            else:
-                # format 1.8.0
-                assert int(
-                    jre_version[0]) == 1, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
-                assert int(
-                    jre_version[1]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+        if jre_version and len(jre_version) > 2:
+            if jre_version[0].isdigit() and jre_version[1].isdigit():
+                if int(jre_version[0]) > 1:
+                    # format 9.0.1
+                    assert int(
+                        jre_version[0]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+                else:
+                    # format 1.8.0
+                    assert int(
+                        jre_version[0]) == 1, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"
+                    assert int(
+                        jre_version[1]) >= 8, "pyCONRAD needs a Jave Runtime Enviroment with version 1.8 or greater"

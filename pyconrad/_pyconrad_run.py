@@ -14,7 +14,9 @@ def main():
                         help="Activate this flag for GUI applications")
 
     args = parser.parse_args()
-    pyconrad.setup_pyconrad(dev_dirs=args.dev_path if args.dev_path else [])
+    if not  args.dev_path:
+        args.dev_path = []
+    pyconrad.setup_pyconrad(dev_dirs=args.dev_path)
 
     for dir in args.dev_path:
         sys.path.append(dir)

@@ -9,7 +9,11 @@ import numpy as np
 from jpype import JArray, JClass, JDouble, JInt, JPackage, JProxy
 
 import pyconrad
-import pyconrad._vtk
+try:
+    import pyconrad._vtk
+except Exception:
+    import warnings
+    warnings.warn("Could not import pyconrad._vtk")
 from pyconrad._java_pyconrad import JavaPyConrad
 
 from ._imageutils import ImageUtil
