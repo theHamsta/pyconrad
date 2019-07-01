@@ -1,3 +1,4 @@
+
 import pyconrad
 import pyconrad.config
 
@@ -26,20 +27,25 @@ _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.conrad.data.numeric.opencl'
 )
 
-geo = pyconrad.config.get_geometry()
-
 phantom = _.NumericalSheppLogan3D(
     *pyconrad.config.get_reco_size()).getNumericalSheppLoganPhantom()
-phantom.show('Phatom')
-
+phantom.show('Phantom')
 
 sino = project(phantom)
 sino.show('Sinogram')
 
+# import numpy as np
+# dot_phantom = np.zeros(pyconrad.config.get_reco_shape())
+# # Let's place a small dot in the middle!
+# dot_phantom[150, 150, 150] = 1
+# dot_phantom = _.Grid3D.from_numpy(dot_phantom)
+# sino = project(dot_phantom)
+
+
 cosine_filter = _.edu.stanford.rsl.conrad.filtering.CosineWeightingTool()
 cosine_filter.configure()
-sino = _.ImageUtil.applyFilterInParallel(sino, cosine_filter, True)
-sino.show('Cosine filtered')
+filtered_sino = _.ImageUtil.applyFilterInParallel(sino, cosine_filter, True)
+filtered_sino.show('Cosine filtered')
 
 # Parker weights missing
 
@@ -47,8 +53,11 @@ filter = _.edu.stanford.rsl.conrad.filtering.rampfilters.SheppLoganRampFilter()
 filter.configure()
 filtertool = _.edu.stanford.rsl.conrad.filtering.RampFilteringTool()
 filtertool.setRamp(filter)
-sino = _.ImageUtil.applyFilterInParallel(sino, filtertool, True)
-sino.show('Ramp filtered')
+filtered_sino = _.ImageUtil.applyFilterInParallel(filtered_sino, filtertool, True)
+filtered_sino.show('Ramp filtered')
 
 reconstruction = back_project(sino)
-reconstruction.show('Reconstruction')
+reconstruction.show('Unfiltered Reconstruction')
+
+reconstruction = back_project(filtered_sino)
+reconstruction.show('Filtered Reconstruction')
