@@ -21,6 +21,11 @@ except Exception:
     import warnings
     warnings.warn("Could not import pyconrad._vtk")
 
+try:
+    import jpype.beans  # noqa
+except ImportError:
+    pass
+
 
 try:
     import pyopencl as cl
