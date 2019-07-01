@@ -1,26 +1,25 @@
-from pyconrad import *
-import numpy as np
+from jpype import JArray, JavaException, JDouble, java
+
+import pyconrad.autoinit
 
 # Compare to Java-Version: CONRAD/src/edu/stanford/rsl/tutorial/iterative/SartCL.java
 
-#, '/localhome/local/projects/CONRADRSL/'
-jvm = PyConrad()
-jvm.setup()
+# , '/localhome/local/projects/CONRADRSL/'
+jvm = pyconrad.ClassGetter()
 # jvm.setup(dev_dirs=['/localhome/local/projects/CONRAD/'])
 
-jvm.add_import('edu.stanford.rsl.conrad.data.numeric')
-jvm.add_import('edu.stanford.rsl.tutorial.phantoms')
-jvm.add_import('edu.stanford.rsl.conrad.phantom')
-jvm.add_import('edu.stanford.rsl.conrad.utils')
-jvm.add_import('edu.stanford.rsl.tutorial.iterative')
-jvm.add_import('edu.stanford.rsl.conrad.geometry.shapes.simple')
-jvm.add_import('edu.stanford.rsl.conrad.geometry.trajectories')
-jvm.add_import('edu.stanford.rsl.conrad.numerics')
-jvm.add_import('edu.stanford.rsl.conrad.geometry')
-jvm.add_import('edu.stanford.rsl.tutorial.cone')
-jvm.add_import('edu.stanford.rsl.conrad.data.numeric.opencl')
+jvm.add_namespaces('edu.stanford.rsl.conrad.data.numeric')
+jvm.add_namespaces('edu.stanford.rsl.tutorial.phantoms')
+jvm.add_namespaces('edu.stanford.rsl.conrad.phantom')
+jvm.add_namespaces('edu.stanford.rsl.conrad.utils')
+jvm.add_namespaces('edu.stanford.rsl.tutorial.iterative')
+jvm.add_namespaces('edu.stanford.rsl.conrad.geometry.shapes.simple')
+jvm.add_namespaces('edu.stanford.rsl.conrad.geometry.trajectories')
+jvm.add_namespaces('edu.stanford.rsl.conrad.numerics')
+jvm.add_namespaces('edu.stanford.rsl.conrad.geometry')
+jvm.add_namespaces('edu.stanford.rsl.tutorial.cone')
+jvm.add_namespaces('edu.stanford.rsl.conrad.data.numeric.opencl')
 
-jvm.start_conrad()
 
 helix = False
 iterations = 6
