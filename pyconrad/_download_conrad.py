@@ -7,7 +7,8 @@ __conrad_release = __conrad_url.split('/')[-1].rstrip(".zip")
 __conrad_jar = __conrad_release.lower() + ".jar"
 __conrad_download_dir = os.path.dirname(__file__)
 
-__linux_jocl = "https://search.maven.org/remotecontent?filepath=org/jogamp/jocl/jocl/2.3.2/jocl-2.3.2-natives-linux-amd64.jar"
+__linux_jocl = "https://search.maven.org/remotecontent?filepath=org/jogamp/jocl/jocl/2.3.2/jocl-2.3.2-natives-linux-amd64.jar"  # noqa
+__jogl_all = "https://repo1.maven.org/maven2/org/jogamp/jogl/jogl-all-main/2.3.2/jogl-all-main-2.3.2.jar"
 
 
 def conrad_jar_filename():
@@ -65,5 +66,10 @@ def download_conrad(dest_dir=__conrad_download_dir):
         from sys import platform
         if platform == "linux" or platform == "linux2":
             download_file(__linux_jocl, conrad_jar_dir())
+    except Exception as e:
+        print(e)
+
+    try:
+        download_file(__jogl_all, conrad_jar_dir())
     except Exception as e:
         print(e)
