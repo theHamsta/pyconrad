@@ -1,11 +1,11 @@
 import pyconrad
-import pyconrad.utils
+import pyconrad.config
 
 
 def project(volume):
     volume_cl = _.OpenCLGrid3D(volume)
     projector = _.ConeBeamProjector()
-    sino = _.OpenCLGrid3D(_.Grid3D(*pyconrad.utils.get_sino_size()))
+    sino = _.OpenCLGrid3D(_.Grid3D(*pyconrad.config.get_sino_size()))
     projector.fastProjectRayDrivenCL(sino, volume_cl)
     return sino
 
@@ -26,10 +26,10 @@ _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.conrad.data.numeric.opencl'
 )
 
-geo = pyconrad.utils.get_geometry()
+geo = pyconrad.config.get_geometry()
 
 phantom = _.NumericalSheppLogan3D(
-    *pyconrad.utils.get_reco_size()).getNumericalSheppLoganPhantom()
+    *pyconrad.config.get_reco_size()).getNumericalSheppLoganPhantom()
 phantom.show('Phatom')
 
 
