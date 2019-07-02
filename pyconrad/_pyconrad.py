@@ -171,8 +171,9 @@ class PyConrad:
         self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
         self.__is_gui_started = True
 
-        conrad_class = JClass('edu.stanford.rsl.conrad.utils.CONRAD')
-        conrad_class.classLoaderForPyconrad = self._context_class_loader
+        #TODO: access private variable does not work anymore
+        # conrad_class = JClass('edu.stanford.rsl.conrad.utils.CONRAD')
+        # conrad_class.classLoaderForPyconrad = self._context_class_loader
         detachThreadFromJVM()
 
         while self.__is_gui_started:
