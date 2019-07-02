@@ -15,7 +15,6 @@ from jpype import (JArray, JClass, JDouble, JPackage, JProxy,
                    attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
                    isJVMStarted, java, shutdownJVM, startJVM)
 
-
 from . import _download_conrad, _extend_conrad_classes
 from . import _windowlistener as wl
 
@@ -171,7 +170,7 @@ class PyConrad:
         self.__gui_instance.ReconstructionPipelineFrame.startConrad(proxy)
         self.__is_gui_started = True
 
-        #TODO: access private variable does not work anymore
+        # TODO: access private variable does not work anymore
         # conrad_class = JClass('edu.stanford.rsl.conrad.utils.CONRAD')
         # conrad_class.classLoaderForPyconrad = self._context_class_loader
         detachThreadFromJVM()
