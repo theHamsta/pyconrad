@@ -60,15 +60,14 @@ def read(fname):
 
 def setup_package():
     setup(name='pyconrad',
-          version='0.6.2',
+          version='0.6.3',
           packages=['pyconrad', 'pyconrad._autocomplete_files', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
-          install_requires=[
-               'jpype1>=0.7', 'numpy', 'pathlib', 'urllib3', 'pyevtk', 'setuptools', 'vtk', 'procbridge', 'cppimport'
-          ],
+          install_requires=['jpype1>=0.7', 'numpy', 'pathlib', 'urllib3',
+              'pyevtk', 'setuptools', 'vtk', 'procbridge', 'cppimport', 'mock'],
           extras_require={'opencl': ['pyopencl']},
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
