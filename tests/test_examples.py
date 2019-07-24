@@ -23,19 +23,19 @@ def test_numpy_example():
 
 @pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
 def test_run_ij_commands():
-    import pyconrad_examples.first_steps._5_run_ij_commands
+    #import pyconrad_examples.first_steps._5_run_ij_commands
     pyconrad.ij().WindowManager.closeAllWindows()
     return
 
 
-@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" not in os.environ or os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_opencl_example():
     import pyconrad_examples.opencl
     pyconrad.ij().WindowManager.closeAllWindows()
     return
 
 
-@pytest.mark.skipif("WITH_OPENCL" in os.environ and os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
+@pytest.mark.skipif("WITH_OPENCL" not in os.environ or os.environ["WITH_OPENCL"] == "0", reason="Skipping this test on Travis CI.")
 def test_opencl_custom_kernel_example():
     import pyconrad_examples.opencl_custom_kernel
     pyconrad.ij().WindowManager.closeAllWindows()
