@@ -66,7 +66,7 @@ def setup_package():
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
-          install_requires=['jpype1>=0.7', 'numpy', 'pathlib', 'urllib3',
+          install_requires=['jpype1==0.7', 'numpy', 'pathlib', 'urllib3',
               'pyevtk', 'setuptools', 'vtk', 'procbridge', 'cppimport'],
           extras_require={'opencl': ['pyopencl']},
           cmdclass={'install': install},
