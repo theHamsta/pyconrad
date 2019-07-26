@@ -11,6 +11,8 @@ pyconrad
    :target: https://travis-ci.org/theHamsta/pyconrad
    :alt: Build Status
 
+.. image:: https://codecov.io/gh/theHamsta/pyconrad/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/theHamsta/pyconrad
 
 A python wrapper for the CONRAD framework (https://www5.cs.fau.de/conrad/)
 
