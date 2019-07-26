@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.6
+
+* [x] Lock jpype version to 0.7 (0.8 will bring breaking changes)
+
 ## 0.6.1
 
 * [x] Re-enable access to private Java members
