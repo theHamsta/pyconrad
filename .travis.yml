@@ -54,6 +54,7 @@ install:
   - pip3 install --ignore-installed wheel
   - pip3 install --ignore-installed pytest-cov
   - pip3 install --ignore-installed pytest
+  - pip3 install --ignore-installed codecov
   - if [[ "$WITH_OPENCL" == "1" ]]; then pip install --ignore-installed pyopencl; fi
   - pip3 install -e .
   - export DISPLAY=:0.0
