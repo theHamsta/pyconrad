@@ -62,6 +62,7 @@ install:
 script:
   - python3 -c "import pyconrad"
   - pytest # or py.test for Python versions 3.5 and below
+  - codecov
 
 addons:
   apt:
