@@ -14,7 +14,8 @@ import os
 from appdirs import user_cache_dir
 from joblib import Memory
 
-CACHE_LIMIT = 5_000_000_000  # in bytes
+# 5_000_000_000 is not supported in Python 3.5
+CACHE_LIMIT = 5000000000  # in bytes
 
 if 'PYCONRAD_CACHE_DIR' in os.environ:
     cache_dir = os.environ['PYCONRAD_CACHE_DIR']
