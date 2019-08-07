@@ -24,6 +24,7 @@ from pyconrad._autocomplete import generate_autocomplete_file
 from pyconrad._imageutils import imshow, to_conrad_grid
 import pyconrad.config
 import jpype.imports
+import pyconrad.phantoms
 
 jpype.imports.registerDomain('edu')
 
