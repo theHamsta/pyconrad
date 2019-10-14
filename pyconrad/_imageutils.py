@@ -120,7 +120,7 @@ def imshow(img,
         run_args {str} -- Commands for ImageJ command `run_args`
     """
     import ij
-    if 'PYCONRAD_HEADLESS' in os.env:
+    if 'PYCONRAD_HEADLESS' in os.environ:
         return
 
     class ImageListener:
