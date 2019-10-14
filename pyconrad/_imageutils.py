@@ -2,6 +2,7 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
+import os
 import sys
 import time
 
@@ -119,6 +120,8 @@ def imshow(img,
         run_args {str} -- Commands for ImageJ command `run_args`
     """
     import ij
+    if 'PYCONRAD_HEADLESS' in os.env:
+        return
 
     class ImageListener:
         def __init__(self, image_plus=None):
