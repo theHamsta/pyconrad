@@ -85,6 +85,8 @@ def to_conrad_grid(img):
         imgs = np.stack(img)
         grid = pyconrad.PyGrid.from_numpy(imgs.astype(
             pyconrad.java_float_dtype)).grid
+    elif 'torch.Tensor' in str(type(img)):
+        grid = pyconrad.PyGrid.from_numpy(img.cpu().numpy().astype(pyconrad.java_float_dtype)).grid
     else:
         raise TypeError('Unsupported Type: %s' % type(img))
 
