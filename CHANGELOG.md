@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.6.9
+
+* [x] Add `torch.Tensor` support for `pyconrad.imshow`
+* [x] Add initial support for environment variable `PYCONRAD_HEADLESS`
+
 ## 0.6.8
 
 * [x] Automatically download newest ImageJ on installation
