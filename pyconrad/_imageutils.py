@@ -8,7 +8,6 @@ import time
 
 import jpype
 import numpy as np
-
 import pyconrad
 
 try:
