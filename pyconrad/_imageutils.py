@@ -10,7 +10,6 @@ import time
 
 import jpype
 import numpy as np
-
 import pyconrad
 
 try:
@@ -151,6 +150,20 @@ def imshow(img,
 
         def imageUpdated(self, imagePlus):
             pass
+
+    if isinstance(img, dict):
+        for k, v in img.items():
+            imshow(v, str(k),
+                   wait_key_press,
+                   wait_window_close,
+                   origin,
+                   spacing,
+                   auto_assume_channels,
+                   lut,
+                   run,
+                   run_args)
+
+        return
 
     if not pyconrad.is_gui_started():
         pyconrad.start_gui()
