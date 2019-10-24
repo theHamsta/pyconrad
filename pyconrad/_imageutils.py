@@ -97,6 +97,11 @@ def to_conrad_grid(img):
 def show_everything(wait_key_press=False):
     previous_frame = inspect.currentframe().f_back
     locals = previous_frame.f_locals
+
+    if wait_key_press:
+        (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
+        print(f'{filename}:{line_number}: {lines[0]}')
+
     imshow(locals, silent_fail=True, wait_key_press=wait_key_press)
 
 
