@@ -94,6 +94,12 @@ def to_conrad_grid(img):
     return grid
 
 
+def show_everything(wait_key_press=False):
+    previous_frame = inspect.currentframe().f_back
+    locals = previous_frame.f_locals
+    imshow(locals, silent_fail=True, wait_key_press=wait_key_press)
+
+
 def imshow(img,
            title="",
            wait_key_press=False,
@@ -155,7 +161,7 @@ def imshow(img,
     if isinstance(img, dict):
         for k, v in img.items():
             imshow(v, str(k),
-                   wait_key_press,
+                   False,
                    wait_window_close,
                    origin,
                    spacing,
@@ -165,6 +171,8 @@ def imshow(img,
                    run_args,
                    silent_fail)
 
+        if wait_key_press:
+            input("press key")
         return
 
     if not pyconrad.is_gui_started():

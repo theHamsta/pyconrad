@@ -21,7 +21,7 @@ from pyconrad._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from pyconrad._classgetter import ClassGetter
 from pyconrad.constants import java_float_dtype
 from pyconrad._autocomplete import generate_autocomplete_file
-from pyconrad._imageutils import imshow, to_conrad_grid
+from pyconrad._imageutils import imshow, show_everything, to_conrad_grid
 import pyconrad.config
 import jpype.imports
 import pyconrad.phantoms
