@@ -103,7 +103,8 @@ def imshow(img,
            auto_assume_channels=True,
            lut=None,
            run=None,
-           run_args=""):
+           run_args="",
+           silent_fail=False):
     """Shows an image in ImageJ
 
     Arguments:
@@ -161,7 +162,8 @@ def imshow(img,
                    auto_assume_channels,
                    lut,
                    run,
-                   run_args)
+                   run_args,
+                   silent_fail)
 
         return
 
@@ -172,7 +174,13 @@ def imshow(img,
         if all(s > 10 for s in img.shape[:-1]) and img.shape[-1] < 10:
             img = np.moveaxis(img, -1, 0)
 
-    grid = to_conrad_grid(img)
+    if silent_fail:
+        try:
+            grid = to_conrad_grid(img)
+        except Exception:
+            return
+    else:
+        grid = to_conrad_grid(img)
 
     if origin:
         assert len(
