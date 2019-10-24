@@ -131,7 +131,6 @@ def imshow(img,
         try:
             previous_frame = inspect.currentframe().f_back
             (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
-            print((filename, line_number, function_name, lines, index))
             match = re.search(r'\(.+\)', lines[0])
             title = match[0].replace('(', '').replace(')', '')
         except Exception:
