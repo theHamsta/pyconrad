@@ -30,11 +30,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 import sys
 
+from pkg_resources import VersionConflict, require
 from setuptools import setup
 from setuptools.command.install import _install
 
 # post install hint from:
 # https://stackoverflow.com/questions/17806485/execute-a-python-script-post-install-using-distutils-setuptools
+
+try:
+    require('setuptools>=38.3')
+except VersionConflict:
+    print("Error: version of setuptools is too old (<38.3)!")
+    sys.exit(1)
 
 
 def _post_install(dir):
