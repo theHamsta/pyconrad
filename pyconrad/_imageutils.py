@@ -131,7 +131,7 @@ def imshow(img,
         try:
             previous_frame = inspect.currentframe().f_back
             (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
-            match = re.search(r'\(.+\)', lines[0])
+            match = re.search(r'\(.+\)', lines[0], re.DOTALL)
             title = match[0][1:-1]
         except Exception:
             pass
