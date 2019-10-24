@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.10
+
+* [x] Try to automatically set title of imshow by stack introspection
+
 ## 0.6.9
 
 * [x] Add `torch.Tensor` support for `pyconrad.imshow`

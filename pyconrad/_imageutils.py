@@ -2,12 +2,15 @@
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
+import inspect
 import os
+import re
 import sys
 import time
 
 import jpype
 import numpy as np
+
 import pyconrad
 
 try:
@@ -123,6 +126,16 @@ def imshow(img,
     import ij
     if 'PYCONRAD_HEADLESS' in os.environ:
         return
+
+    if not title:
+        try:
+            previous_frame = inspect.currentframe().f_back
+            (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
+            print((filename, line_number, function_name, lines, index))
+            match = re.search(r'\(.+\)', lines[0])
+            title = match[0].replace('(', '').replace(')', '')
+        except Exception:
+            pass
 
     class ImageListener:
         def __init__(self, image_plus=None):
