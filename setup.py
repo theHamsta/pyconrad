@@ -60,7 +60,7 @@ def read(fname):
 
 def setup_package():
     setup(name='pyconrad',
-          version='0.6.9',
+          version='0.6.10',
           packages=['pyconrad', 'pyconrad._autocomplete_files', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
