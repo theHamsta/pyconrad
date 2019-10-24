@@ -132,7 +132,7 @@ def imshow(img,
             previous_frame = inspect.currentframe().f_back
             (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
             match = re.search(r'\(.+\)', lines[0])
-            title = match[0].replace('(', '').replace(')', '')
+            title = match[0][1:-1]
         except Exception:
             pass
 
