@@ -172,17 +172,18 @@ class PyGrid(np.ndarray):
             # Grid1D.getBuffer() would generate as copy of the original buffer
             # for i in range(shape[0]):
             #     self[i] = self.__gr
-            
+
             self.__grid.notifyBeforeRead()
-            f_buffer.put(jpype.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D').class_.getDeclaredField('buffer').get(self.__grid))
+            f_buffer.put(jpype.JClass('edu.stanford.rsl.conrad.data.numeric.Grid1D').class_.getDeclaredField(
+                'buffer').get(self.__grid))
 
         elif len(shape) == 2:
             f_buffer.put(self.__grid.getBuffer())
-        elif len(shape) is 3:
+        elif len(shape) == 3:
             for z in range(0, shape[0]):
                 f_buffer.put(self.__grid.getSubGrid(
                     z).getBuffer())  # TODO: stride == 0?
-        elif len(shape) is 4:
+        elif len(shape) == 4:
             for f in range(shape[0]):
                 for z in range(shape[1]):
                     f_buffer.put(self.__grid.getSubGrid(f).getSubGrid(
@@ -223,11 +224,11 @@ class PyGrid(np.ndarray):
                 jpype.JArray(jpype.JFloat)(list(self[:])))
         elif len(shape) == 2:
             f_buffer.get(self.__grid.getBuffer())
-        elif len(shape) is 3:
+        elif len(shape) == 3:
             for z in range(shape[0]):
                 f_buffer.get(self.__grid.getSubGrid(
                     z).getBuffer())  # TODO: stride == 0?
-        elif len(shape) is 4:
+        elif len(shape) == 4:
             for f in range(shape[0]):
                 for z in range(shape[1]):
                     f_buffer.get(self.__grid.getSubGrid(f).getSubGrid(
@@ -273,4 +274,4 @@ class PyGrid(np.ndarray):
         else:
             spacing = tuple(self.grid.getSpacing()[:])
         imageToVTK(file, tuple(self.grid.getOrigin()[
-                   :]), spacing, pointData={title: np.swapaxes(p.array(self))})
+                   :]), spacing, pointData={title: np.swapaxes(np.array(self))})
