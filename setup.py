@@ -79,13 +79,13 @@ def setup_package():
               'urllib3',
               'pyevtk',
               'setuptools',
-              'vtk',
               'procbridge',
               'cppimport',
               'joblib',
               'appdirs'
               ],
-          extras_require={'opencl': ['pyopencl']},
+          extras_require={'opencl': ['pyopencl'],
+              'vtk': ['vtk']},
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
           description='Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography',  # noqa

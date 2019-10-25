@@ -1,6 +1,5 @@
-
-
-from __future__ import print_function
+import pytest 
+pytest.importorskip('vtk')
 
 import math
 import tempfile
