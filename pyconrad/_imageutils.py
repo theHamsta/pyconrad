@@ -10,6 +10,7 @@ import time
 
 import jpype
 import numpy as np
+
 import pyconrad
 
 try:
@@ -94,15 +95,18 @@ def to_conrad_grid(img):
     return grid
 
 
-def show_everything(wait_key_press=False):
+def show_everything(wait_key_press=False, wait_window_close=False):
     previous_frame = inspect.currentframe().f_back
     locals = previous_frame.f_locals
 
-    if wait_key_press:
+    if wait_key_press or wait_window_close:
         (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
         print(f'{filename}:{line_number}: {lines[0]}')
 
-    imshow(locals, silent_fail=True, wait_key_press=wait_key_press)
+    imshow(locals,
+           silent_fail=True,
+           wait_key_press=wait_key_press,
+           wait_window_close=wait_window_close)
 
 
 def imshow(img,
@@ -164,10 +168,10 @@ def imshow(img,
             pass
 
     if isinstance(img, dict):
-        for k, v in img.items():
+        for i, (k, v) in enumerate(img.items()):
             imshow(v, str(k),
-                   False,
-                   wait_window_close,
+                   i == len(img.items()) - 1 and wait_key_press,
+                   i == len(img.items()) - 1 and wait_window_close,
                    origin,
                    spacing,
                    auto_assume_channels,
@@ -176,8 +180,6 @@ def imshow(img,
                    run_args,
                    silent_fail)
 
-        if wait_key_press:
-            input("press key")
         return
 
     if not pyconrad.is_gui_started():
