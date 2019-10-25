@@ -51,6 +51,7 @@ env:
 install:
   - export WITH_OPENCL=0
   - pip3 install --upgrade pip
+  - pip3 install --upgrade pip vtk || echo "VTK installation"
   - pip3 install --ignore-installed setuptools
   - pip3 install --ignore-installed wheel
   - pip3 install --ignore-installed pytest-cov
