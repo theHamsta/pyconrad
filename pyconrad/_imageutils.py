@@ -101,7 +101,7 @@ def show_everything(wait_key_press=False, wait_window_close=False):
 
     if wait_key_press or wait_window_close:
         (filename, line_number, function_name, lines, index) = inspect.getframeinfo(previous_frame)
-        print(f'{filename}:{line_number}: {lines[0]}')
+        print('{filename}:{line_number}: {line}'.format(filename=filename, line_number=line_number, line=lines[0]))
 
     imshow(locals,
            silent_fail=True,
