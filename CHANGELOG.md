@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.6.12
+
+* [x] Add `pyconrad.show_everything`
+
+## 0.6.11
 ## 0.6.10
 
 * [x] Try to automatically set title of imshow by stack introspection
