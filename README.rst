@@ -135,11 +135,11 @@ You can access CONRAD's Java classes via pyconrad.edu() or using the convinience
         100, 100, 100).getNumericalSheppLoganPhantom()
 
     # You can also group Java packages an access all classes that are contained (import * does not work)
-    # Access more easily using ClassGetter (# type: pyconrad.AutoCompleteConrad adds static auto-complete feature for ClassGetter.edu)
+    # Access more easily using ClassGetter (
     _ = pyconrad.ClassGetter(
         'edu.stanford.rsl.tutorial.phantoms',
         'edu.stanford.rsl.conrad.phantom'
-    )  # type: pyconrad.AutoCompleteConrad
+    )
 
     print('This is a Java class: ' + str(_.NumericalSheppLogan3D))
 
@@ -182,20 +182,6 @@ More Examples
 -------------
 
 More examples can be found `here <https://git5.cs.fau.de/PyConrad/pyCONRAD/tree/master/pyconrad_examples>`_
-
-Autocomplete
-------------
-
-As it might be difficult to remember the exact names of Java functions and classes, pyconrad provides basic autocomplete feature for CONRAD classes.
-Just give your IDE a type hint that a object represents a certain Java namespace or class (\ ``# type: pyconrad.AutoCompleteConrad.edu.standford...``\ ).
-
-Works with pycharm:
-
-
-.. image:: README.md_files/autocomplete.webm
-   :target: README.md_files/autocomplete.webm
-   :alt: autocomplete_video
-
 
 Extension methods for java classes
 ----------------------------------

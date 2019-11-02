@@ -3,8 +3,6 @@ import numpy as np
 from pyconrad._classgetter import ClassGetter
 import pyconrad
 
-from ._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
-
 _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.conrad.utils',
     'java.beans',
@@ -13,14 +11,14 @@ _ = pyconrad.ClassGetter(
 )
 
 
-def get_conf() -> AutoCompleteConrad.edu.stanford.rsl.conrad.utils.Configuration:
+def get_conf():
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
 
     return conf
 
 
-def get_geometry() -> AutoCompleteConrad.edu.stanford.rsl.conrad.geometry.trajectories.Trajectory:
+def get_geometry():
     from edu.stanford.rsl.conrad.utils import Configuration
     geo = Configuration.getGlobalConfiguration().getGeometry()
     return geo
@@ -51,21 +49,21 @@ def get_reco_size() -> list:
 def get_reco_origin() -> tuple:
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    geo = conf.getGeometry()
     return (geo.getOriginX(), geo.getOriginY(), geo.getOriginZ())
 
 
 def get_reco_spacing() -> tuple:
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    geo = conf.getGeometry()
     return (geo.getVoxelSpacingX(), geo.getVoxelSpacingY(), geo.getVoxelSpacingZ())
 
 
 def set_reco_spacing(spacing):
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    geo = conf.getGeometry()
     geo.setVoxelSpacingX(spacing[0])
     geo.setVoxelSpacingY(spacing[1])
     geo.setVoxelSpacingZ(spacing[2])
@@ -74,7 +72,7 @@ def set_reco_spacing(spacing):
 def set_reco_origin(origin):
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    geo = conf.getGeometry()
 
     geo.setOriginInWorld(_.PointND([origin[0], origin[1], origin[2]]))
 
@@ -82,7 +80,7 @@ def set_reco_origin(origin):
 def set_reco_shape(shape):
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    geo = conf.getGeometry()
 
     geo.setReconDimensionX(shape[2])
     geo.setReconDimensionY(shape[1])
@@ -92,7 +90,7 @@ def set_reco_shape(shape):
 def set_reco_size(size):
     from edu.stanford.rsl.conrad.utils import Configuration
     conf = Configuration.getGlobalConfiguration()
-    geo = conf.getGeometry()  # type: AutoCompleteConrad.edu.stanford.rsl
+    geo = conf.getGeometry()
 
     geo.setReconDimensionX(size[0])
     geo.setReconDimensionY(size[1])

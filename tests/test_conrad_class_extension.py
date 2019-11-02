@@ -3,7 +3,7 @@ import numpy as np
 import os
 import pytest
 
-_ = pyconrad.ClassGetter()  # type: pyconrad.AutoCompleteConrad
+_ = pyconrad.ClassGetter()
 
 
 def test_create_pointnd():
