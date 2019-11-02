@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.7.0
+
+* Make vtk dependency optional
+
 ## 0.6.13
 ## 0.6.12
 
