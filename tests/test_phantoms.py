@@ -15,6 +15,7 @@ import pyconrad.autoinit
 import pyconrad.phantoms
 
 if 'CI' in os.environ:
+    import unittest.mock
     pyconrad.imshow = unittest.mock.MagicMock()
 
 
