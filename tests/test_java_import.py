@@ -8,11 +8,3 @@ def import_grids():
 
     assert a
     assert b
-
-
-
-def main():
-    import_grids()
-
-if __name__ == '__main__':
-    main()

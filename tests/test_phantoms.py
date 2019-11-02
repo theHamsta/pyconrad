@@ -23,10 +23,3 @@ def test_phantoms():
     phantom = pyconrad.phantoms.shepp_logan(100, 100, 100)
     pyconrad.imshow(phantom, "phantom")
 
-
-def main():
-    test_phantoms()
-
-
-if __name__ == '__main__':
-    main()

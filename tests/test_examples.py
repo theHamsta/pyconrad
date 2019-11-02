@@ -60,10 +60,3 @@ def test_readme_example():
     # Attention: Python has a different indexing (z,y,x)
     print('Old value: %f' % array[3, 1, 0])
     print('New value: %f' % new_array[3, 1, 0])
-
-
-if __name__ == "__main__":
-    # test_basic_example()
-    test_numpy_example()
-    test_readme_example()
-    test_run_ij_commands()
