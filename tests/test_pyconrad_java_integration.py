@@ -18,11 +18,3 @@ def test_pyconrad_pyconrad_example():
     PyConradExample = JClass(
         'edu.stanford.rsl.tutorial.pyconrad.PyConradExample')
     PyConradExample.main([])
-
-
-def main():
-    test_pyconrad_pyconrad_example()
-
-
-if __name__ == '__main__':
-    main()

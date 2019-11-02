@@ -28,10 +28,3 @@ def test_list_to_simplematrix():
     assert numpy_matrix is not None
     assert numpy_matrix2 is not None
     assert numpy_matrix3 is not None
-
-def main():
-    test_list_to_simplematrix()
-    test_simplematrix()
-
-if __name__ == '__main__':
-    main()

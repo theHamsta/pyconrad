@@ -190,12 +190,3 @@ def test_javacl_from_pycl():
 
     out2 = java.as_numpy()
     assert np.allclose(out2, random)
-
-
-if __name__ == "__main__":
-    test_device_info()
-    test_pyopencl_kernel_on_openclgrid()
-    test_javacl_from_pycl()
-    test_init_cone_beam_backprojector()
-    test_get_conrad_cl()
-    test_add_noise()

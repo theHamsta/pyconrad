@@ -26,11 +26,3 @@ def test_imshow():
 
     for action in actions:
         pyconrad.imshow(a, "foo", run=action, lut='Fire')
-
-
-def main():
-    test_imshow()
-
-
-if __name__ == '__main__':
-    main()
