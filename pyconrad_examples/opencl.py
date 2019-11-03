@@ -5,7 +5,7 @@ import pyopencl.array
 
 _ = pyconrad.ClassGetter(
     'edu.stanford.rsl.tutorial.phantoms',
-)  # type: pyconrad.AutoCompleteConrad
+)
 
 pyconrad.start_gui()
 

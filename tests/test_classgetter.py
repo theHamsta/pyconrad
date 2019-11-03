@@ -15,9 +15,3 @@ def test_standfordrsl_classgetter():
 
 def test_standfordrsl():
     pyconrad.stanfordrsl().conrad.filtering.rampfilters.SheppLoganRampFilter()
-
-
-if __name__ == "__main__":
-    test_subnamespaces()
-    test_standfordrsl_classgetter()
-    test_standfordrsl()

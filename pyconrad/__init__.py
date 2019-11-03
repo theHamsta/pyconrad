@@ -17,10 +17,8 @@ import jpype
 import jpype.imports
 from ._pygrid import PyGrid
 from pyconrad._pyconrad import setup_pyconrad, start_gui, start_reconstruction_pipeline_gui, is_initialized, is_gui_started, terminate_pyconrad
-from pyconrad._autocomplete_files.autocomplete_conrad import AutoCompleteConrad
 from pyconrad._classgetter import ClassGetter
 from pyconrad.constants import java_float_dtype
-from pyconrad._autocomplete import generate_autocomplete_file
 from pyconrad._imageutils import imshow, show_everything, to_conrad_grid
 import pyconrad.config
 import jpype.imports
@@ -37,9 +35,9 @@ jpype.imports.registerDomain('edu')
 jpype.imports.registerDomain('ij')
 
 
-def edu() -> AutoCompleteConrad.edu:
+def edu():
     if not is_initialized():
-        raise _pyconrad.PyConradNotInitializedError()
+        raise pyconrad._pyconrad.PyConradNotInitializedError()
 
     return JPackage('edu')
 
@@ -47,14 +45,14 @@ def edu() -> AutoCompleteConrad.edu:
 def ij():
 
     if not is_initialized():
-        raise _pyconrad.PyConradNotInitializedError()
+        raise pyconrad._pyconrad.PyConradNotInitializedError()
 
     return JPackage('ij')
 
 
-def stanfordrsl() -> AutoCompleteConrad.edu.stanford.rsl:
+def stanfordrsl():
     if not is_initialized():
-        raise _pyconrad.PyConradNotInitializedError()
+        raise pyconrad._pyconrad.PyConradNotInitializedError()
 
     return JPackage('edu.stanford.rsl')
 

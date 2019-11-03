@@ -5,7 +5,7 @@ import tempfile
 import sys
 import subprocess
 
-_ = pyconrad.ClassGetter()  # type: pyconrad.AutoCompleteConrad
+_ = pyconrad.ClassGetter()
 
 phantom = _.edu.stanford.rsl.conrad.phantom.NumericalSheppLogan3D(
     200, 200, 200).getNumericalSheppLoganPhantom()
