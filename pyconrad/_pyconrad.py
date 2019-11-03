@@ -90,6 +90,7 @@ class PyConrad:
         if not cls.___instance:
             cls.___instance = super(PyConrad, cls).__new__(
                 cls, *args, **kwargs)
+        cls.jvm_args = None
         return cls.___instance
 
     @staticmethod
@@ -114,7 +115,11 @@ class PyConrad:
                 if not os.path.exists(self.__conrad_path):
                     _download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
-                startJVM(getDefaultJVMPath(), conrad_source_and_libs,
+
+                self.jvm_args = '-ea ' + conrad_source_and_libs + " -Xmx%s" % max_ram, "-Xmn%s" % min_ram
+                startJVM(getDefaultJVMPath(),
+                         '-ea',
+                         conrad_source_and_libs,
                          "-Xmx%s" % max_ram, "-Xmn%s" % min_ram, convertStrings=True)
                 os.chdir(curr_directory)
 
@@ -230,13 +235,13 @@ class PyConrad:
 
         if self.__conrad_repo_set:
             src = ";".join(map(str, dev_src))
-            s = "-Djava.class.path=%s;%s" % (src, extra_libs)
+            s = '-Djava.class.path="%s;%s"' % (src, extra_libs)
         else:
             self.__conrad_path = _download_conrad.conrad_jar_dir()
             dev_src.extend(g for g in glob.glob(join(_download_conrad.conrad_jar_dir(), '*.jar')) if 'conrad_' not in g)
             dev_src.append(_download_conrad.conrad_jar_file())
             src = ";".join(map(str, dev_src))
-            s = "-Djava.class.path=%s;%s" % (src, extra_libs)
+            s = '-Djava.class.path="%s;%s"' % (src, extra_libs)
 
         # Unix-like systems use : instead of ; to separate classpaths
         if os.name != "nt":  # Windows
