@@ -1,6 +1,8 @@
 import argparse
-import pyconrad
+import os
 import sys
+
+import pyconrad
 
 
 def main():
@@ -12,11 +14,14 @@ def main():
     parser.add_argument('args', nargs='*', help="CLI arguments")
     parser.add_argument('--gui', action='store_true',
                         help="Activate this flag for GUI applications")
+    parser.add_argument('--show_jvm_args', action='store_true',
+                        help="Shows launch arguments for JVM for debugging")
 
     args = parser.parse_args()
-    if not  args.dev_path:
-        args.dev_path = []
+    if not args.dev_path:
+        args.dev_path = [os.getcwd()]
     pyconrad.setup_pyconrad(dev_dirs=args.dev_path)
+    print(pyconrad._pyconrad.PyConrad().jvm_args)
 
     for dir in args.dev_path:
         sys.path.append(dir)
