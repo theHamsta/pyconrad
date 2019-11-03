@@ -7,21 +7,22 @@ import pyconrad
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dev_path', nargs='*',
+    parser.add_argument('--dev-path', nargs='*',
                         help="Path to CONRAD or CONRADRSL folder (root for classpath)")
     parser.add_argument(
         'class_with_main', help="Java class with main (e.g. edu.stanford.rsl.apps.gui.ReconstructionPipelineFrame)")
     parser.add_argument('args', nargs='*', help="CLI arguments")
     parser.add_argument('--gui', action='store_true',
                         help="Activate this flag for GUI applications")
-    parser.add_argument('--show_jvm_args', action='store_true',
+    parser.add_argument('--show-jvm-args', action='store_true',
                         help="Shows launch arguments for JVM for debugging")
 
     args = parser.parse_args()
     if not args.dev_path:
         args.dev_path = [os.getcwd()]
     pyconrad.setup_pyconrad(dev_dirs=args.dev_path)
-    print(pyconrad._pyconrad.PyConrad().jvm_args)
+    if args.show_jvm_args:
+        print(pyconrad._pyconrad.PyConrad().jvm_args)
 
     for dir in args.dev_path:
         sys.path.append(dir)
