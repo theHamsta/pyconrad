@@ -116,9 +116,9 @@ class PyConrad:
                     _download_conrad.download_conrad()
                 os.chdir(self.__conrad_path)
 
-                self.jvm_args = '-ea ' + conrad_source_and_libs + " -Xmx%s" % max_ram, "-Xmn%s" % min_ram
+                self.jvm_args = conrad_source_and_libs + " -Xmx%s" % max_ram, "-Xmn%s" % min_ram
                 startJVM(getDefaultJVMPath(),
-                         '-ea',
+                        # '-ea', #TODO: make work with assertions
                          conrad_source_and_libs,
                          "-Xmx%s" % max_ram, "-Xmn%s" % min_ram, convertStrings=True)
                 os.chdir(curr_directory)
