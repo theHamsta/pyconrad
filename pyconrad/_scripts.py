@@ -1,8 +1,11 @@
-import pyconrad
-import os
-from os.path import basename, isfile, abspath
-import numpy as np
 import argparse
+import os
+from os.path import abspath, basename, dirname, isfile, join
+
+import numpy as np
+
+import pyconrad
+
 try:
     import procbridge
 except Exception:
@@ -30,6 +33,7 @@ def start_conrad_imagej(*args, **kwargs):
 
     if not args.single_instance_mode:
 
+        import pyconrad
         pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
         pyconrad.start_gui()
 
@@ -61,10 +65,24 @@ def start_conrad_imagej(*args, **kwargs):
                         for key in file_object.keys():
                             numpy_array = file_object[key]
                             _.NumericGrid.from_numpy(numpy_array).show(key)
-
                     else:
-                        pyconrad.ij().IJ.openImage(
-                            f).show(basename(f))
+                        try:
+                            import pydicom
+                            dc = pydicom.read_file(f)
+                            if dc.SliceThickness:
+                                import pyconrad.dicom_utils
+                                #
+                                vol, spacing = pyconrad.dicom_utils.dicomdir2vol(
+                                    dirname(f), str(dc.ImageType))
+                                pyconrad.imshow(vol, str(dc.ImageType)
+                                                .replace('[', '')
+                                                .replace(']', '')
+                                                .replace("'", '') + ' -- ' + basename(f), spacing=spacing)
+                                return
+                        except Exception:
+                            pass
+
+                        pyconrad.ij().IJ.openImage(f).show(basename(f))
 
             except Exception as e:
                 print(e)

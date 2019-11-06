@@ -84,8 +84,11 @@ def setup_package():
               'joblib',
               'appdirs'
               ],
-          extras_require={'opencl': ['pyopencl'],
-              'vtk': ['vtk']},
+          extras_require={
+              'opencl': ['pyopencl'],
+              'vtk': ['vtk'],
+              'dicom': ['pydicom', 'tqdm', 'natglob']
+              },
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
           description='Python wrapper for CONRAD (https://www5.cs.fau.de/conrad/), a framework for cone beam radiography',  # noqa
