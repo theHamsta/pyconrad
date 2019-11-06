@@ -77,7 +77,7 @@ def start_conrad_imagej(*args, **kwargs):
                                 pyconrad.imshow(vol, str(dc.ImageType)
                                                 .replace('[', '')
                                                 .replace(']', '')
-                                                .replace("'", '') + ' -- ' + basename(f), spacing=spacing)
+                                                .replace("'", '') + ' – ' + basename(f), spacing=spacing)
                                 return
                         except Exception:
                             pass
