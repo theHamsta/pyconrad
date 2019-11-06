@@ -24,11 +24,11 @@ CONRAD is a state-of-the-art software platform with extensive documentation. It 
 Installation
 ============
 
-Install via pip (vtk is optional):
+Install via pip (``vtk``, ``dicom``, ``opencl`` is optional):
 
 .. code-block:: bash
 
-   pip install pyconrad[vtk]
+   pip install pyconrad[vtk,dicom]
 
 or if you downloaded this repository (https://git5.cs.fau.de/PyConrad/pyCONRAD) using:
 
