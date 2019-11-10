@@ -8,7 +8,8 @@ import pyconrad
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--dev-path', nargs='*',
-                        help="Path to CONRAD or CONRADRSL folder (root for classpath)")
+                        help="Path to CONRAD or CONRADRSL folder (root for classpath). "
+                        "Default: current working directroy")
     parser.add_argument(
         'class_with_main', help="Java class with main (e.g. edu.stanford.rsl.apps.gui.ReconstructionPipelineFrame)")
     parser.add_argument('args', nargs='*', help="CLI arguments")
