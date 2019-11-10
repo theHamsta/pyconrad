@@ -11,16 +11,16 @@ from os.path import join
 from pathlib import Path
 
 import jpype
-from jpype import (JArray, JClass, JDouble, JPackage, JProxy,
-                   attachThreadToJVM, detachThreadFromJVM, getDefaultJVMPath,
-                   isJVMStarted, java, shutdownJVM, startJVM)
+from jpype import (JClass, JPackage, JProxy, attachThreadToJVM,
+                   detachThreadFromJVM, getDefaultJVMPath, isJVMStarted, java,
+                   shutdownJVM, startJVM)
 
 from . import _download_conrad, _extend_conrad_classes
 from . import _windowlistener as wl
 
 try:
     from jpype import JavaException as JException
-except Exception as e:
+except Exception:
     from jpype import JException
 
 
