@@ -1,6 +1,6 @@
 import argparse
 import os
-from os.path import abspath, basename, dirname, isfile, join
+from os.path import abspath, basename, dirname, isfile
 
 import numpy as np
 
