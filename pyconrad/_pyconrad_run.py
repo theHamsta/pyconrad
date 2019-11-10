@@ -30,6 +30,11 @@ def main():
     if args.gui:
         pyconrad.start_gui()
 
+    args.class_with_main = args.class_with_main.replace('/', '.')
+    args.class_with_main = args.class_with_main.replace('\\', '.')
+    if args.class_with_main.startswith('src'):
+        args.class_with_main = args.class_with_main.replace('src.', '', 1)
+
     runable_class = pyconrad.JClass(args.class_with_main)
     runable_class.main(args.args)
 
