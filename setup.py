@@ -67,7 +67,7 @@ def read(fname):
 
 def setup_package():
     setup(name='pyconrad',
-          version='0.7.1',
+          version='0.7.2',
           packages=['pyconrad', 'pyconrad_examples'
                     ],
           author='Andreas Maier',
