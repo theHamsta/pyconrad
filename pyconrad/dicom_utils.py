@@ -57,8 +57,7 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
             last_image_idx = cur_image_idx
 
             if not spacing:
-                spacing = [float(dc.PixelSpacing[0]), float(
-                    dc.PixelSpacing[1]), float(dc.SliceThickness)]
+                spacing = [float(dc.SliceThickness), float(dc.PixelSpacing[0]), float(dc.PixelSpacing[1])]
             # if not origin:
             #     origin = [float(dc[0x20, 0x32].value[0]), float(
             #     dc[0x20, 0x32].value[1]), float(dc[0x20, 0x32].value[2])]
