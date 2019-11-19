@@ -1,6 +1,6 @@
 import argparse
 import os
-from os.path import abspath, basename, dirname, isfile
+from os.path import abspath, basename, dirname, isfile, splitext
 
 import numpy as np
 import pyconrad
@@ -67,18 +67,20 @@ def start_conrad_imagej(*args, **kwargs):
                     else:
                         try:
                             import pydicom
-                            dc = pydicom.read_file(f)
-                            if dc.SliceThickness:
-                                import pyconrad.dicom_utils
-                                #
-                                vol, spacing, origin, _orientation = pyconrad.dicom_utils.dicomdir2vol(
-                                    dirname(f), str(dc.ImageType))
-                                pyconrad.imshow(vol, str(dc.ImageType)
-                                                .replace('[', '')
-                                                .replace(']', '')
-                                                .replace("'", '') + ' – ' + basename(f),
-                                                spacing=spacing,
-                                                origin=origin)
+                            _base, ext = splitext(f)
+                            if ext.lower() in ['.dcm', '.ima']:
+                                dc = pydicom.read_file(f)
+                                if dc.SliceThickness:
+                                    import pyconrad.dicom_utils
+                                    #
+                                    vol, spacing, origin, _orientation = pyconrad.dicom_utils.dicomdir2vol(
+                                        dirname(f), str(dc.ImageType))
+                                    pyconrad.imshow(vol, str(dc.ImageType)
+                                                    .replace('[', '')
+                                                    .replace(']', '')
+                                                    .replace("'", '') + ' – ' + basename(f),
+                                                    spacing=spacing,
+                                                    origin=origin)
                                 return
                         except Exception:
                             pass

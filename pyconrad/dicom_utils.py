@@ -10,7 +10,7 @@
 
 import glob
 import warnings
-from os.path import join
+from os.path import join, splitext
 
 import natsort
 import numpy as np
@@ -41,6 +41,9 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
     """
 
     dicom_dir_files = natglob(join(dicom_dir, "*"))
+    dicom_dir_files = list(filter((lambda x: splitext(x.lower())[1] in ['.dcm', '.ima']), dicom_dir_files))
+    if not dicom_dir_files:
+        return None, None, None, None
 
     spacing = None
     origin = None
@@ -59,6 +62,8 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
             if series_filter and dc.SeriesNumber != series_filter:
                 continue
             if frame_of_reference_filter and frame_of_reference_filter not in dc[0x20, 0x52].value:
+                continue
+            if not dc[0x20, 0x13]:
                 continue
             cur_image_idx = dc[0x20, 0x13].value
             if cur_image_idx <= last_image_idx:
