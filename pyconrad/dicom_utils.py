@@ -9,6 +9,7 @@
 """
 
 import glob
+import warnings
 from os.path import join
 
 import natsort
@@ -30,10 +31,11 @@ def natglob(pattern, recursive=True) -> list:
 def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_reference_filter=None, report_progress=True):
 
     dicom_dir_files = natglob(join(dicom_dir, "*"))
-    # print('Found %i files in DICOM directory' % len(dicom_dir_files))
 
     spacing = None
-    # origin = None
+    origin = None
+    orientation = None
+
     last_image_idx = -1
     arrays = []
 
@@ -58,12 +60,25 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
 
             if not spacing:
                 spacing = [float(dc.SliceThickness), float(dc.PixelSpacing[0]), float(dc.PixelSpacing[1])]
-            # if not origin:
-            #     origin = [float(dc[0x20, 0x32].value[0]), float(
-            #     dc[0x20, 0x32].value[1]), float(dc[0x20, 0x32].value[2])]
+            if not origin:
+                try:
+                    origin = [float(dc.ImagePositionPatient[0]),
+                              float(dc.ImagePositionPatient[1]),
+                              float(dc.ImagePositionPatient[2])]
+                except Exception:
+                    pass
+            if not orientation:
+                try:
+                    orientation = [float(dc.PatientOrientationPatient[0]),
+                                   float(dc.PatientOrientationPatient[1]),
+                                   float(dc.PatientOrientationPatient[2])]
+                    if orientation and not np.allclose(orientation, np.zeros(3)):
+                        warnings.warn("Patient orientation is not 0,0,0!!!")
+                except Exception:
+                    pass
 
         except Exception as e:
             print(e)
 
     vol = np.stack(arrays)
-    return vol, spacing
+    return vol, spacing, origin
