@@ -3,7 +3,6 @@ import os
 from os.path import abspath, basename, dirname, isfile
 
 import numpy as np
-
 import pyconrad
 
 try:
@@ -72,12 +71,14 @@ def start_conrad_imagej(*args, **kwargs):
                             if dc.SliceThickness:
                                 import pyconrad.dicom_utils
                                 #
-                                vol, spacing = pyconrad.dicom_utils.dicomdir2vol(
+                                vol, spacing, origin, _orientation = pyconrad.dicom_utils.dicomdir2vol(
                                     dirname(f), str(dc.ImageType))
                                 pyconrad.imshow(vol, str(dc.ImageType)
                                                 .replace('[', '')
                                                 .replace(']', '')
-                                                .replace("'", '') + ' – ' + basename(f), spacing=spacing)
+                                                .replace("'", '') + ' – ' + basename(f),
+                                                spacing=spacing,
+                                                origin=origin)
                                 return
                         except Exception:
                             pass
