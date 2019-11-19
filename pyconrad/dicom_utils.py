@@ -74,19 +74,19 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
             last_image_idx = cur_image_idx
 
             if not spacing:
-                spacing = [float(dc.SliceThickness), float(dc.PixelSpacing[0]), float(dc.PixelSpacing[1])]
+                spacing = [float(dc.SliceThickness), float(dc.PixelSpacing[1]), float(dc.PixelSpacing[0])]
             if not origin:
                 try:
-                    origin = [float(dc.ImagePositionPatient[0]),
+                    origin = [float(dc.ImagePositionPatient[2]),
                               float(dc.ImagePositionPatient[1]),
-                              float(dc.ImagePositionPatient[2])]
+                              float(dc.ImagePositionPatient[0])]
                 except Exception:
                     pass
             if not orientation:
                 try:
-                    orientation = [float(dc.PatientOrientationPatient[0]),
+                    orientation = [float(dc.PatientOrientationPatient[2]),
                                    float(dc.PatientOrientationPatient[1]),
-                                   float(dc.PatientOrientationPatient[2])]
+                                   float(dc.PatientOrientationPatient[0])]
                     if orientation and not np.allclose(orientation, np.zeros(3)):
                         warnings.warn("Patient orientation is not 0,0,0!!!")
                 except Exception:
