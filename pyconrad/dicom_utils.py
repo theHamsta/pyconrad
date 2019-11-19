@@ -29,6 +29,18 @@ def natglob(pattern, recursive=True) -> list:
 
 
 def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_reference_filter=None, report_progress=True):
+    """Reads a DICOM directory to a volume
+
+    [TODO:description]
+
+    Args:
+        dicom_dir (str): Path to directory
+        filter_type (str, optional): Only DICOMs with this sub string in ImageType are regarded
+        series_filter (int, optional): Find a specific index in DICOM stack
+        frame_of_reference_filter (str, optional): Enter a specific DICOM file that should be regarded
+                                                   as reference filter
+        report_progress (bool, optional): Show a progress bar while reading the files
+    """
 
     dicom_dir_files = natglob(join(dicom_dir, "*"))
 
@@ -81,4 +93,4 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
             print(e)
 
     vol = np.stack(arrays)
-    return vol, spacing, origin
+    return vol, spacing, origin, orientation
