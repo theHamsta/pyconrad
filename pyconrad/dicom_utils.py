@@ -31,8 +31,6 @@ def natglob(pattern, recursive=True) -> list:
 def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_reference_filter=None, report_progress=True):
     """Reads a DICOM directory to a volume
 
-    [TODO:description]
-
     Args:
         dicom_dir (str): Path to directory
         filter_type (str, optional): Only DICOMs with this sub string in ImageType are regarded
