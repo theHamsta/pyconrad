@@ -46,15 +46,13 @@ def start_conrad_imagej(*args, **kwargs):
                     if str.lower(f).endswith('.vtk') or str.lower(f).endswith('.vti'):
                         _.NumericGrid.from_vtk(f).show(filename)
                     elif str.lower(f).endswith('.vdb'):
-                        import cppimport
-                        cppimport.set_quiet(False)
-                        vdb_io = cppimport.imp('pyconrad.vdb_io', opt_in=True)
-                        grids = vdb_io.readFloatVdbGrid(f, [0]*3)
+                        import volume2mesh
+                        grids, spacings, origins = volume2mesh.read_vdb(f, return_spacing_origin=True)
                         for name, grid in grids.items():
                             if grid.ndim == 4:
                                 grid = np.linalg.norm(grid, axis=3)
                                 name += ' (Magnitude)'
-                            pyconrad.imshow(grid, name)
+                            pyconrad.imshow(grid, name, spacing=spacings[name], origin=origins[name])
 
                     elif str.lower(f).endswith('.npy'):
                         numpy_array = np.load(f)
