@@ -56,7 +56,6 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
         try:
             dc = pydicom.read_file(file)
 
-            # print(file + ': ' + str(dc.ImageType))
             if filter_type and not str.lower(filter_type) in str.lower(str(dc.ImageType)):
                 continue
             if series_filter and dc.SeriesNumber != series_filter:
@@ -95,5 +94,9 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
         except Exception as e:
             print(e)
 
-    vol = np.stack(arrays)
-    return vol, spacing, origin, orientation
+    if arrays:
+        vol = np.stack(arrays)
+        return vol, spacing, origin, orientation
+    else:
+        warnings.warn('Could not match any DICOMs with the filtered type')
+        return None, None, None, None
