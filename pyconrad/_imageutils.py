@@ -19,6 +19,7 @@ except ImportError:
     pass
 
 
+
 class ImageUtil:
 
     ########################
@@ -83,7 +84,7 @@ def to_conrad_grid(img):
     elif 'pycuda' in sys.modules and isinstance(img, gpuarray.GPUArray):
         grid = pyconrad.PyGrid.from_numpy(img.get().astype(
             pyconrad.java_float_dtype)).grid
-    elif isinstance(img, list):
+    elif isinstance(img, (list, tuple, set)):
         imgs = np.stack(img)
         grid = pyconrad.PyGrid.from_numpy(imgs.astype(
             pyconrad.java_float_dtype)).grid
