@@ -77,8 +77,8 @@ def to_conrad_grid(img):
         grid = img
     elif isinstance(img, pyconrad.PyGrid):
         grid = img.grid
-    elif isinstance(img, np.ndarray):
-        grid = pyconrad.PyGrid.from_numpy(img.astype(
+    elif isinstance(img, np.ndarray) or hasattr(img, '__array__'):
+        grid = pyconrad.PyGrid.from_numpy(np.array(img).astype(
             pyconrad.java_float_dtype)).grid
     elif 'pycuda' in sys.modules and isinstance(img, gpuarray.GPUArray):
         grid = pyconrad.PyGrid.from_numpy(img.get().astype(
