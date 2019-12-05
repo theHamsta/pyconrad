@@ -1,12 +1,14 @@
-import pyconrad.autoinit
-import numpy as np
-import ij
-import pytest
 import os
+
+import numpy as np
+import pytest
+
+import pyconrad.autoinit
 
 
 @pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
 def test_imshow():
+    import ij
     a = np.random.rand(20, 30)
     luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
 
@@ -26,3 +28,23 @@ def test_imshow():
 
     for action in actions:
         pyconrad.imshow(a, "foo", run=action, lut='Fire')
+
+
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
+def test_tile():
+    a = np.random.rand(20, 30)
+    luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
+
+    for lut in luts:
+        pyconrad.imshow(a, title=lut, lut=lut)
+    pyconrad.tile()
+
+
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
+def test_tile_always():
+    a = np.random.rand(20, 30)
+    luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
+
+    pyconrad.tile(always=True)
+    for lut in luts:
+        pyconrad.imshow(a, title=lut, lut=lut)

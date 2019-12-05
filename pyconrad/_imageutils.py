@@ -18,6 +18,7 @@ try:
 except ImportError:
     pass
 
+_always_use_tile = False
 
 
 class ImageUtil:
@@ -181,6 +182,8 @@ def imshow(img,
                    run_args,
                    silent_fail)
 
+        if _always_use_tile:
+            pyconrad.tile()
         return
 
     if not pyconrad.is_gui_started():
@@ -253,3 +256,6 @@ def imshow(img,
 
     if wait_key_press:
         input("press key")
+
+    if _always_use_tile:
+        pyconrad.tile()

@@ -58,4 +58,13 @@ def stanfordrsl():
 
 
 def close_all_windows():
+    import pyconrad
     pyconrad.ij().WindowManager.closeAllWindows()
+
+
+def tile(always=None):
+    import pyconrad
+    pyconrad.ij().IJ.run('Tile')
+    if always is not None:
+        import pyconrad._imageutils
+        pyconrad._imageutils._always_use_tile = always
