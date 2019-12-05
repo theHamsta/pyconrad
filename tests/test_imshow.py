@@ -48,3 +48,24 @@ def test_tile_always():
     pyconrad.tile(always=True)
     for lut in luts:
         pyconrad.imshow(a, title=lut, lut=lut)
+
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
+def test_cascade_always():
+    a = np.random.rand(20, 30)
+    luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
+
+    pyconrad.tile(always=True)
+    pyconrad.cascade(always=True)
+    for lut in luts:
+        pyconrad.imshow(a, title=lut, lut=lut)
+
+
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
+def test_cascade():
+    a = np.random.rand(20, 30)
+    luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
+
+    pyconrad.tile(always=True)
+    for lut in luts:
+        pyconrad.imshow(a, title=lut, lut=lut)
+    pyconrad.cascade(always=True)

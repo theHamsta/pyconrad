@@ -68,3 +68,11 @@ def tile(always=None):
     if always is not None:
         import pyconrad._imageutils
         pyconrad._imageutils._always_use_tile = always
+
+
+def cascade(always=None):
+    import pyconrad
+    pyconrad.ij().IJ.run('Cascade')
+    if always is not None:
+        import pyconrad._imageutils
+        pyconrad._imageutils._always_use_tile = not always
