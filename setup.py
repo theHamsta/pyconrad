@@ -81,12 +81,14 @@ def setup_package():
               'procbridge',
               'cppimport',
               'joblib',
-              'appdirs'
+              'appdirs',
+              'pydicom',
+              'tqdm',
+              'natglob'
               ],
           extras_require={
               'opencl': ['pyopencl'],
               'vtk': ['vtk'],
-              'dicom': ['pydicom', 'tqdm', 'natglob']
               },
           cmdclass={'install': install},
           url='https://git5.cs.fau.de/PyConrad/pyCONRAD/',
