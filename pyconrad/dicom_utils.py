@@ -17,6 +17,8 @@ import numpy as np
 import pydicom
 from tqdm import tqdm
 
+from collections.abc import Sequence
+
 
 def natglob(pattern, recursive=True) -> list:
     """natglob
@@ -61,8 +63,12 @@ def dicomdir2vol(dicom_dir,
         try:
             dc = pydicom.read_file(file)
 
-            if filter_type and not str.lower(filter_type) in str.lower(str(dc.ImageType)):
-                continue
+            if filter_type:
+                if not isinstance(filter_type, Sequence):
+                    filter_type = [filter_type]
+
+                if any(not str.lower(t) in str.lower(str(dc.ImageType)) for t in filter_type):
+                    continue
             if series_filter and dc.SeriesNumber != series_filter:
                 continue
             if sequence_name_filter and sequence_name_filter not in dc.SequenceName:
