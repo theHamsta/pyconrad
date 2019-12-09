@@ -72,6 +72,7 @@ def setup_package():
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
+          use_pyscaffold=True,
           install_requires=['jpype1==0.7',
               'numpy',
               'pathlib',
