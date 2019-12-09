@@ -75,9 +75,9 @@ def dicomdir2vol(dicom_dir,
 
             if frame_of_reference_filter and frame_of_reference_filter not in dc[0x20, 0x52].value:
                 continue
-            if not dc.AcquisitionNumber:  # [0x20, 0x13]
+            if not dc[0x20, 0x13]:
                 continue
-            cur_image_idx = dc.AcquisitionNumber
+            cur_image_idx = dc[0x20, 0x13].value
             if cur_image_idx <= last_image_idx:
                 continue
 
