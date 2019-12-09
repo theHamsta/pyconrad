@@ -10,14 +10,13 @@
 
 import glob
 import warnings
+from collections.abc import Sequence
 from os.path import join, splitext
 
 import natsort
 import numpy as np
 import pydicom
 from tqdm import tqdm
-
-from collections.abc import Sequence
 
 
 def natglob(pattern, recursive=True) -> list:
@@ -67,7 +66,7 @@ def dicomdir2vol(dicom_dir,
                 if not isinstance(filter_type, Sequence):
                     filter_type = [filter_type]
 
-                if any(not str.lower(t) in str.lower(str(dc.ImageType)) for t in filter_type):
+                if any(str.lower(t) not in str.lower(str(dc.ImageType)) for t in filter_type):
                     continue
             if series_filter and dc.SeriesNumber != series_filter:
                 continue
