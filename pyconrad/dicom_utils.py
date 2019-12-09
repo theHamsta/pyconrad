@@ -28,7 +28,12 @@ def natglob(pattern, recursive=True) -> list:
     return natsort.natsorted(glob.glob(pattern, recursive=recursive))
 
 
-def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_reference_filter=None, report_progress=True):
+def dicomdir2vol(dicom_dir,
+                 filter_type=None,
+                 series_filter=None,
+                 sequence_name_filter=None,
+                 frame_of_reference_filter=None,
+                 report_progress=True):
     """Reads a DICOM directory to a volume
 
     Args:
@@ -60,11 +65,14 @@ def dicomdir2vol(dicom_dir, filter_type=None, series_filter=None, frame_of_refer
                 continue
             if series_filter and dc.SeriesNumber != series_filter:
                 continue
+            if sequence_name_filter and sequence_name_filter not in dc.SequenceName:
+                continue
+
             if frame_of_reference_filter and frame_of_reference_filter not in dc[0x20, 0x52].value:
                 continue
-            if not dc[0x20, 0x13]:
+            if not dc.AcquisitionNumber:  # [0x20, 0x13]
                 continue
-            cur_image_idx = dc[0x20, 0x13].value
+            cur_image_idx = dc.AcquisitionNumber
             if cur_image_idx <= last_image_idx:
                 continue
 
