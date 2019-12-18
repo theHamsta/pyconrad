@@ -63,7 +63,7 @@ def dicomdir2vol(dicom_dir,
             dc = pydicom.read_file(file)
 
             if filter_type:
-                if not isinstance(filter_type, Sequence):
+                if not isinstance(filter_type, (list, tuple)):
                     filter_type = [filter_type]
 
                 if any(str.lower(t) not in str.lower(str(dc.ImageType)) for t in filter_type):
