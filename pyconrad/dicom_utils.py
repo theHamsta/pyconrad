@@ -10,23 +10,11 @@
 
 import glob
 import warnings
-from collections.abc import Sequence
 from os.path import join, splitext
 
-import natsort
 import numpy as np
 import pydicom
 from tqdm import tqdm
-
-
-def natglob(pattern, recursive=True) -> list:
-    """natglob
-
-    :param pattern:
-    :param recursive:
-    :rtype: list
-    """
-    return natsort.natsorted(glob.glob(pattern, recursive=recursive))
 
 
 def dicomdir2vol(dicom_dir,
@@ -34,7 +22,8 @@ def dicomdir2vol(dicom_dir,
                  series_filter=None,
                  sequence_name_filter=None,
                  frame_of_reference_filter=None,
-                 report_progress=True):
+                 report_progress=True,
+                 only_with_correct_extension=True):
     """Reads a DICOM directory to a volume
 
     Args:
@@ -46,8 +35,9 @@ def dicomdir2vol(dicom_dir,
         report_progress (bool, optional): Show a progress bar while reading the files
     """
 
-    dicom_dir_files = natglob(join(dicom_dir, "*"))
-    dicom_dir_files = list(filter((lambda x: splitext(x.lower())[1] in ['.dcm', '.ima']), dicom_dir_files))
+    dicom_dir_files = glob.glob(join(glob.escape(dicom_dir), "*"))
+    if only_with_correct_extension:
+        dicom_dir_files = list(filter((lambda x: splitext(x.lower())[1] in ['.dcm', '.ima']), dicom_dir_files))
     if not dicom_dir_files:
         return None, None, None, None
 
@@ -55,8 +45,7 @@ def dicomdir2vol(dicom_dir,
     origin = None
     orientation = None
 
-    last_image_idx = -1
-    arrays = []
+    slices = {}
 
     for file in tqdm(dicom_dir_files) if report_progress else dicom_dir_files:
         try:
@@ -75,15 +64,13 @@ def dicomdir2vol(dicom_dir,
 
             if frame_of_reference_filter and frame_of_reference_filter not in dc[0x20, 0x52].value:
                 continue
+            else:
+                frame_of_reference_filter = dc[0x20, 0x52].value
             if not dc[0x20, 0x13]:
                 continue
             cur_image_idx = dc[0x20, 0x13].value
-            if cur_image_idx <= last_image_idx:
-                continue
 
-            # print("Loading dicom slice %i" % cur_image_idx)
-            arrays.append(dc.pixel_array)
-            last_image_idx = cur_image_idx
+            slices[cur_image_idx] = dc.pixel_array
 
             if not spacing:
                 spacing = [float(dc.SliceThickness), float(dc.PixelSpacing[1]), float(dc.PixelSpacing[0])]
@@ -107,8 +94,8 @@ def dicomdir2vol(dicom_dir,
         except Exception as e:
             print(e)
 
-    if arrays:
-        vol = np.stack(arrays)
+    if slices:
+        vol = np.stack(slices[k] for k in sorted(slices.keys()))
         return vol, spacing, origin, orientation
     else:
         warnings.warn('Could not match any DICOMs with the filtered type')
