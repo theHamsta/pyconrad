@@ -85,7 +85,6 @@ def setup_package():
               'appdirs',
               'pydicom',
               'tqdm',
-              'natsort'
               ],
           extras_require={
               'opencl': ['pyopencl'],
