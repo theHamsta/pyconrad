@@ -70,3 +70,12 @@ def test_cascade():
     for lut in luts:
         pyconrad.imshow(a, title=lut, lut=lut)
     pyconrad.cascade(always=True)
+
+
+@pytest.mark.skipif("CI" in os.environ and os.environ["CI"] == "true", reason="Skipping this test on Travis CI.")
+def test_3d():
+    a = np.random.rand(20, 30, 40)
+    luts = ['Fire', 'Spectrum', 'Ice', 'Cyan']
+
+    for lut in luts:
+        pyconrad.imshow(a, title=lut)
