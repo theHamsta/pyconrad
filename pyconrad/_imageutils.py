@@ -217,7 +217,7 @@ def imshow(img,
             spacing = (1,) * max(grid.ndim, 3)
 
     listener = ImageListener()
-    proxy = jpype.JProxy("ij.ImageListener", inst=listener)
+    proxy = jpype.JProxy(ij.ImageListener, inst=listener)
     pyconrad.ij().ImagePlus.addImageListener(proxy)
 
     window = pyconrad.ij().WindowManager.getImage(title) if title else None
