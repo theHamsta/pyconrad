@@ -79,6 +79,8 @@ def to_conrad_grid(img):
         grid = img
     elif isinstance(img, pyconrad.PyGrid):
         grid = img.grid
+    elif 'torch.Tensor' in str(type(img)):
+        grid = pyconrad.PyGrid.from_numpy(img.cpu().numpy().astype(pyconrad.java_float_dtype)).grid
     elif isinstance(img, np.ndarray) or hasattr(img, '__array__'):
         grid = pyconrad.PyGrid.from_numpy(np.array(img).astype(
             pyconrad.java_float_dtype)).grid
@@ -89,8 +91,6 @@ def to_conrad_grid(img):
         imgs = np.stack(img)
         grid = pyconrad.PyGrid.from_numpy(imgs.astype(
             pyconrad.java_float_dtype)).grid
-    elif 'torch.Tensor' in str(type(img)):
-        grid = pyconrad.PyGrid.from_numpy(img.cpu().numpy().astype(pyconrad.java_float_dtype)).grid
     else:
         raise TypeError('Unsupported Type: %s' % type(img))
 
@@ -140,6 +140,7 @@ def imshow(img,
         run {str} -- Run a ImageJ command with `run_args`
         run_args {str} -- Commands for ImageJ command `run_args`
     """
+
     import ij
     if 'PYCONRAD_HEADLESS' in os.environ:
         return
