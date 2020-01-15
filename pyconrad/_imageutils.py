@@ -80,7 +80,10 @@ def to_conrad_grid(img):
     elif isinstance(img, pyconrad.PyGrid):
         grid = img.grid
     elif 'torch.Tensor' in str(type(img)):
-        grid = pyconrad.PyGrid.from_numpy(img.cpu().numpy().astype(pyconrad.java_float_dtype)).grid
+        try:
+            grid = pyconrad.PyGrid.from_numpy(img.cpu().numpy().astype(pyconrad.java_float_dtype)).grid
+        except Exception:
+            grid = pyconrad.PyGrid.from_numpy(img.cpu().detach().numpy().astype(pyconrad.java_float_dtype)).grid
     elif isinstance(img, np.ndarray) or hasattr(img, '__array__'):
         grid = pyconrad.PyGrid.from_numpy(np.array(img).astype(
             pyconrad.java_float_dtype)).grid
