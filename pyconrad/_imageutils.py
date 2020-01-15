@@ -7,6 +7,9 @@ import os
 import re
 import sys
 import time
+import warnings
+from datetime import datetime
+from os.path import join
 
 import jpype
 import numpy as np
@@ -19,6 +22,10 @@ except ImportError:
     pass
 
 _always_use_tile = True
+PYCONRAD_DUMP_DIR = os.environ.get('PYCONRAD_DUMP_DIR', None)
+if PYCONRAD_DUMP_DIR:
+    os.makedirs(PYCONRAD_DUMP_DIR, exist_ok=True)
+PYCONRAD_DUMP_EXT = os.environ.get('PYCONRAD_DUMP_EXT', 'tif')
 
 
 class ImageUtil:
@@ -73,30 +80,38 @@ class ImageUtil:
         return ImageUtil.numpy_from_grid(grid)
 
 
-def to_conrad_grid(img):
+def _get_dump_filename(title):
+    if PYCONRAD_DUMP_DIR:
+        return join(PYCONRAD_DUMP_DIR, f'{title}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S-%f")}.{PYCONRAD_DUMP_EXT}')
+    else:
+        return None
+
+
+def to_conrad_grid(img, dump_if_numpy_file=None):
 
     if isinstance(img, pyconrad.edu().stanford.rsl.conrad.data.numeric.NumericGrid):
-        grid = img
+        return img
     elif isinstance(img, pyconrad.PyGrid):
-        grid = img.grid
+        return img.grid
     elif 'torch.Tensor' in str(type(img)):
-        try:
-            grid = pyconrad.PyGrid.from_numpy(img.cpu().numpy().astype(pyconrad.java_float_dtype)).grid
-        except Exception:
-            grid = pyconrad.PyGrid.from_numpy(img.cpu().detach().numpy().astype(pyconrad.java_float_dtype)).grid
+        array = img.cpu().detach().numpy()
     elif isinstance(img, np.ndarray) or hasattr(img, '__array__'):
-        grid = pyconrad.PyGrid.from_numpy(np.array(img).astype(
-            pyconrad.java_float_dtype)).grid
+        array = np.array(img)
     elif 'pycuda' in sys.modules and isinstance(img, gpuarray.GPUArray):
-        grid = pyconrad.PyGrid.from_numpy(img.get().astype(
-            pyconrad.java_float_dtype)).grid
+        array = img.get()
     elif isinstance(img, (list, tuple, set)):
-        imgs = np.stack(img)
-        grid = pyconrad.PyGrid.from_numpy(imgs.astype(
-            pyconrad.java_float_dtype)).grid
+        array = np.stack(img)
     else:
         raise TypeError('Unsupported Type: %s' % type(img))
 
+    if dump_if_numpy_file:
+        try:
+            import skimage.io
+            skimage.io.imsave(dump_if_numpy_file, array)
+        except Exception as e:
+            warnings.warn(f'Failed to dump image "{dump_if_numpy_file}":\n{e}')
+
+    grid = pyconrad.PyGrid.from_numpy(array).grid
     return grid
 
 
@@ -199,11 +214,11 @@ def imshow(img,
 
     if silent_fail:
         try:
-            grid = to_conrad_grid(img)
+            grid = to_conrad_grid(img, _get_dump_filename(title))
         except Exception:
             return
     else:
-        grid = to_conrad_grid(img)
+        grid = to_conrad_grid(img, _get_dump_filename(title))
 
     if origin:
         assert len(
