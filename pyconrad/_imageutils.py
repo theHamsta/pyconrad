@@ -18,7 +18,7 @@ try:
 except ImportError:
     pass
 
-_always_use_tile = False
+_always_use_tile = True
 
 
 class ImageUtil:
