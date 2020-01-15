@@ -21,7 +21,7 @@ try:
 except ImportError:
     pass
 
-_always_use_tile = True
+_always_use_tile = os.environ.get('PYCONRAD_ALWAYS_USE_TILE', True)
 PYCONRAD_DUMP_DIR = os.environ.get('PYCONRAD_DUMP_DIR', None)
 if PYCONRAD_DUMP_DIR:
     os.makedirs(PYCONRAD_DUMP_DIR, exist_ok=True)
