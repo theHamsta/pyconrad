@@ -5,6 +5,7 @@
 import glob
 import os
 import threading
+import time
 import warnings
 from os.path import join
 from pathlib import Path
@@ -141,8 +142,8 @@ class PyConrad:
         if self.__gui_thread is None:
             self.__gui_thread = threading.Thread(target=self.__start_ij_gui)
             self.__gui_thread.start()
-            # while not self.__is_gui_started:
-                # time.sleep(1)
+            while not self.__is_gui_started:
+                time.sleep(1)
         else:
             print("Some GUI is already started")
 
@@ -151,8 +152,8 @@ class PyConrad:
             self._context_class_loader = jpype.java.lang.Thread.currentThread().getContextClassLoader()
             self.__gui_thread = threading.Thread(target=self.__start_rfp_gui)
             self.__gui_thread.start()
-            # while not self.__is_gui_started:
-                # time.sleep(1)
+            while not self.__is_gui_started:
+                time.sleep(1)
         else:
             print("Some GUI is already started")
 
@@ -181,8 +182,8 @@ class PyConrad:
             pass
         detachThreadFromJVM()
 
-        # while self.__is_gui_started:
-            # time.sleep(1)
+        while self.__is_gui_started:
+            time.sleep(1)
 
     def __start_ij_gui(self):
         attachThreadToJVM()
@@ -196,8 +197,8 @@ class PyConrad:
         self.__is_gui_started = True
 
         detachThreadFromJVM()
-        # while self.__is_gui_started:
-            # time.sleep(1)
+        while self.__is_gui_started:
+            time.sleep(1)
 
     def __import__libs(self, dev_dirs):
         # if user forgets the brackets
