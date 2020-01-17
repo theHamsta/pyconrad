@@ -44,7 +44,7 @@ def read_vtk(file, array_name=0):
     from vtk.util import numpy_support as VN
 
     if not isfile(file):
-        raise FileNotFoundError('File %s does not exit' % file)
+        raise FileNotFoundError(f'File {file} does not exit')
 
     _, ext = splitext(file)
 

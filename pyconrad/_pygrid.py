@@ -56,7 +56,7 @@ class PyGrid(np.ndarray):
         if not 0 < len(shape) < 5:
             raise Exception("shape dimension of %d not supported" % len(shape))
         self.__grid = getattr(self.__numericpackage,
-                              "Grid{}D".format(len(shape)))(*reversed(shape))
+                              f"Grid{len(shape)}D")(*reversed(shape))
         if shape[0] != 0:
             self.__dbuffer = jpype.nio.convertToDirectBuffer(self)
 
@@ -104,7 +104,7 @@ class PyGrid(np.ndarray):
             'edu').stanford.rsl.conrad.data.numeric
 
         if not 0 < array.ndim < 5:
-            raise Exception("shape dimension of %d not supported" % array.ndim)
+            raise Exception(f"shape dimension of {array.ndim:d} not supported")
         instance.__grid = getattr(instance.__numericpackage, "Grid{}D".format(
             array.ndim))(*reversed(array.shape))
 

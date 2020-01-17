@@ -36,7 +36,7 @@ def download_file(url, download_dir):
     with open(join(download_dir, file_name), 'wb') as f:
         file_size_dl = 0
         block_sz = 8192
-        print("Downloading %s..." % file_name)
+        print(f"Downloading {file_name}...")
         while True:
             buffer = u.read(block_sz)
             if not buffer:
@@ -56,7 +56,7 @@ def download_conrad(dest_dir=__conrad_download_dir):
 
     download_file(__conrad_url, __conrad_download_dir)
 
-    print("Extracting %s..." % file_name)
+    print(f"Extracting {file_name}...")
     zip_ref = zipfile.ZipFile(zip_path, 'r')
     zip_ref.extractall(__conrad_download_dir)
     zip_ref.close()

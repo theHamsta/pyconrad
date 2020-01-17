@@ -34,7 +34,7 @@ def start_conrad_imagej(*args, **kwargs):
     if not args.single_instance_mode:
 
         import pyconrad
-        pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
+        pyconrad.setup_pyconrad(max_ram=f'{args.max_memory:d}G')
         pyconrad.start_gui()
 
         # def request_handler(api, args):
@@ -106,7 +106,7 @@ def start_conrad_imagej(*args, **kwargs):
         except Exception as e:
             print(e)
 
-        pyconrad.setup_pyconrad(max_ram='%iG' % args.max_memory)
+        pyconrad.setup_pyconrad(max_ram=f'{args.max_memory:d}G')
         pyconrad.start_gui()
 
         def request_handler(api, args):

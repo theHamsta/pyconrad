@@ -273,10 +273,10 @@ def _extend_ocl_grids():
     @staticmethod
     def _oclgrid_from_numpy(numpy):
         grid = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
-                       'Grid%iD' % numpy.ndim)(*reversed(numpy.shape))
+                       f'Grid{numpy.ndim:d}D')(*reversed(numpy.shape))
         oclgrid = getattr(
             JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
-            'OpenCLGrid%iD' % numpy.ndim)(grid)
+            f'OpenCLGrid{numpy.ndim:d}D')(grid)
         oclgrid.getDelegate().hostChanged = False
         oclgrid.getDelegate().deviceChanged = True
 
@@ -321,7 +321,7 @@ def _extend_ocl_grids():
     def _oclgrid_from_tiff(path):
         grid = ImageUtil.grid_from_tiff(path)
         clgrid_class = JClass(
-            'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % grid.ndim)
+            f'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid{grid.ndim:d}D')
         clgrid = clgrid_class(grid)
         return clgrid
 
@@ -333,12 +333,12 @@ def _extend_ocl_grids():
     @staticmethod
     def _oclgrid_from_size(size):
         grid = PyGrid(list(reversed(size))).grid
-        return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
+        return getattr(pyconrad.opencl.opencl_namespaces, f'OpenCLGrid{grid.ndim:d}D')(grid)
 
     @staticmethod
     def _oclgrid_from_shape(shape):
         grid = PyGrid(list(shape)).grid
-        return getattr(pyconrad.opencl.opencl_namespaces, 'OpenCLGrid%iD' % grid.ndim)(grid)
+        return getattr(pyconrad.opencl.opencl_namespaces, f'OpenCLGrid{grid.ndim:d}D')(grid)
 
     def _oclgrid_as_clbuffer(self):
         self.getDelegate().prepareForDeviceOperation()
@@ -352,12 +352,12 @@ def _extend_ocl_grids():
         # TODO: still needs copy!
 
         grid_class = getattr(JPackage('edu').stanford.rsl.conrad.data.numeric,
-                             'Grid%iD' % clarray.ndim)
+                             f'Grid{clarray.ndim:d}D')
         int_size = reversed([int(i) for i in clarray.shape])
         grid = grid_class(*int_size)
         oclgrid = getattr(
             JPackage('edu').stanford.rsl.conrad.data.numeric.opencl,
-            'OpenCLGrid%iD' % clarray.ndim)(grid)
+            f'OpenCLGrid{clarray.ndim:d}D')(grid)
         oclgrid.getDelegate().hostChanged = False
         oclgrid.getDelegate().deviceChanged = True
 
@@ -377,7 +377,7 @@ def _extend_ocl_grids():
 
     for i in range(1, 4):
         clgrid_class = JClass(
-            'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid%iD' % i)
+            f'edu.stanford.rsl.conrad.data.numeric.opencl.OpenCLGrid{i:d}D')
         clgrid_class.from_numpy = _oclgrid_from_numpy
         clgrid_class.from_tiff = _oclgrid_from_tiff
         clgrid_class.from_image = _oclgrid_from_tiff
