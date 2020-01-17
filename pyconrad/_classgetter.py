@@ -114,7 +114,7 @@ class ClassGetter:
                 return ClassGetter(*([ns + '.' + classname for ns in self._imported_namespaces] + [classname]))
 
         if not success:
-            raise Exception("Class \"%s\" not found in the following namespaces:\n %s" % (
+            raise Exception("Class \"{}\" not found in the following namespaces:\n {}".format(
                 classname, self._imported_namespaces))
 
         return rtn

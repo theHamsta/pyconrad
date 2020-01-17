@@ -262,10 +262,10 @@ class PyGrid(np.ndarray):
         return java_float_dtype
 
     def __str__(self):
-        return super(PyGrid, self).__str__()
+        return super().__str__()
 
     def __getitem__(self, item):
-        return super(PyGrid, self).__getitem__(item)
+        return super().__getitem__(item)
 
     def save_vtk(self, file, title="pygrid"):
         from pyevtk.hl import imageToVTK

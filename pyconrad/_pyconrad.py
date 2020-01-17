@@ -1,4 +1,3 @@
-
 # Copyright (C) 2010-2017 - Andreas Maier
 # CONRAD is developed as an Open Source project under the GNU General Public License (GPL-3.0)
 
@@ -88,7 +87,7 @@ class PyConrad:
 
     def __new__(cls, *args, **kwargs):
         if not cls.___instance:
-            cls.___instance = super(PyConrad, cls).__new__(
+            cls.___instance = super().__new__(
                 cls, *args, **kwargs)
         cls.jvm_args = None
         return cls.___instance

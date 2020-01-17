@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright © 2019 Stephan Seitz <stephan.seitz@fau.de>
 #
