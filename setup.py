@@ -75,6 +75,7 @@ def setup_package():
           use_pyscaffold=True,
           install_requires=['jpype1==0.7',
               'numpy',
+              'nibabel',
               'pathlib',
               'urllib3',
               'pyevtk',

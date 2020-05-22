@@ -2,6 +2,7 @@ import argparse
 import os
 from os.path import abspath, basename, dirname, isfile, splitext
 from time import sleep
+import warnings
 
 import numpy as np
 import pyconrad
@@ -54,6 +55,13 @@ def start_conrad_imagej(*args, **kwargs):
                                 grid = np.linalg.norm(grid, axis=3)
                                 name += ' (Magnitude)'
                             pyconrad.imshow(grid, name, spacing=spacings[name], origin=origins[name])
+                    elif str.lower(f).endswith('.nii'):
+                        try:
+                            import nibabel
+                            dataset = nibabel.load(f)
+                            pyconrad.imshow(dataset.get_data(), filename)
+                        except ImportError:
+                            warnings.warn("Install nibabel")
 
                     elif str.lower(f).endswith('.npy'):
                         numpy_array = np.load(f)
