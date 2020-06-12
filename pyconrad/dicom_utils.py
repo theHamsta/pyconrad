@@ -94,7 +94,7 @@ def dicomdir2vol(dicom_dir,
             print(e)
 
     if slices:
-        vol = np.stack(slices[k] for k in sorted(slices.keys()))
+        vol = np.stack(list(slices[k] for k in sorted(slices.keys())))
         return vol, spacing, origin, orientation
     else:
         warnings.warn('Could not match any DICOMs with the filtered type')
