@@ -1,6 +1,5 @@
 import numpy as np
 
-from pyconrad._classgetter import ClassGetter
 import pyconrad
 
 _ = pyconrad.ClassGetter(
@@ -110,7 +109,6 @@ def get_projection_matrices() -> np.ndarray:
     projMats = pyconrad.config.get_geometry().getProjectionMatrices()
     numProjs = pyconrad.config.get_geometry().getProjectionStackSize()
     projMatsArray = np.empty((numProjs, 3, 4), np.float32)
-    idx = 0
 
     for p in range(numProjs):
         matrix = projMats[p].computeP()
