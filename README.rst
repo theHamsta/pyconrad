@@ -40,6 +40,15 @@ This will automatically install CONRAD and all python dependencies. Requirements
 
 If you encounter a problem during the installation have a look at our wiki: https://git5.cs.fau.de/PyConrad/pyCONRAD/wikis/home
 
+
+.. warning::
+
+    If installation of JPype fails under Python 3.9 try my branch:
+
+    .. code-block:: bash
+          
+          pip3 install git+https://github.com/theHamsta/jpype@pyconrad --verbose
+
 Tests
 =====
 
