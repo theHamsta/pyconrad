@@ -45,6 +45,7 @@ If you encounter a problem during the installation have a look at our wiki: http
 
 .. code-block:: bash
       
+      apt install ant # ant was required for building the Java dependencies
       pip3 install git+https://github.com/theHamsta/jpype@pyconrad --verbose
 
 Tests
