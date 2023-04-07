@@ -69,11 +69,12 @@ def setup_package():
     setup(name='pyconrad',
           packages=['pyconrad', 'pyconrad_examples'
                     ],
+          version="0.7.10",
           author='Andreas Maier',
           author_email='andreas.maier@fau.de',
           license='GPL 3.0',
           use_pyscaffold=True,
-          install_requires=['jpype1==0.7',
+          install_requires=['jpype1 @ git+https://github.com/theHamsta/jpype@pyconrad',
               'numpy',
               'nibabel',
               'pathlib',
